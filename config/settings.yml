@@ -1,0 +1,47 @@
+dbconf:
+     # 数据库类型 mysql, sqlite3, postgres, sqlserver
+     driver: mysql
+     #Mysql数据库配置 (开发必改)---服务器部署请改成： 127.0.0.1:3306 本地开发开源连服务器数据库
+     source: gofly_base:password@tcp(127.0.0.1:3306)/gofly_base?charset=utf8&parseTime=True&loc=Local&timeout=1000ms
+     #数据库名称-在api接口操作数据时使用 (开发必改)
+     name: gofly_base
+jwt:
+     secret: 3Bde3BGEbYqtqyEUzW3ry8jKFcaPH17fRmTmqE7MDr05Lwj95uruRKrrkb44TJ4s
+     jwt_ttl: 43200
+app:
+     #环境状态：dev=开发，pro=生产
+     env: dev
+     #运行服务端口号
+     port: 8105
+     #接口合法性验证
+     apisecret: gofly@888
+     #接口JWT验证-不添加请求时报403 (开发、部署必改)
+     allowurl: http://localhost:9101,http://localhost:9102,https://sg.goflys.cn
+     #token超时时间单位分钟 
+     tokenouttime: 10 
+     #调用cpu个数
+     cpunum: 3
+     # Gin 框架在运行的时候默认是debug模式 有： 开发：debug，生产：release，测试模式：test
+     runlogtype: debug
+     # 配置代码生成时-前端代码根目录位置(开发必改)
+     vueobjroot: D:/Project/develop/vue/gofly_base/gofly_business
+     # 配置根域名访问重定向路径,默认是业务端后台
+     rootview: webbusiness
+     #不需要token-根模块
+     noVerifyTokenRoot: resource,webbusiness,webadmin,wxapp,chat
+     #不需要api接口合法性验证-根模块md5加密
+     noVerifyAPIRoot: resource,webbusiness,webadmin,chat
+     #不需要验证token-具体请求路径
+     noVerifyToken: /common/uploadfile/get_image,/admin/user/login,/admin/user/logout,/admin/user/refreshtoken,/admin/user/get_code,/admin/user/resetPassword,/business/user/login,/business/user/logout,/business/user/refreshtoken,/business/user/get_code,/business/user/resetPassword,/wxoffi/service/getPost_api,/wxapp/user/get_openid,/admin/user/get_logininfo,/business/user/get_logininfo
+     #不需要接口合法性-具体请求路径
+     noVerifyAPI: /wxoffi/service/getPost_api
+log:
+     level: info  # 日志等级debug
+     root_dir: ./runtime/logs # 日志根目录
+     filename: app.log # 日志文件名称
+     format: json # 写入格式 可选json
+     show_line: true # 是否显示调用行
+     max_backups: 3 # 旧文件的最大个数
+     max_size: 500 # 日志文件最大大小（MB）
+     max_age: 28 # 旧文件的最大保留天数
+     compress: true # 是否压缩

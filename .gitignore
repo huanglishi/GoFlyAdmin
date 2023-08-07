@@ -1,0 +1,10 @@
+tmp
+.history
+
+runtime/app
+runtime/logs
+
+.local
+# local env files
+*.exe
+*.exe~
