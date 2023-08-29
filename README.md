@@ -27,6 +27,8 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
  ```
 db.Table("users").Fields("uid,name,age").First()
 ```
+8.一键快速安装
+![快速安装](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230827/84bea6a34f9f1cbfb8360de0dda72604.jpg?_t=1693108434?_t=1693180904?_t=1693199681)
 ## 三、在线预览
  [1.GoFly全栈开发社区了解更多](https://goflys.cn/home)  
 
