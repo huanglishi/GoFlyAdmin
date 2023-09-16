@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"gofly/app/model"
 	"gofly/global"
 	"io"
 	"io/ioutil"
@@ -147,6 +148,13 @@ func ServerError(c *gin.Context, err interface{}) {
 			http.StatusInternalServerError,
 			nil,
 			msg,
+		})
+	} else if res := strings.Contains(msg, "invalid memory address or nil pointer dereference"); res { //数据库链接失败
+		model.MyInit(3) //重连数据库-初始化数据
+		c.JSON(http.StatusInternalServerError, Response{1,
+			http.StatusInternalServerError,
+			"可能是数据库链接失败，请查看数据库链接是否正常",
+			msg + "，可能是数据库链接失败，请查看数据库配置及是否启动，再刷新试试！",
 		})
 	} else {
 		c.JSON(http.StatusInternalServerError, Response{1,

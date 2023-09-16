@@ -58,13 +58,13 @@ func Register(controller interface{}, PkgPathstr string) bool {
 		//遍历参数
 		params := make([]reflect.Type, 0, v.NumMethod())
 		httpMethod := "POST" //默认POST
-		if strings.Contains(action, "Get_") {
+		if strings.Contains(action, "Get_") || action == "Index" {
 			httpMethod = "GET"
 		}
 		if strings.Contains(action, "Del_") || action == "Del" {
 			httpMethod = "DELETE"
 		}
-		if strings.Contains(action, "Put_") {
+		if strings.Contains(action, "Put_") || action == "Put" {
 			httpMethod = "PUT"
 		}
 		for j := 0; j < method.Type().NumIn(); j++ {

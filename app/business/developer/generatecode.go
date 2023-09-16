@@ -60,10 +60,10 @@ func (api *Generatecode) Get_dbfield(c *gin.Context) {
 		results.Failed(c, "请传数据表名称", nil)
 	} else {
 		tablename_arr := strings.Split(tablename, ",")
-		dbname := global.App.Config.DBconf.Name
+		//获取数据库名
 		var dielddata_list []map[string]interface{}
 		for _, Val := range tablename_arr {
-			dielddata, _ := model.DB().Query("select COLUMN_NAME,COLUMN_COMMENT,DATA_TYPE from information_schema.columns where TABLE_SCHEMA='" + dbname + "' AND TABLE_NAME='" + Val + "'")
+			dielddata, _ := model.DB().Query("select COLUMN_NAME,COLUMN_COMMENT,DATA_TYPE from information_schema.columns where TABLE_SCHEMA='" + global.App.Config.DBconf.Database + "' AND TABLE_NAME='" + Val + "'")
 			for _, data := range dielddata {
 				if data["COLUMN_COMMENT"] == "" && data["COLUMN_NAME"] == "id" {
 					data["COLUMN_COMMENT"] = "ID"
@@ -94,9 +94,9 @@ func (api *Generatecode) Save(c *gin.Context) {
 	}
 	if f_id == 0 {
 		delete(parameter, "id")
-		dbname := global.App.Config.DBconf.Name
+		//获取数据库名
 		tablenames, _ := model.DB().Table("common_generatecode").Pluck("tablename")
-		dbtalbelist, _ := model.DB().Query("SELECT TABLE_NAME,TABLE_COMMENT,ENGINE,TABLE_ROWS,CREATE_TIME,UPDATE_TIME,TABLE_COLLATION,AUTO_INCREMENT FROM information_schema.TABLES WHERE table_schema='" + dbname + "'")
+		dbtalbelist, _ := model.DB().Query("SELECT TABLE_NAME,TABLE_COMMENT,ENGINE,TABLE_ROWS,TABLE_COLLATION,AUTO_INCREMENT FROM information_schema.TABLES WHERE table_schema='" + global.App.Config.DBconf.Database + "'")
 		save_arr := []map[string]interface{}{}
 		for _, val := range dbtalbelist {
 			webb, _ := json.Marshal(val)
@@ -111,7 +111,7 @@ func (api *Generatecode) Save(c *gin.Context) {
 			midata := map[string]interface{}{"tablename": val["TABLE_NAME"], "comment": val["TABLE_COMMENT"],
 				"engine":     val["ENGINE"],
 				"table_rows": val["TABLE_ROWS"],
-				"createtime": val["UPDATE_TIME"], "updatetime": val["UPDATE_TIME"],
+				"createtime": utils.NowTimestamp(), "updatetime": utils.NowTimestamp(),
 				"collation": val["TABLE_COLLATION"], "auto_increment": val["AUTO_INCREMENT"]}
 			if utils.IsContain(tablenames.([]interface{}), val["TABLE_NAME"].(string)) {
 				delete(midata, "createtime")
@@ -146,17 +146,16 @@ func (api *Generatecode) Save(c *gin.Context) {
 			if err != nil {
 				results.Failed(c, "添加菜单失败", err)
 			} else {
-				if getId != 0 {
-					parameter["rule_id"] = getId
-					model.DB().Table("business_auth_rule").
-						Data(map[string]interface{}{"orderNo": getId}).
-						Where("id", getId).
-						Update()
-				}
+				model.DB().Table("business_auth_rule").
+					Data(map[string]interface{}{"orderNo": getId}).
+					Where("id", getId).
+					Update()
+				parameter["rule_id"] = getId
 				isok = true
 			}
 		} else {
 			isok = true
+			parameter["rule_id"] = findrule["id"]
 		}
 		if isok {
 			//1判断添前后端文件目录

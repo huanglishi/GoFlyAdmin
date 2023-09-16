@@ -2,9 +2,13 @@ package config
 
 //数据数据库配置
 type DBconf struct {
-	Driver string `yaml:"driver"`
-	Source string `yaml:"source"`
-	Name   string `yaml:"name"`
+	Driver   string `yaml:"driver"`
+	Hostname string `yaml:"hostname"`
+	Hostport string `yaml:"hostport"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+	Database string `yaml:"database"`
+	Prefix   string `yaml:"prefix"`
 }
 
 //应用配置

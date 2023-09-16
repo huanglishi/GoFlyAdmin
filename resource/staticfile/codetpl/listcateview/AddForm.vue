@@ -7,7 +7,7 @@
                 <div class="label">{{iten.name}}</div>
             </div>
         </div>
-        <div class="tabs-bar" :style="{top: `${(activeKey-1)*65}px`,height: `65px`}"></div>
+        <div class="tabs-bar" :style="{top: `${(activeKey-1)*64}px`,height: `64px`}"></div>
       </div>
       <div class="tabs-content" :class="{addpadding:!isEditor}">
         <a-form ref="formRef" :model="formData" auto-label-width>

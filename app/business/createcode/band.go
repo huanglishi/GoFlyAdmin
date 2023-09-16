@@ -35,7 +35,7 @@ func (api *Band) Get_list(c *gin.Context) {
 	pageNo, _ := strconv.Atoi(page)
 	pageSize, _ := strconv.Atoi(_pageSize)
 	MDB := model.DB().Table("business_createcode_band").
-		Fields("name,des,id,status").Where("businessID", user.BusinessID)
+		Fields("id,name,des,status,businessID,content").Where("businessID", user.BusinessID)
 	MDBC := model.DB().Table("business_createcode_band").Where("businessID", user.BusinessID)
 	if name != "" {
 		MDB.Where("name", "like", "%"+name+"%")

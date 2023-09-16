@@ -2,6 +2,7 @@ package developer
 
 import (
 	"encoding/json"
+	"fmt"
 	"gofly/app/model"
 	"gofly/global"
 	"gofly/route/middleware"
@@ -154,10 +155,10 @@ func (api *Devapi) Get_DBField(c *gin.Context) {
 		results.Failed(c, "请传数据表名称", nil)
 	} else {
 		tablename_arr := strings.Split(tablename, ",")
-		dbname := global.App.Config.DBconf.Name
+		//获取数据库名
 		var dielddata_list []map[string]interface{}
 		for _, Val := range tablename_arr {
-			dielddata, _ := model.DB().Query("select COLUMN_NAME,COLUMN_COMMENT,COLUMN_TYPE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,IS_NULLABLE,COLUMN_DEFAULT,NUMERIC_PRECISION from information_schema.columns where TABLE_SCHEMA='" + dbname + "' AND TABLE_NAME='" + Val + "'")
+			dielddata, _ := model.DB().Query("select COLUMN_NAME,COLUMN_COMMENT,COLUMN_TYPE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,IS_NULLABLE,COLUMN_DEFAULT,NUMERIC_PRECISION from information_schema.columns where TABLE_SCHEMA='" + global.App.Config.DBconf.Database + "' AND TABLE_NAME='" + Val + "'")
 			for _, data := range dielddata {
 				data["tablename"] = Val
 				dielddata_list = append(dielddata_list, data)
@@ -185,4 +186,23 @@ func (api *Devapi) Get_token(c *gin.Context) {
 		})
 		results.Success(c, "获取测试Token", token, nil)
 	}
+}
+
+// 获取锁数据表
+func (api *Devapi) Get_tables(c *gin.Context) {
+	tablelist, _ := model.DB().Query("select TABLE_NAME,TABLE_COMMENT from information_schema.tables where table_schema = '" + global.App.Config.DBconf.Database + "'")
+	var talbe_list []interface{}
+	for _, Val := range tablelist {
+		if strings.Contains(fmt.Sprintf("%v", Val["TABLE_NAME"]), "business") {
+			talbe_list = append(talbe_list, map[string]interface{}{"name": Val["TABLE_NAME"], "title": Val["TABLE_COMMENT"]})
+		}
+	}
+	results.Success(c, "获取锁数据表", talbe_list, nil)
+}
+
+// 获取所有路由列表
+func (api *Devapi) Get_routes(c *gin.Context) {
+	filePath := "runtime/app/roiters.txt"
+	list := utils.ReaderFileByline(filePath)
+	results.Success(c, "获取所有路由列表", list, nil)
 }

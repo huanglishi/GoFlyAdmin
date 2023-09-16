@@ -27,23 +27,18 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
  ```
 db.Table("users").Fields("uid,name,age").First()
 ```
-## 三、一键快速安装数据库和配置
-部署好项目后，启动go服务成功后，点击运行终端安装地址访问安装项目数据库，如下：
-![点击安装](https://docapi.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230909/a311c2e15207bcdaa6d2facb0fe42460.png?_t=1694264444)
-根据自己需求修改后安装。
-![快速安装](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230827/84bea6a34f9f1cbfb8360de0dda72604.jpg?_t=1693108434?_t=1693180904?_t=1693199681)
-## 四、在线预览
-[1.GoFly全栈开发社区了解更多](https://goflys.cn/home)
+## 三、在线预览
+ [1.GoFly全栈开发社区了解更多](https://goflys.cn/home)  
 
-[2.Go快速后台系统开发框架完整代码包下载](https://goflys.cn/prdetail?id=6)
+ [2.Go快速后台系统开发框架完整代码包下载](https://goflys.cn/prdetail?id=6)
 
-[3.Go快速后台系统开发文档](https://doc.goflys.cn/docview?id=25)
+ [3.Go快速后台系统开发文档](https://doc.goflys.cn/docview?id=25)
 
-[4.A端在线预览](https://sg.goflys.cn/webadmin)
+ [4.A端在线预览](https://sg.goflys.cn/webadmin)
 
-[5.B端在线预览](https://sg.goflys.cn/webbusiness)
+ [5.B端在线预览](https://sg.goflys.cn/webbusiness)
 
-## 五、效果图片预览
+## 四、效果图片预览
 1.登录
 ![登录](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230507/f7c95d545b8c6b2efcdc67411717dff9.png?_t=1683391696?_t=1683391957?_t=1683392586?_t=1683392719?_t=1683431653?_t=1683457525?_t=1683788194?_t=1683900699?_t=1683900728?_t=1684131551?_t=1684131610?_t=1684248566?_t=1684251100?_t=1684251116?_t=1684942532?_t=1690089174?_t=1690381209?_t=1690381302?_t=1690381509?_t=1690381580?_t=1690384672?_t=1690384708?_t=1690417520?_t=1690615914?_t=1690616150?_t=1690616188?_t=1690616229?_t=1690616269?_t=1690616688?_t=1690616712?_t=1690619741?_t=1690621677?_t=1690622192?_t=1690622941?_t=1690654664?_t=1690654946?_t=1690696591?_t=1690907888?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
 2.统计页
@@ -53,24 +48,24 @@ db.Table("users").Fields("uid,name,age").First()
 4.数据中心-数据字典
 ![数据中心-数据字典](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/f894c904f617b32a8da0bb5310ed95e0.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
 5. 数据中心-附件管理
-   ![附件管理列表](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c54d9d9141bad3aaa5a4923e7abcc32e.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-   ![附件管理器](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/23ec93d6787bfcbca2e6c930213671bd.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-   6.数据中心-配置
-   ![配置](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/fba8e679546d1f3fe450b94e7f239a51.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-   7.微信业务
-   ![微信菜单](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/79770e6d1fb7e4155c67f6637a4a33df.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-   8.api接口管理
-   ![api接口管理列表及测试接口](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/10132ac752b08efd8b2b2c56c6492775.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-   ![api接口管理添加接口](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/595c0301371762910ea3c20c1ce737ca.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-   9.1 代码一键生成后端CRUD和前端代码
-   ![代码一键生成后端CRUD和前端代码列表](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/0708c3ad360324d3af90ebebbf47db67.png?_t=1691428879)
-   ![代码一键生成后端CRUD和前端代码添加](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/e2300484772ab8eb9bbf94a1d4503735.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
-   9.12 代码生成示例
-   ![生成列表](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/23d844127703ba85731097a305571b89.png?_t=1691428879)
-   ![生成添加表单](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/2622a5071f8f512e8f0a31e23990da3c.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
-   ![生成添加表单-文本编辑器](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/85c36eef5e37779858f2e912885f71c5.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
+![附件管理列表](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c54d9d9141bad3aaa5a4923e7abcc32e.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
+![附件管理器](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/23ec93d6787bfcbca2e6c930213671bd.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
+6.数据中心-配置
+![配置](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/fba8e679546d1f3fe450b94e7f239a51.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
+7.微信业务
+![微信菜单](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/79770e6d1fb7e4155c67f6637a4a33df.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
+8.api接口管理
+![api接口管理列表及测试接口](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/10132ac752b08efd8b2b2c56c6492775.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
+![api接口管理添加接口](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/595c0301371762910ea3c20c1ce737ca.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
+9.1 代码一键生成后端CRUD和前端代码
+![代码一键生成后端CRUD和前端代码列表](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/0708c3ad360324d3af90ebebbf47db67.png?_t=1691428879)
+![代码一键生成后端CRUD和前端代码添加](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/e2300484772ab8eb9bbf94a1d4503735.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
+9.12 代码生成示例
+![生成列表](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/23d844127703ba85731097a305571b89.png?_t=1691428879)
+![生成添加表单](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/2622a5071f8f512e8f0a31e23990da3c.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
+![生成添加表单-文本编辑器](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/85c36eef5e37779858f2e912885f71c5.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
 
-## 六、GoFly SAAS开始开发后台系统-服务端
+## 五、GoFly SAAS开始开发后台系统-服务端
 版本：v1.1.0
 
 ### 安装fresh 热更新-边开发边编译
@@ -85,7 +80,7 @@ ignored:           assets, tmp, web
 go mod tidy
 
 ### 热编译运行
-bee run 或 fresh
+bee run 或 fresh 
 ### 打包
 go build main.go
 ### 打包（此时会打包成Linux上可运行的二进制文件，不带后缀名的文件）
@@ -118,7 +113,7 @@ go build main.go
 // 编译命令
 ```
 
-## 七、前端代码
+## 六、前端代码
 由于前端后端分类，在Go本地开发使用fresh热编译，Go目录不能用太多文件影响编译时间，
 所以我们开发是建议前端代码放在其他位置。然后再Go项目config/settings.yml配置文件中vueobjroot配置前端业务端开发路径：
 ```

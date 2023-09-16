@@ -2,7 +2,7 @@ package utils
 
 import "github.com/gohouse/gorose/v2"
 
-// tool-获取树状数组
+// 获取树状数组
 func GetTreeArray(num []gorose.Data, pid int64, itemprefix string) []gorose.Data {
 	childs := ToolFar(num, pid) //获取pid下的所有数据
 	var chridnum []gorose.Data
@@ -106,7 +106,7 @@ func GetMenuChildrenArraylist(pdata []gorose.Data, parent_id int64) []gorose.Dat
 	return returnList
 }
 
-// base_tool-获取pid下所有数组
+// 获取pid下所有数组
 func ToolFar(data []gorose.Data, pid int64) []gorose.Data {
 	var mapString []gorose.Data
 	for _, v := range data {

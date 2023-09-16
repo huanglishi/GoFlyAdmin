@@ -1,21 +1,29 @@
 dbconf:
      # 数据库类型 mysql, sqlite3, postgres, sqlserver
      driver: mysql
-     #Mysql数据库配置 (开发必改)---服务器部署请改成： 127.0.0.1:3306 本地开发开源连服务器数据库
-     source: gofly_base:password@tcp(127.0.0.1:3306)/gofly_base?charset=utf8&parseTime=True&loc=Local&timeout=1000ms
-     #数据库名称-在api接口操作数据时使用 (开发必改)
-     name: gofly_base
+     #服务器地址 本地建议 127.0.0.1
+     hostname: 127.0.0.1
+     #端口 默认3306
+     hostport: 3306
+     #用户名
+     username: root
+     #密码
+     password: root
+     #数据库名
+     database: gofly_single
+     #数据表前缀
+     prefix: 
 jwt:
      secret: 3Bde3BGEbYqtqyEUzW3ry8jKFcaPH17fRmTmqE7MDr05Lwj95uruRKrrkb44TJ4s
      jwt_ttl: 43200
 app:
      #环境状态：dev=开发，pro=生产
      env: dev
-     #运行服务端口号
+     #运行服务端口（根据您的实际情况修改）
      port: 8105
      #接口合法性验证
      apisecret: gofly@888
-     #接口JWT验证-不添加请求时报403 (开发、部署必改)
+     #接口JWT验证、跨域域名-不添加请求时报403 (开发、部署必改),部署域名时：“https://sg.goflys.cn”替换成您的域名
      allowurl: http://localhost:9101,http://localhost:9102,https://sg.goflys.cn
      #token超时时间单位分钟 
      tokenouttime: 10 
@@ -32,9 +40,9 @@ app:
      #不需要api接口合法性验证-根模块md5加密
      noVerifyAPIRoot: resource,webbusiness,webadmin,chat
      #不需要验证token-具体请求路径
-     noVerifyToken: /common/uploadfile/get_image,/admin/user/login,/admin/user/logout,/admin/user/refreshtoken,/admin/user/get_code,/admin/user/resetPassword,/business/user/login,/business/user/logout,/business/user/refreshtoken,/business/user/get_code,/business/user/resetPassword,/wxoffi/service/getPost_api,/wxapp/user/get_openid,/admin/user/get_logininfo,/business/user/get_logininfo
+     noVerifyToken: /common/uploadfile/get_image,/common/install/index,/common/install/save,/admin/user/login,/admin/user/logout,/admin/user/refreshtoken,/admin/user/get_code,/admin/user/resetPassword,/business/user/login,/business/user/logout,/business/user/refreshtoken,/business/user/get_code,/business/user/resetPassword,/wxoffi/service/getPost_api,/wxapp/user/get_openid,/admin/user/get_logininfo,/business/user/get_logininfo
      #不需要接口合法性-具体请求路径
-     noVerifyAPI: /wxoffi/service/getPost_api
+     noVerifyAPI: /wxoffi/service/getPost_api,/common/install/index,/common/install/save
 log:
      level: info  # 日志等级debug
      root_dir: ./runtime/logs # 日志根目录

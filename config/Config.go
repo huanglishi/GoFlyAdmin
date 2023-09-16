@@ -1,8 +1,12 @@
 package config
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"os"
+	"os/exec"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
@@ -46,4 +50,35 @@ func (config *Config) InitializeConfig() *Config {
 		panic(err)
 	}
 	return config
+}
+func listenSignal() {
+	go func() {
+		// 执行重启命令
+		cmd := exec.Command("gofly", "run", "daemon", "restart")
+		stdout, err := cmd.StdoutPipe()
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer stdout.Close()
+
+		if err := cmd.Start(); err != nil {
+			panic(err)
+		}
+		reader := bufio.NewReader(stdout)
+		//实时循环读取输出流中的一行内容
+		for {
+			line, err2 := reader.ReadString('\n')
+			if err2 != nil || io.EOF == err2 {
+				break
+			}
+			fmt.Print(line)
+		}
+
+		if err := cmd.Wait(); err != nil {
+			fmt.Println(err)
+		}
+		opBytes, _ := ioutil.ReadAll(stdout)
+		fmt.Print(string(opBytes))
+
+	}()
 }

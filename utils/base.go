@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"gofly/app/model"
 	"math/rand"
@@ -15,6 +16,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
+// 判断路径是否存在
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
@@ -91,13 +93,27 @@ func MergeArr(a, b []interface{}) []interface{} {
 	return arr
 }
 
-// JSONMarshalToString JSON编码为字符串
+// 转JSON编码为字符串
 func JSONMarshalToString(v interface{}) string {
 	s, err := jsoniter.MarshalToString(v)
 	if err != nil {
 		return ""
 	}
 	return s
+}
+
+// 字符串转JSON编码
+func StringToJSON(val interface{}) interface{} {
+	str := val.(string)
+	if strings.HasPrefix(str, "{") && strings.HasSuffix(str, "}") {
+		var parameter interface{}
+		_ = json.Unmarshal([]byte(str), &parameter)
+		return parameter
+	} else {
+		var parameter []interface{}
+		_ = json.Unmarshal([]byte(str), &parameter)
+		return parameter
+	}
 }
 
 // 获取子菜单包含的父级ID-返回全部ID
@@ -145,53 +161,53 @@ func UniqueArr(m []interface{}) []interface{} {
 }
 
 // interface{}转int
-func GetInterfaceToInt(t1 interface{}) int {
+func GetInterfaceToInt(data interface{}) int {
 	var t2 int
-	switch t1.(type) {
+	switch data.(type) {
 	case uint:
-		t2 = int(t1.(uint))
+		t2 = int(data.(uint))
 		break
 	case int8:
-		t2 = int(t1.(int8))
+		t2 = int(data.(int8))
 		break
 	case uint8:
-		t2 = int(t1.(uint8))
+		t2 = int(data.(uint8))
 		break
 	case int16:
-		t2 = int(t1.(int16))
+		t2 = int(data.(int16))
 		break
 	case uint16:
-		t2 = int(t1.(uint16))
+		t2 = int(data.(uint16))
 		break
 	case int32:
-		t2 = int(t1.(int32))
+		t2 = int(data.(int32))
 		break
 	case uint32:
-		t2 = int(t1.(uint32))
+		t2 = int(data.(uint32))
 		break
 	case int64:
-		t2 = int(t1.(int64))
+		t2 = int(data.(int64))
 		break
 	case uint64:
-		t2 = int(t1.(uint64))
+		t2 = int(data.(uint64))
 		break
 	case float32:
-		t2 = int(t1.(float32))
+		t2 = int(data.(float32))
 		break
 	case float64:
-		t2 = int(t1.(float64))
+		t2 = int(data.(float64))
 		break
 	case string:
-		t2, _ = strconv.Atoi(t1.(string))
+		t2, _ = strconv.Atoi(data.(string))
 		break
 	default:
-		t2 = t1.(int)
+		t2 = data.(int)
 		break
 	}
 	return t2
 }
 
-// FirstUpper 字符串首字母大写
+// 字符串首字母大写
 func FirstUpper(s string) string {
 	if s == "" {
 		return ""
@@ -199,7 +215,7 @@ func FirstUpper(s string) string {
 	return strings.ToUpper(s[:1]) + s[1:]
 }
 
-// FirstLower 字符串首字母小写
+// 字符串首字母小写
 func FirstLower(s string) string {
 	if s == "" {
 		return ""
@@ -233,4 +249,21 @@ func Del_file(file_list []interface{}) {
 		dir := fmt.Sprintf("./%v", val)
 		os.Remove(dir)
 	}
+}
+
+// 截取指定字符串中间字符串的方法
+func GetBetweenStr(str, start, end string) string {
+	n := strings.Index(str, start)
+	if n == -1 {
+		n = 0
+	} else {
+		n = n + 1
+	}
+	str = string([]byte(str)[n:])
+	m := strings.Index(str, end)
+	if m == -1 {
+		m = len(str)
+	}
+	str = string([]byte(str)[:m])
+	return str
 }

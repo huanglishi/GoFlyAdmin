@@ -2,12 +2,12 @@ package system
 
 import (
 	"encoding/json"
+	"fmt"
 	"gofly/app/model"
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
 	"io/ioutil"
-	"math/rand"
 	"reflect"
 	"strconv"
 	"strings"
@@ -96,9 +96,8 @@ func (api *Account) Save(c *gin.Context) {
 		delete(parameter, "roleid")
 	}
 	if parameter["password"] != nil && parameter["password"] != "" {
-		rnd := rand.New(rand.NewSource(6))
-		salt := strconv.Itoa(rnd.Int())
-		mdpass := parameter["password"].(string) + salt
+		salt := time.Now().Unix()
+		mdpass := fmt.Sprintf("%v%v", parameter["password"], salt)
 		parameter["password"] = utils.Md5(mdpass)
 		parameter["salt"] = salt
 	}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"gofly/app/model"
 	"gofly/bootstrap"
 	"gofly/global"
 	"runtime"
@@ -15,7 +14,6 @@ func main() {
 	// 初始化日志
 	global.App.Log = bootstrap.InitializeLog()
 	global.App.Log.Info("项目启动成功")
-	model.MyInit(global.App.Log) //初始化数据
 	//将对象，转换成json格式
 	// data_config, err := json.Marshal(conf)
 
@@ -33,10 +31,10 @@ func main() {
 	}
 	if cpu_num > 0 {
 		runtime.GOMAXPROCS(cpu_num)
-		global.App.Log.Info(fmt.Sprintf("当前计算机核数: %v个,调用：%v个\n", mycpu, cpu_num))
+		global.App.Log.Info(fmt.Sprintf("当前计算机核数: %v个,调用：%v个", mycpu, cpu_num))
 	} else {
 		runtime.GOMAXPROCS(mycpu)
-		global.App.Log.Info(fmt.Sprintf("当前计算机核数: %v个,调用：%v个\n", mycpu, mycpu))
+		global.App.Log.Info(fmt.Sprintf("当前计算机核数: %v个,调用：%v个", mycpu, mycpu))
 	}
 
 	// 启动服务器

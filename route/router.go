@@ -29,6 +29,7 @@ import (
 func InitRouter() *gin.Engine {
 	//初始化路由
 	R := gin.Default()
+	R.SetTrustedProxies([]string{"127.0.0.1"})
 	/**静态资源处理*/
 	// a.1.前端项目静态资源
 	// R.StaticFile("/", "./resource/admindist/index.html")
@@ -39,6 +40,7 @@ func InitRouter() *gin.Engine {
 	//a.3.业务后台
 	R.Static("/webadmin", "./resource/webadmin")
 	R.Static("/webbusiness", "./resource/webbusiness")
+	R.LoadHTMLFiles("./resource/staticfile/template/install.html", "./resource/staticfile/template/isinstall.html")
 	//访问域名根目录重定向
 	R.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, global.App.Config.App.Rootview)
