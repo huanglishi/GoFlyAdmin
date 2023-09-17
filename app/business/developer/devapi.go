@@ -193,7 +193,7 @@ func (api *Devapi) Get_tables(c *gin.Context) {
 	tablelist, _ := model.DB().Query("select TABLE_NAME,TABLE_COMMENT from information_schema.tables where table_schema = '" + global.App.Config.DBconf.Database + "'")
 	var talbe_list []interface{}
 	for _, Val := range tablelist {
-		if strings.Contains(fmt.Sprintf("%v", Val["TABLE_NAME"]), "business") {
+		if !strings.Contains(fmt.Sprintf("%v", Val["TABLE_NAME"]), "admin_") && !strings.Contains(fmt.Sprintf("%v", Val["TABLE_NAME"]), "login_") && Val["TABLE_NAME"] != "attachment" {
 			talbe_list = append(talbe_list, map[string]interface{}{"name": Val["TABLE_NAME"], "title": Val["TABLE_COMMENT"]})
 		}
 	}
@@ -202,7 +202,7 @@ func (api *Devapi) Get_tables(c *gin.Context) {
 
 // 获取所有路由列表
 func (api *Devapi) Get_routes(c *gin.Context) {
-	filePath := "runtime/app/roiters.txt"
+	filePath := "runtime/app/routers.txt"
 	list := utils.ReaderFileByline(filePath)
 	results.Success(c, "获取所有路由列表", list, nil)
 }

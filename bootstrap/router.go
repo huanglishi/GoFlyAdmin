@@ -21,11 +21,11 @@ func RunServer() {
 	r := route.InitRouter()
 	routes := ""
 	for _, route := range r.Routes() {
-		if !strings.Contains(route.Path, "/admin/") && route.Path != "/" {
+		if !strings.Contains(route.Path, "/admin/") && route.Path != "/" && !strings.Contains(route.Path, "/*filepath") {
 			routes = routes + fmt.Sprintf("%v\n", route.Path)
 		}
 	}
-	filePath := "runtime/app/roiters.txt"
+	filePath := "runtime/app/routers.txt"
 	utils.WriteToFile(filePath, routes)
 	model.MyInit(1) //初始化数据
 	if global.App.Config.App.Env == "dev" {
