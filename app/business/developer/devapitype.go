@@ -35,7 +35,7 @@ func (api *Devapitype) Get_typeinfo(c *gin.Context) {
 	if id == "" {
 		results.Failed(c, "参数id不能为空", nil)
 	} else {
-		data, _ := model.DB().Table("common_apitext_type").Where("id", id).Fields("name,rooturl,verifyEncrypt,isself").First()
+		data, _ := model.DB().Table("common_apitext_type").Where("id", id).First()
 		results.Success(c, "获取单条接口类型", data, nil)
 	}
 }

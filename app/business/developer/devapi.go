@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"gofly/app/model"
 	"gofly/global"
-	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
 	"io/ioutil"
@@ -14,7 +13,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/gohouse/gorose/v2"
 )
@@ -168,26 +166,6 @@ func (api *Devapi) Get_DBField(c *gin.Context) {
 	}
 }
 
-// 获取token-测试
-func (api *Devapi) Get_token(c *gin.Context) {
-	//当前用户
-	getuser, _ := c.Get("user")
-	user := getuser.(*middleware.UserClaims)
-	userdata, _ := model.DB().Table("business_wxsys_user").Where("businessID", user.BusinessID).Fields("id,accountID,businessID,name,wxapp_openid").First()
-	if userdata == nil {
-		results.Failed(c, "账号不存在", nil)
-	} else {
-		token := middleware.GenerateToken(&middleware.UserClaims{
-			ID:             userdata["id"].(int64),
-			Accountid:      userdata["accountID"].(int64),
-			BusinessID:     userdata["businessID"].(int64),
-			Openid:         userdata["wxapp_openid"].(string),
-			StandardClaims: jwt.StandardClaims{},
-		})
-		results.Success(c, "获取测试Token", token, nil)
-	}
-}
-
 // 获取锁数据表
 func (api *Devapi) Get_tables(c *gin.Context) {
 	tablelist, _ := model.DB().Query("select TABLE_NAME,TABLE_COMMENT from information_schema.tables where table_schema = '" + global.App.Config.DBconf.Database + "'")
@@ -205,4 +183,25 @@ func (api *Devapi) Get_routes(c *gin.Context) {
 	filePath := "runtime/app/routers.txt"
 	list := utils.ReaderFileByline(filePath)
 	results.Success(c, "获取所有路由列表", list, nil)
+}
+
+// 获取指定数据库表的数据
+func (api *Devapi) Get_tablelist(c *gin.Context) {
+	tablename := c.DefaultQuery("tablename", "")
+	pageSize := c.DefaultQuery("pageSize", "10")
+	if tablename == "" {
+		results.Failed(c, "请传数据库名称", nil)
+	} else {
+		seachword := c.DefaultQuery("seachword", "")
+		MDB := model.DB().Table(tablename)
+		if seachword != "" {
+			MDB.Where("name", "like", "%"+seachword+"%")
+		}
+		list, err := MDB.Limit(utils.GetInterfaceToInt(pageSize)).Order("id desc").Get()
+		if err != nil {
+			results.Failed(c, err.Error(), nil)
+		} else {
+			results.Success(c, "获取指定数据库表的数据", list, nil)
+		}
+	}
 }

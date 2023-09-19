@@ -164,3 +164,21 @@ func (api *Index) UpuserInfo(c *gin.Context) {
 		results.Success(c, "更新成功！", res, nil)
 	}
 }
+
+// 获取token-APi
+func (api *Index) Get_apitoken(c *gin.Context) {
+	user_id := c.DefaultQuery("user_id", "")
+	userdata, _ := model.DB().Table("business_wxsys_user").Where("id", user_id).Fields("id,accountID,businessID,name,wxapp_openid").First()
+	if userdata == nil {
+		results.Failed(c, "账号不存在", nil)
+	} else {
+		token := middleware.GenerateToken(&middleware.UserClaims{
+			ID:             userdata["id"].(int64),
+			Accountid:      userdata["accountID"].(int64),
+			BusinessID:     userdata["businessID"].(int64),
+			Openid:         userdata["wxapp_openid"].(string),
+			StandardClaims: jwt.StandardClaims{},
+		})
+		results.Success(c, "获取测试Token", token, nil)
+	}
+}
