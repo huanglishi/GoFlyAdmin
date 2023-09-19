@@ -3,8 +3,8 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"gofly/app/model"
 	"gofly/global"
+	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
 	"io/ioutil"

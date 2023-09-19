@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
 	"io"

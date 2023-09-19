@@ -5,7 +5,7 @@ package common
  */
 import (
 	"encoding/json"
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"

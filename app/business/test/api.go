@@ -1,7 +1,7 @@
 package article
 
 import (
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
 	"reflect"

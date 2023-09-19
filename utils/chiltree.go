@@ -1,6 +1,6 @@
 package utils
 
-import "gofly/app/model"
+import "gofly/model"
 
 /**
 * 1.批量获取子节点id

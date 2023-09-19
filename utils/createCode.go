@@ -2,8 +2,8 @@ package utils
 
 import (
 	"encoding/json"
-	"gofly/app/model"
 	"gofly/global"
+	"gofly/model"
 )
 
 // 判断某个数据表是否存在指定字段

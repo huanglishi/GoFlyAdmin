@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/xml"
 	"fmt"
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/utils"
 	"log"
 	"reflect"

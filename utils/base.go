@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
-	"gofly/app/model"
+	"gofly/model"
 	"math/rand"
 	"os"
 	"strconv"

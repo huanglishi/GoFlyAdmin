@@ -3,7 +3,7 @@ package business
 import (
 	"encoding/json"
 	"fmt"
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"

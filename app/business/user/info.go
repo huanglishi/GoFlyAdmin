@@ -1,7 +1,7 @@
 package user
 
 import (
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
 	"math/rand"

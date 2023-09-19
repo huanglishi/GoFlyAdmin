@@ -2,7 +2,7 @@ package datacenter
 
 import (
 	"encoding/json"
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
 	"io/ioutil"

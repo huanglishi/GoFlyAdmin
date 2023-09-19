@@ -3,7 +3,7 @@ package testcode
 import (
 	"encoding/json"
 	"fmt"
-	"gofly/app/model"
+	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
 	"io/ioutil"

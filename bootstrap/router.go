@@ -3,8 +3,8 @@ package bootstrap
 import (
 	"context"
 	"fmt"
-	"gofly/app/model"
 	"gofly/global"
+	"gofly/model"
 	"gofly/route"
 	"gofly/utils"
 	"net/http"

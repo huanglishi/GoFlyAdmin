@@ -4,15 +4,15 @@ import (
 	//一定要导入这个Controller包，用来注册需要访问的方法
 	//这里路由-由构架是添加-开发者仅在指定工程目录下controller.go文件添加宝即可
 
-	_ "gofly/app/admin"
-	_ "gofly/app/business"
-	_ "gofly/app/wxoffi"
+	// _ "gofly/app/admin"
+	// _ "gofly/app/business"
+	// _ "gofly/app/wxoffi"
+	// _ "gofly/app/common"
+	// _ "gofly/app/wxapp"
+	// _ "gofly/app/home"
+	_ "gofly/app"
 	"net/http"
 
-	_ "gofly/app/common"
-	_ "gofly/app/wxapp"
-
-	_ "gofly/app/home"
 	"gofly/global"
 	"gofly/route/middleware"
 	"strings"
@@ -32,8 +32,6 @@ func InitRouter() *gin.Engine {
 	R.SetTrustedProxies([]string{"127.0.0.1"})
 	/**静态资源处理*/
 	// a.1.前端项目静态资源
-	// R.StaticFile("/", "./resource/admindist/index.html")
-	// R.Static("/assets", "./resource/admindist/assets")
 	// R.StaticFile("/favicon.ico", "./resource/webadmin/favicon.ico")
 	//a.2.附件访问
 	R.Static("/resource", "./resource")

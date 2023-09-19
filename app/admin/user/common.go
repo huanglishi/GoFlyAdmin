@@ -1,7 +1,7 @@
 package user
 
 import (
-	"gofly/app/model"
+	"gofly/model"
 
 	"github.com/gohouse/gorose/v2"
 )
