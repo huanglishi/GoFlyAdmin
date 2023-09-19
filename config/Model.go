@@ -14,6 +14,7 @@ type DBconf struct {
 //应用配置
 type App struct {
 	Port              string `yaml:"port"`
+	Version           string `yaml:"version"`
 	Env               string `yaml:"env"`
 	Apisecret         string `yaml:"apisecret"`
 	Allowurl          string `yaml:"allowurl"`
