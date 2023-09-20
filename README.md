@@ -26,9 +26,35 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 7. 集成操作简单的 ORM 框架，操作数据非常简单，就像使用 thinkphp 一样，您可以去文档看看 [框架的ROM数据库操作文档](https://doc.goflys.cn/docview?id=25&fid=289)
    例如下面语句就可以查找一条数据：
  ```
-db.Table("users").Fields("uid,name,age").First()
+  db.Table("users").Fields("uid,name,age").First()
 ```
-## 三、在线预览
+## 三、目录结构
+
+```
+├── app                     # 应用目录
+│   ├── admin               # 后台管理应用模块
+│   ├── business            # 业务端应用模块
+│   ├── common              # 通用应用模块
+│   ├── wxapp               # 微信小程序模块
+│   ├── wxoffi              # 微信公众号模块
+│   └── wxoffi              # 微信公众号模块
+├── bootstrap               # 工具方法
+├── config                  # 配置文件
+├── global                  # 全局变量
+├── model                   # 数据操作
+├── resource                # 静态资源
+├── route                   # 路由
+├── runtime                 # 运行日志文件
+├── tmp                     # 开发是使用fresh热编译 产生临时文件
+├── utils                   # 工具包
+├── go.mod                  # 依赖包管理工具
+├── go.sum         
+├── main.go                 # main函数        
+└── README.md               # 项目介绍
+```
+开发时仅需在app目录下添加你新的需求，app外部文件建议不要改动，除了config配置需要改，其他不要修改，
+框架已经为您封装好，你只需在app应用目录书写你的业务。
+## 四、在线预览
  [1.GoFly全栈开发社区了解更多](https://goflys.cn/home)  
 
  [2.Go快速后台系统开发框架完整代码包下载](https://goflys.cn/prdetail?id=6)
@@ -39,7 +65,7 @@ db.Table("users").Fields("uid,name,age").First()
 
  [5.B端在线预览](https://sg.goflys.cn/webbusiness)
 
-## 四、效果图片预览
+## 五、效果图片预览
 1.登录
 ![登录](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230507/f7c95d545b8c6b2efcdc67411717dff9.png?_t=1683391696?_t=1683391957?_t=1683392586?_t=1683392719?_t=1683431653?_t=1683457525?_t=1683788194?_t=1683900699?_t=1683900728?_t=1684131551?_t=1684131610?_t=1684248566?_t=1684251100?_t=1684251116?_t=1684942532?_t=1690089174?_t=1690381209?_t=1690381302?_t=1690381509?_t=1690381580?_t=1690384672?_t=1690384708?_t=1690417520?_t=1690615914?_t=1690616150?_t=1690616188?_t=1690616229?_t=1690616269?_t=1690616688?_t=1690616712?_t=1690619741?_t=1690621677?_t=1690622192?_t=1690622941?_t=1690654664?_t=1690654946?_t=1690696591?_t=1690907888?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
 2.统计页
@@ -66,7 +92,7 @@ db.Table("users").Fields("uid,name,age").First()
 ![生成添加表单](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/2622a5071f8f512e8f0a31e23990da3c.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
 ![生成添加表单-文本编辑器](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/85c36eef5e37779858f2e912885f71c5.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
 
-## 五、GoFly SAAS开始开发后台系统-服务端
+## 六、GoFly SAAS开始开发后台系统-服务端
 版本：v1.1.0
 
 ### 安装fresh 热更新-边开发边编译
@@ -114,7 +140,7 @@ go build main.go
 // 编译命令
 ```
 
-## 六、前端代码
+## 七、前端代码
 由于前端后端分类，在Go本地开发使用fresh热编译，Go目录不能用太多文件影响编译时间，
 所以我们开发是建议前端代码放在其他位置。然后再Go项目config/settings.yml配置文件中vueobjroot配置前端业务端开发路径：
 ```
