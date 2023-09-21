@@ -97,7 +97,7 @@
 		.install .formbox{
 			max-width: 600px;
             margin: 0 auto;
-			margin-top: 68px;
+			margin-top: 20px;
 		}
 		.install .formbox .logo{
 			text-align: center;
@@ -106,7 +106,7 @@
 			text-align: center;
 		}
 		.install .formbox .content{
-		   margin-top: 30px;
+		   margin-top: 20px;
 		}
 		.install .formbox .content form{
 			background: #ffffff;
@@ -118,7 +118,12 @@
 			 text-align: center;
 		}
 		.content .divider{
-			height: 20px;
+			 padding-left: 50px;
+			 padding-bottom: 5px;
+		}
+		.content .divider .htitle{
+			 font-size: 15px;
+			 font-weight: 600;
 		}
 		#error, #success,  #warmtips {
             background: #D83E3E;
@@ -155,6 +160,9 @@
 				<div id="success" style="display:none"></div>
 				<div id="warmtips" style="display:none"></div>
 				<form action="" method="POST">
+					<div class="divider">
+						<div class="htitle">配置数据库：</div>
+					</div>
 					<div class="form-field">
 						<label>MySQL数据库地址</label>
 						<input type="text" name="hostname" value="127.0.0.1" required="">
@@ -179,7 +187,9 @@
 						<label>MySQL 数据表前缀</label>
 						<input type="text" name="prefix" value="" required="">
 					</div> -->
-					<div class="divider"></div>
+					<div class="divider" style="padding-top: 10px;">
+						<div class="htitle">配置管理员账号：</div>
+					</div>
 					<div class="form-field">
 						<label>A端管理员用户名</label>
 						<input type="text" name="adminUsername" value="gofly" required="">

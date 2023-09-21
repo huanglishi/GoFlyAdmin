@@ -34,14 +34,15 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 ├── app                     # 应用目录
 │   ├── admin               # 后台管理应用模块
 │   ├── business            # 业务端应用模块
-│   ├── common              # 通用应用模块
+│   ├── common              # 公共应用模块
+│   ├── home                # 可以编写平台对应网站
 │   ├── wxapp               # 微信小程序模块
 │   ├── wxoffi              # 微信公众号模块
-│   └── wxoffi              # 微信公众号模块
+│   └── controller.go       # 应用控制器
 ├── bootstrap               # 工具方法
 ├── config                  # 配置文件
 ├── global                  # 全局变量
-├── model                   # 数据操作
+├── model                   # 数据模型
 ├── resource                # 静态资源
 ├── route                   # 路由
 ├── runtime                 # 运行日志文件
