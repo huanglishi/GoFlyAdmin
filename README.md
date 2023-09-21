@@ -23,7 +23,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 5. 前后端分离解耦业务，让前段人员与后端人协调开发，提高项目交付，并且可以开发出功能复杂度高的项目。
 
 6. 前端用 Vue3+TypeScript 的 UI 框架 [Arco Design](https://arco.design/vue/component/button)，好用的 UI 框架前端可以设计出优秀且交互不错的界面，完善的大厂 UI 支持，前端开发效率也很高！ 以上只是框架比较明显优势点，还有很多优势等你自己体验，我们从各个开发环节，努力为您节省每一分时间。
-7. 集成操作简单的 ORM 框架，操作数据非常简单，就像使用 thinkphp 一样，您可以去文档看看 [框架的ROM数据库操作文档](https://doc.goflys.cn/docview?id=25&fid=289)
+7. 集成操作简单的 ORM 框架，操作数据非常简单，就像使用php的Laravel一样，您可以去文档看看 [框架的ROM数据库操作文档](https://doc.goflys.cn/docview?id=25&fid=289)
    例如下面语句就可以查找一条数据：
  ```
   db.Table("users").Fields("uid,name,age").First()
