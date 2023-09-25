@@ -58,24 +58,23 @@ func Register(controller interface{}, PkgPathstr string) bool {
 		//遍历参数
 		params := make([]reflect.Type, 0, v.NumMethod())
 		httpMethod := "POST" //默认POST
-		if strings.Contains(action, "Get_") || action == "Index" {
+		if (strings.HasPrefix(action, "Get") && !strings.HasPrefix(action, "GetPost")) || action == "Index" {
 			httpMethod = "GET"
 		}
-		if strings.Contains(action, "Del_") || action == "Del" {
+		if strings.HasPrefix(action, "Del") || action == "Del" {
 			httpMethod = "DELETE"
 		}
-		if strings.Contains(action, "Put_") || action == "Put" {
+		if strings.HasPrefix(action, "Put") || action == "Put" {
 			httpMethod = "PUT"
 		}
 		for j := 0; j < method.Type().NumIn(); j++ {
 			params = append(params, method.Type().In(j))
-			// fmt.Println("params-name=", method.Type().In(j))
 		}
 		// fmt.Println("params=", params)
 		// fmt.Println("action=", action)
 		route := Route{path: path, Method: method, Args: params, httpMethod: httpMethod}
 		Routes = append(Routes, route)
-		if strings.Contains(action, "GetPost_") { //再增加一个get请求
+		if strings.HasPrefix(action, "GetPost") { //再增加一个get请求
 			route := Route{path: path, Method: method, Args: params, httpMethod: "GET"}
 			Routes = append(Routes, route)
 		}
