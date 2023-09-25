@@ -18,7 +18,7 @@ jwt:
      jwt_ttl: 43200
 app:
      #版本号
-     version: 1.2.1
+     version: 1.2.2
      #环境状态：dev=开发，pro=生产
      env: dev
      #运行服务端口（根据您的实际情况修改）
