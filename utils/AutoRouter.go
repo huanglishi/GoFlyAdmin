@@ -60,11 +60,9 @@ func Register(controller interface{}, PkgPathstr string) bool {
 		httpMethod := "POST" //默认POST
 		if (strings.HasPrefix(action, "Get") && !strings.HasPrefix(action, "GetPost")) || action == "Index" {
 			httpMethod = "GET"
-		}
-		if strings.HasPrefix(action, "Del") || action == "Del" {
+		} else if strings.HasPrefix(action, "Del") || action == "Del" {
 			httpMethod = "DELETE"
-		}
-		if strings.HasPrefix(action, "Put") || action == "Put" {
+		} else if strings.HasPrefix(action, "Put") || action == "Put" {
 			httpMethod = "PUT"
 		}
 		for j := 0; j < method.Type().NumIn(); j++ {
