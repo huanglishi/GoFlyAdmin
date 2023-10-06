@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=0.3,minimum-scale=0.3,maximum-scale=1,viewport-fit=cover">
-    <link rel="shortcut icon" type="image/x-icon" href="https://doc.goflys.cn/logo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="//doc.goflys.cn/logo.png">
     <title>安装GoFly快速开发</title>
 	<style >
 		 body {
@@ -43,7 +43,7 @@
             border: 2px solid transparent;
             transition: background 0.2s, border-color 0.2s, color 0.2s;
             width: 100%;
-            padding: 15px 15px 15px 180px;
+            padding: 11px 11px 11px 180px;
             box-sizing: border-box;
 			border-bottom: 2px #E8F7FF solid;
         }
@@ -61,7 +61,7 @@
             text-align: right;
             margin-right: -160px;
             position: relative;
-            margin-top: 15px;
+            margin-top: 11px;
             font-size: 14px;
             pointer-events: none;
             opacity: 0.7;
@@ -97,7 +97,7 @@
 		.install .formbox{
 			max-width: 600px;
             margin: 0 auto;
-			margin-top: 20px;
+			margin-top: 10px;
 		}
 		.install .formbox .logo{
 			text-align: center;
@@ -106,7 +106,7 @@
 			text-align: center;
 		}
 		.install .formbox .content{
-		   margin-top: 20px;
+		   margin-top: 10px;
 		}
 		.install .formbox .content form{
 			background: #ffffff;
@@ -114,8 +114,9 @@
 			border-radius: 5px;
 		}
 		.install .formbox .content .link{
-			margin-top: 20px;
-			 text-align: center;
+			margin-top: 15px;
+			text-align: center;
+			margin-bottom: 5px;
 		}
 		.content .divider{
 			 padding-left: 50px;
@@ -143,7 +144,9 @@
             font-size: 14px;
             color: #e74c3c;
         }
-
+		input[type=text]::placeholder{
+		   color: #c9cdd4;
+		}
 	</style>
   </head>
   <body>
@@ -206,6 +209,13 @@
 						<label>B端管理员密码</label>
 						<input type="text" name="businessPassword" value="gofly123" required="">
 					</div>
+					<div class="divider" style="padding-top: 10px;">
+						<div class="htitle">前端代码安装设置：</div>
+					</div>
+					<div class="form-field">
+						<label>前端安装路径(不装留空)</label>
+						<input type="text" name="vuepath" value="D:/Project/develop/vue/gofly_admin" placeholder="如果不安装前端代码就留空">
+					</div>
 					<div class="form-buttons">
 						<button type="submit" >立即安装</button>
 					</div>
@@ -221,6 +231,7 @@
 	  <script>
 		function formToJson (data) {
 			data = decodeURIComponent(data)  // 解码
+			data=data.replaceAll("\\","/");
 			data=data.replace(/&/g,"\",\"");
 			data=data.replace(/=/g,"\":\"");
 			data="{\""+data+"\"}";
@@ -241,7 +252,7 @@
 					  type: "POST",
 					  contentType:'application/json',
                       dataType:'json',
-					  data:  savedata,
+					  data: savedata,
 					  success: function (ret) {
 						  if (ret.code == 0) {
 							  var data = ret.data;
