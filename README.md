@@ -101,26 +101,25 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 ![生成添加表单](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/2622a5071f8f512e8f0a31e23990da3c.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
 ![生成添加表单-文本编辑器](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/85c36eef5e37779858f2e912885f71c5.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
 
-## 七、GoFly SAAS开始开发后台系统-服务端
-版本：v1.1.0
-
-### 安装fresh 热更新-边开发边编译
+## 七、安装及部署打包说明
+### 1 后端代码
+#### 安装fresh 热更新-边开发边编译
 go install github.com/pilu/fresh@latest
 
-### 初始化mod
+#### 初始化mod
 go mod tidy
 
-### 热编译运行
+#### 热编译运行
 bee run 或 fresh 
-### 打包
+#### 打包
 go build main.go
-### 打包（此时会打包成Linux上可运行的二进制文件，不带后缀名的文件）
+#### 打包（此时会打包成Linux上可运行的二进制文件，不带后缀名的文件）
 ```
 SET GOOS=linux
 SET GOARCH=amd64
 go build
 ```
-### widows
+#### widows
 ```
 // 配置环境变量
 SET CGO_ENABLED=1
@@ -131,7 +130,7 @@ go build main.go
 
 // 编译命令
 ```
-### 编译成Linux环境可执行文件
+#### 编译成Linux环境可执行文件
 ```
 
 // 配置参数
@@ -142,6 +141,23 @@ SET GOARCH=amd64
 go build main.go
 
 // 编译命令
+```
+### 2 前端端代码
+#### 初始化依赖
+ ```
+ npm run install 或者 yarn install
+ ```
+如果第一次使用Arco Design Pro install初始化可以报错，如果保存请运行下面命令（安装项目模版的工具）：
+```
+npm i -g arco-cli
+```
+#### 运行
+```
+npm run serve 或者  yarn serve
+```
+#### 打包
+```
+npm run build 或者 yarn build
 ```
 
 ## 八、前端代码
