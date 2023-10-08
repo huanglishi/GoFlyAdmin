@@ -104,12 +104,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 
 ### 安装fresh 热更新-边开发边编译
 go install github.com/pilu/fresh@latest
-```
-#请修改fresh配置runner.conf.sample中的 
-ignored:           assets, tmp, web
-添加 web 让他不要监听前端开发更新
 
-```
 ### 初始化mod
 go mod tidy
 
@@ -149,8 +144,15 @@ go build main.go
 
 ## 八、前端代码
 由于前端后端分类，在Go本地开发使用fresh热编译，Go目录不能用太多文件影响编译时间，
-所以我们开发是建议前端代码放在其他位置。然后再Go项目config/settings.yml配置文件中vueobjroot手动配置前端业务端开发路径（或者安装界面配置）：
+所以我们开发是建议前端代码放在其他位置。在安装界面填写你前端代码放置位置或者手动在Go项目config/settings.yml配置文件中vueobjroot手动配置前端业务端开发路径：
 ```
 vueobjroot: D:/Project/develop/vue/gofly_base/gofly_business
 ```
-所以如果您使用GoFly快速框架开发项目，也可以移步到[GoFly全栈开发社区下载](https://goflys.cn/prdetail?id=6)最新版本
+如果以需要了解更多关于gofl社区框架，也可以移步到[GoFly全栈开发社区](https://goflys.cn/prdetail?id=6)了解或者下载最新版本。
+## 联系我们
+如果使用过程有问题，可以添加GoFly技术客服咨询（微信：goflycn）:
+<div align="center">
+ <img src=https://goflys.cn/assets/itservice-6334c7e6.jpg width=220 />
+</div>
+
+
