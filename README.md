@@ -102,7 +102,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 ![生成添加表单-文本编辑器](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/85c36eef5e37779858f2e912885f71c5.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
 
 ## 七、安装及部署打包说明
-### 1 后端代码
+### 1. 后端代码
 #### 安装fresh 热更新-边开发边编译
 go install github.com/pilu/fresh@latest
 
@@ -142,7 +142,7 @@ go build main.go
 
 // 编译命令
 ```
-### 2 前端端代码
+### 2. 前端端代码
 #### 初始化依赖
  ```
  npm run install 或者 yarn install
