@@ -57,10 +57,12 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 框架已经为您封装好，你只需在app应用目录书写你的业务，路由、访问权限、跨域、限流、Token验证、ORM等
 框架已集成好，开发只需添加新的方法或者新增一个文件即可。
 ## 四、快速安装
-在线项目根目录下运行服务，启动成功如下：
+1. 首先在GOPATH路径下的src目录下现在放代码的文件夹下载代码解压到项目文件夹中（或者直接git clone 代码到src目录下）。
+2. 再运行服务 go run main.go 或者 编译 fresh (go install github.com/pilu/fresh@latest 安装fresh热编译工具)，启动成功如下：
 ![运行启动命令](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230912/00ab0aa6dbbaea7135421d9d58fc7d53.png?_t=1694449909?_t=1694449925?_t=1694450017?_t=1694450312?_t=1694450377?_t=1694736335?_t=1695142966?_t=1695227756?_t=1695227832?_t=1695227905?_t=1695258004?_t=1695303162?_t=1695304546?_t=1695307395?_t=1695307635?_t=1695308030?_t=1695651050?_t=1696613724?_t=1696613784)
 在浏览器打开安装界面进行安装：
 ![安装界面](https://admin.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20231007/b4f51067751de5c74480883910840303.png?_t=1696613784)
+注意：前端代码安装设置是安装时同时把前端vue代码安装到开发前端代码目录下，为了防止热编译效率框架不建议把前端代码放到go目录下。
 ## 五、在线预览
  [1.GoFly全栈开发社区了解更多](https://goflys.cn/home)  
 
@@ -148,6 +150,8 @@ go build main.go
 ```
 vueobjroot: D:/Project/develop/vue/gofly_base/gofly_business
 ```
+收到安装前端代码是前端源码在项目目录下的resource/staticfile/template/vuecode文件夹中，自己复制到开发文件夹下即可。
+
 如果以需要了解更多关于gofl社区框架，也可以移步到[GoFly全栈开发社区](https://goflys.cn/prdetail?id=6)了解或者下载最新版本。
 ## 联系我们
 如果使用过程有问题，可以添加GoFly技术客服咨询（微信：goflycn）:
