@@ -161,13 +161,13 @@ npm run serve 或者  yarn serve
 npm run build 或者 yarn build
 ```
 
-## 八、前端代码
+## 八、前端代码安装及源码位置
 由于框架是前端后端分离，且在Go本地开发使用fresh热编译，Go目录不能用太多文件影响编译时间，
 所以我们开发是建议前端代码放在其他位置。在安装界面填写你前端代码放置位置或者手动在Go项目config/settings.yml配置文件中vueobjroot手动配置前端业务端开发路径：
 ```
 vueobjroot: D:/Project/develop/vue/gofly_base/gofly_business
 ```
-收到安装前端代码是前端源码在项目目录下的resource/staticfile/template/vuecode文件夹中，自己复制到开发文件夹下即可。
+如果你想要手动安装前端代码，源码在代码包的resource/staticfile/template/vuecode目录下文件夹中，自己复制到开发文件夹下即可。
 
 如果以需要了解更多关于gofl社区框架，也可以移步到[GoFly全栈开发社区](https://goflys.cn/prdetail?id=6)了解或者下载最新版本。
 ## 联系我们
