@@ -35,12 +35,13 @@ func init() {
 
 // 安装页面
 func (api *Install) Index(context *gin.Context) {
-	path, err := os.Getwd()
+	_path, err := os.Getwd()
 	if err != nil {
 		results.Failed(context, "项目路径获取失败", nil)
 		return
 	}
-	filePath := fmt.Sprintf("%s\\resource\\staticfile\\template\\install.lock", path)
+	filePath := path.Join(_path, "/resource/staticfile/template/install.lock")
+
 	if _, err := os.Stat(filePath); err == nil {
 		context.HTML(http.StatusOK, "isinstall.html", gin.H{
 			"title": "已经安装页面",
@@ -48,6 +49,7 @@ func (api *Install) Index(context *gin.Context) {
 	} else {
 		context.HTML(http.StatusOK, "install.html", gin.H{
 			"title": "安装页面",
+			"path":  path.Join(_path, "../", "vue"), // 当前项目的绝对路径的上一级目录
 		})
 	}
 
@@ -58,14 +60,14 @@ func (api *Install) Save(c *gin.Context) {
 	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
-	path, err := os.Getwd() //获取当前路径
+	_path, err := os.Getwd() //获取当前路径
 	if err != nil {
 		results.Failed(c, "项目路径获取失败", nil)
 		return
 	}
 	model.CreateDataBase(parameter["username"], parameter["password"], parameter["hostname"], parameter["hostport"], parameter["database"])
 	//2.修改数据库配置
-	cferr := upConfFieldData(path, parameter)
+	cferr := upConfFieldData(_path, parameter)
 	if cferr != nil {
 		results.Failed(c, "修改数据库配置失败", nil)
 		return
@@ -73,7 +75,7 @@ func (api *Install) Save(c *gin.Context) {
 	model.MyInit(2) //初始化数据
 	//创建数据库
 	//导入书库配置
-	SqlPath := fmt.Sprintf("%v\\resource\\staticfile\\template\\gofly_single.sql", path)
+	SqlPath := path.Join(_path, "/resource/staticfile/template/gofly_single.sql")
 	sqls, sqlerr := os.ReadFile(SqlPath)
 	if sqlerr != nil {
 		results.Failed(c, "数据库文件不存在："+SqlPath, nil)
@@ -94,7 +96,7 @@ func (api *Install) Save(c *gin.Context) {
 	model.DB().Table("admin_user").Data(map[string]interface{}{"username": parameter["adminUsername"], "password": utils.Md5(adminpass), "salt": salt}).Where("id", 1).Update()
 	model.DB().Table("business_user").Data(map[string]interface{}{"username": parameter["businessUsername"], "password": utils.Md5(businesspass), "salt": salt}).Where("id", 1).Update()
 	//4.创建安装锁文件
-	filePath := fmt.Sprintf("%s\\resource\\staticfile\\template\\install.lock", path)
+	filePath := path.Join(_path, "/resource/staticfile/template/install.lock")
 	os.Create(filePath)
 	//5.安装前端页面
 	if _, ok := parameter["vuepath"]; ok && parameter["vuepath"] != "" {
@@ -107,7 +109,7 @@ func (api *Install) Save(c *gin.Context) {
 			}
 		}
 		//2 复制前端文件到指定位置
-		vuesoure_path := fmt.Sprintf("%s/resource/staticfile/template/vuecode/", path)
+		vuesoure_path := path.Join(_path, "/resource/staticfile/template/vuecode/")
 		CopyDir(vuesoure_path, file_path)
 		//3 解压文件
 		business_vue_path := file_path + "/gofly_business.zip"
@@ -123,8 +125,8 @@ func (api *Install) Save(c *gin.Context) {
 }
 
 // 更新配置文件
-func upConfFieldData(path string, parameter map[string]interface{}) error {
-	file_path := fmt.Sprintf("%v\\config\\settings.yml", path)
+func upConfFieldData(_path string, parameter map[string]interface{}) error {
+	file_path := path.Join(_path, "/config/settings.yml")
 	f, err := os.Open(file_path)
 	if err != nil {
 		return err
