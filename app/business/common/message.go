@@ -9,7 +9,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -48,7 +48,7 @@ func (api *Message) Get_list(c *gin.Context) {
 // 设置为已读
 func (api *Message) Read(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	b_ids, _ := json.Marshal(parameter["ids"])

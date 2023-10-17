@@ -6,7 +6,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"math/rand"
 	"reflect"
 	"strconv"
@@ -34,7 +34,7 @@ type Index struct {
  */
 func (api *Index) Login(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	if parameter["username"] == nil || parameter["password"] == nil {
@@ -73,7 +73,7 @@ func (api *Index) Login(c *gin.Context) {
  */
 func (api *Index) RegisterUser(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	if parameter["username"] == nil || parameter["password"] == nil {
@@ -221,7 +221,7 @@ func (api *Index) Get_code(c *gin.Context) {
  */
 func (api *Index) ResetPassword(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	if parameter["code"] == nil || parameter["password"] == nil {

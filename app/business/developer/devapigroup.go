@@ -5,7 +5,7 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -47,7 +47,7 @@ func (api *Devapigroup) Get_parent(c *gin.Context) {
 // 保存
 func (api *Devapigroup) Save(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	//当前用户
@@ -79,7 +79,7 @@ func (api *Devapigroup) Save(c *gin.Context) {
 // 更新状态
 func (api *Devapigroup) UpStatus(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	res2, err := model.DB().Table("common_apitext_group").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
@@ -97,7 +97,7 @@ func (api *Devapigroup) UpStatus(c *gin.Context) {
 // 删除
 func (api *Devapigroup) Del(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]

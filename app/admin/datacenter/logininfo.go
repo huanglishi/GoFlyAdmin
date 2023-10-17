@@ -5,7 +5,7 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 	"strconv"
 	"strings"
@@ -58,7 +58,7 @@ func (api *Logininfo) Get_list(c *gin.Context) {
 
 // 保存
 func (api *Logininfo) Save(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	var f_id float64 = 0
@@ -96,7 +96,7 @@ func (api *Logininfo) Save(c *gin.Context) {
 
 // 更新状态
 func (api *Logininfo) UpStatus(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	res2, err := model.DB().Table("common_logininfo").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
@@ -113,7 +113,7 @@ func (api *Logininfo) UpStatus(c *gin.Context) {
 
 // 删除
 func (api *Logininfo) Del(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]

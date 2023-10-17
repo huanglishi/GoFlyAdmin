@@ -6,7 +6,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -67,7 +67,7 @@ func (api *Account) Get_menu(c *gin.Context) {
 
 // 保存数据
 func (api *Account) Upuserinfo(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
@@ -85,7 +85,7 @@ func (api *Account) Upuserinfo(c *gin.Context) {
 
 // 更新头像
 func (api *Account) Upavatar(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
@@ -100,7 +100,7 @@ func (api *Account) Upavatar(c *gin.Context) {
 
 // 修改密码
 func (api *Account) Changepwd(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值

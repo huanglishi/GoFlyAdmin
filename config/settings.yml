@@ -10,7 +10,7 @@ dbconf:
      #密码
      password: root
      #数据库名
-     database: gofly_single
+     database: gofly_base
      #数据表前缀
      prefix: 
 jwt:
@@ -18,7 +18,7 @@ jwt:
      jwt_ttl: 43200
 app:
      #版本号
-     version: 1.2.2
+     version: 1.2.3
      #环境状态：dev=开发，pro=生产
      env: dev
      #运行服务端口（根据您的实际情况修改）

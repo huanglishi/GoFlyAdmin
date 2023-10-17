@@ -8,7 +8,6 @@ import (
 	"gofly/global"
 	"gofly/model"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -210,7 +209,7 @@ func Post_strdata(url string, data string, contentType string) (string, error) {
 		return "", error
 	}
 	defer resp.Body.Close()
-	result, _ := ioutil.ReadAll(resp.Body)
+	result, _ := io.ReadAll(resp.Body)
 	return string(result), nil
 }
 
@@ -258,6 +257,6 @@ func Post(url string, data interface{}, contentType string) string {
 	}
 	defer resp.Body.Close()
 
-	result, _ := ioutil.ReadAll(resp.Body)
+	result, _ := io.ReadAll(resp.Body)
 	return string(result)
 }

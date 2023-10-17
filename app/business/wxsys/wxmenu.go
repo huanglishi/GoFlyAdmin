@@ -7,7 +7,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -46,7 +46,7 @@ func (api *Wxmenu) Get_menu(c *gin.Context) {
 		request, _ := http.NewRequest("GET", AccessTokenHost, nil)
 		response, _ := client.Do(request)
 		defer response.Body.Close()
-		body, err := ioutil.ReadAll(response.Body)
+		body, err := io.ReadAll(response.Body)
 		if err != nil {
 			results.Failed(c, "请求AccessToken失败1", err.Error())
 			return
@@ -90,7 +90,7 @@ func (api *Wxmenu) Get_menu(c *gin.Context) {
 // 保存微信菜单
 func (api *Wxmenu) SaveMenuOnly(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user")
@@ -146,7 +146,7 @@ func (api *Wxmenu) Get_menuList(c *gin.Context) {
 // 删除
 func (api *Wxmenu) Del_menu(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]
@@ -161,7 +161,7 @@ func (api *Wxmenu) Del_menu(c *gin.Context) {
 // 发布菜单
 func (api *Wxmenu) SaveMenu(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user")
@@ -186,7 +186,7 @@ func (api *Wxmenu) SaveMenu(c *gin.Context) {
 		request, _ := http.NewRequest("GET", AccessTokenHost, nil)
 		response, _ := client.Do(request)
 		defer response.Body.Close() //最后再执行
-		body, err := ioutil.ReadAll(response.Body)
+		body, err := io.ReadAll(response.Body)
 		if err != nil {
 			results.Failed(c, "请求AccessToken失败1", err.Error())
 			return

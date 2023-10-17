@@ -40,7 +40,7 @@ func (api *Install) Index(context *gin.Context) {
 		results.Failed(context, "项目路径获取失败", nil)
 		return
 	}
-	filePath := fmt.Sprintf("%s\\resource\\staticfile\\template\\install.lock", path)
+	filePath := fmt.Sprintf("%s/resource/staticfile/template/install.lock", path)
 	if _, err := os.Stat(filePath); err == nil {
 		context.HTML(http.StatusOK, "isinstall.html", gin.H{
 			"title": "已经安装页面",
@@ -73,7 +73,7 @@ func (api *Install) Save(c *gin.Context) {
 	model.MyInit(2) //初始化数据
 	//创建数据库
 	//导入书库配置
-	SqlPath := fmt.Sprintf("%v\\resource\\staticfile\\template\\gofly_single.sql", path)
+	SqlPath := fmt.Sprintf("%v/resource/staticfile/template/gofly_base.sql", path)
 	sqls, sqlerr := os.ReadFile(SqlPath)
 	if sqlerr != nil {
 		results.Failed(c, "数据库文件不存在："+SqlPath, nil)
@@ -94,11 +94,11 @@ func (api *Install) Save(c *gin.Context) {
 	model.DB().Table("admin_user").Data(map[string]interface{}{"username": parameter["adminUsername"], "password": utils.Md5(adminpass), "salt": salt}).Where("id", 1).Update()
 	model.DB().Table("business_user").Data(map[string]interface{}{"username": parameter["businessUsername"], "password": utils.Md5(businesspass), "salt": salt}).Where("id", 1).Update()
 	//4.创建安装锁文件
-	filePath := fmt.Sprintf("%s\\resource\\staticfile\\template\\install.lock", path)
+	filePath := fmt.Sprintf("%s/resource/staticfile/template/install.lock", path)
 	os.Create(filePath)
 	//5.安装前端页面
 	if _, ok := parameter["vuepath"]; ok && parameter["vuepath"] != "" {
-		parameter["vueobjroot"] = fmt.Sprintf("%v/gofly_business", parameter["vuepath"]) //更新前端路径
+		parameter["vueobjroot"] = fmt.Sprintf("%v/business", parameter["vuepath"]) //更新前端路径
 		//1 如果没有filepath文件目录就创建一个
 		file_path := fmt.Sprintf("%v", parameter["vuepath"])
 		if _, err := os.Stat(file_path); err != nil {
@@ -110,8 +110,8 @@ func (api *Install) Save(c *gin.Context) {
 		vuesoure_path := fmt.Sprintf("%s/resource/staticfile/template/vuecode/", path)
 		CopyDir(vuesoure_path, file_path)
 		//3 解压文件
-		business_vue_path := file_path + "/gofly_business.zip"
-		admin_vue_path := file_path + "/gofly_admin.zip"
+		business_vue_path := file_path + "/business.zip"
+		admin_vue_path := file_path + "/admin.zip"
 		Unzip(business_vue_path, file_path)
 		Unzip(admin_vue_path, file_path)
 		//删除zip文件
@@ -124,7 +124,7 @@ func (api *Install) Save(c *gin.Context) {
 
 // 更新配置文件
 func upConfFieldData(path string, parameter map[string]interface{}) error {
-	file_path := fmt.Sprintf("%v\\config\\settings.yml", path)
+	file_path := fmt.Sprintf("%v/config/settings.yml", path)
 	f, err := os.Open(file_path)
 	if err != nil {
 		return err

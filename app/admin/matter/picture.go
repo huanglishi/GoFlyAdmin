@@ -9,7 +9,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -80,7 +80,7 @@ func (api *Picture) Get_list(c *gin.Context) {
 
 // 保存
 func (api *Picture) Save(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	delete(parameter, "catename")
@@ -98,7 +98,7 @@ func (api *Picture) Save(c *gin.Context) {
 
 // 更新状态
 func (api *Picture) UpStatus(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	res2, err := model.DB().Table("common_picture").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
@@ -115,7 +115,7 @@ func (api *Picture) UpStatus(c *gin.Context) {
 
 // 删除
 func (api *Picture) Del(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]

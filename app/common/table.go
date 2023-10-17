@@ -5,7 +5,7 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -22,7 +22,7 @@ func init() {
 // 数据通用排序
 func (api *Table) Weigh(context *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(context.Request.Body)
+	body, _ := io.ReadAll(context.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	//排序的数组

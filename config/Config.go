@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 
@@ -77,7 +76,7 @@ func listenSignal() {
 		if err := cmd.Wait(); err != nil {
 			fmt.Println(err)
 		}
-		opBytes, _ := ioutil.ReadAll(stdout)
+		opBytes, _ := io.ReadAll(stdout)
 		fmt.Print(string(opBytes))
 
 	}()
