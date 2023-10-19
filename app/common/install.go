@@ -73,7 +73,7 @@ func (api *Install) Save(c *gin.Context) {
 	model.MyInit(2) //初始化数据
 	//创建数据库
 	//导入书库配置
-	SqlPath := filepath.Join(path, "/resource/staticfile/template/gofly_enterprise.sql")
+	SqlPath := filepath.Join(path, "/resource/staticfile/template/gofly_base.sql")
 	sqls, sqlerr := os.ReadFile(SqlPath)
 	if sqlerr != nil {
 		results.Failed(c, "数据库文件不存在："+SqlPath, nil)
