@@ -7,7 +7,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 	"strings"
 	"time"
@@ -149,7 +149,7 @@ func (api *Index) Get_userinfo(c *gin.Context) {
 // 保存
 func (api *Index) UpuserInfo(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	token := c.Request.Header.Get("Authorization")
 	user := middleware.ParseToken(token)

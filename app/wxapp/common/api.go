@@ -7,7 +7,7 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 	"strconv"
 	"strings"
@@ -105,7 +105,7 @@ func (api *Api) Save(c *gin.Context) {
 	if apiID == "" {
 		results.Failed(c, "请传参数apiID", nil)
 	} else {
-		body, _ := ioutil.ReadAll(c.Request.Body)
+		body, _ := io.ReadAll(c.Request.Body)
 		var parameter map[string]interface{}
 		_ = json.Unmarshal(body, &parameter)
 		var f_id float64 = 0
@@ -154,7 +154,7 @@ func (api *Api) Del(c *gin.Context) {
 		results.Failed(c, "请传参数apiID", nil)
 	} else {
 		apitext, _ := model.DB().Table("common_apitext").Where("id", apiID).Fields("tablename").First()
-		body, _ := ioutil.ReadAll(c.Request.Body)
+		body, _ := io.ReadAll(c.Request.Body)
 		var parameter map[string]interface{}
 		_ = json.Unmarshal(body, &parameter)
 		ids := parameter["ids"]

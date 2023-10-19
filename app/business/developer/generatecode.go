@@ -8,7 +8,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"os"
 	"reflect"
 	"strconv"
@@ -85,7 +85,7 @@ func (api *Generatecode) Get_tablelist(c *gin.Context) {
 // 保存
 func (api *Generatecode) Save(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	var f_id float64 = 0
@@ -234,7 +234,7 @@ func (api *Generatecode) Save(c *gin.Context) {
 // 更新状态
 func (api *Generatecode) UpStatus(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	res2, err := model.DB().Table("common_generatecode").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
@@ -252,7 +252,7 @@ func (api *Generatecode) UpStatus(c *gin.Context) {
 // 删除
 func (api *Generatecode) Del(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	isok, err := common_uninstall(parameter["id"])
@@ -271,7 +271,7 @@ func (api *Generatecode) Del(c *gin.Context) {
 // 卸载
 func (api *Generatecode) Uninstallcode(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	isok, err := common_uninstall(parameter["id"])

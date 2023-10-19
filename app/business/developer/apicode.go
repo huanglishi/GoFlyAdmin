@@ -5,7 +5,7 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 	"strings"
 
@@ -24,7 +24,7 @@ func init() {
 // 生成api接口代码
 func (api *Apicode) Installcode(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	data, err := model.DB().Table("common_apitext").Where("id", parameter["id"]).Fields("cid,url,getdata_type,tablename,apicode_type,is_install,fields,method").First()
@@ -51,7 +51,7 @@ func (api *Apicode) Installcode(c *gin.Context) {
 // 卸载api接口代码-改变方法
 func (api *Apicode) Uninstallcode(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	data, err := model.DB().Table("common_apitext").Where("id", parameter["id"]).Fields("cid,url,getdata_type,tablename,apicode_type,is_install,fields,method").First()
@@ -74,7 +74,7 @@ func (api *Apicode) Uninstallcode(c *gin.Context) {
 // 删除文件
 func (api *Apicode) RemoveFile(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	data, err := model.DB().Table("common_apitext").Where("id", parameter["id"]).Fields("cid,url,getdata_type,tablename,apicode_type,is_install,fields,method").First()

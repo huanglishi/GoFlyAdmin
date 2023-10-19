@@ -6,7 +6,7 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 	"time"
 
@@ -37,7 +37,7 @@ func (api *Wxsetting) Get_account(c *gin.Context) {
 // 保存
 func (api *Wxsetting) Save_account(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	//当前用户
@@ -87,7 +87,7 @@ func (api *Wxsetting) Get_wxapp(c *gin.Context) {
 // 保存
 func (api *Wxsetting) Save_wxapp(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	//当前用户

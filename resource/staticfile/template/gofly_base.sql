@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 80012
  Source Host           : localhost:3306
- Source Schema         : gofly_single
+ Source Schema         : gofly_base
 
  Target Server Type    : MySQL
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 09/09/2023 13:37:15
+ Date: 17/10/2023 23:34:01
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `admin_auth_dept`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '备注',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理后台部门' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理后台部门' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_auth_dept
@@ -59,7 +59,7 @@ CREATE TABLE `admin_auth_role`  (
   `weigh` int(11) NOT NULL COMMENT '排序',
   `createtime` int(11) NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限分组' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限分组' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_auth_role
@@ -120,7 +120,7 @@ CREATE TABLE `admin_auth_rule`  (
   `noAffix` tinyint(1) NOT NULL DEFAULT 0 COMMENT '如果设置为true，标签将不会添加到tab-bar中 0=否1=是',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'C端-菜单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 81 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'C端-菜单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_auth_rule
@@ -179,12 +179,12 @@ CREATE TABLE `admin_user`  (
   `province` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '省份',
   `area` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '地区',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户端-用户信息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户端-用户信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES (1, 1, 1, 3, 'gofly', '131ffac800502aee306d42a3c83ff6c4', '1693074293', '开发管理员', '管家人', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230310/b4ac2e2246073c50c9dc764d5b426720.png', '88422345', '18988274072', '550325@qq.com', '', 1668909071, 0, 0, 1666161776, 0, '对的', '昆明', '开发测试账号', 'GoFLy科技', '', 'chaoyang');
+INSERT INTO `admin_user` VALUES (1, 1, 1, 3, 'gofly', '561f2fd0ceaf2e26afb193c4610a6eea', '1696612960', '开发管理员', '管家人', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230310/b4ac2e2246073c50c9dc764d5b426720.png', '88422345', '18988274072', '550325@qq.com', '', 1668909071, 0, 0, 1666161776, 0, '对的', '昆明', '开发测试账号', 'GoFLy科技', '', 'chaoyang');
 INSERT INTO `admin_user` VALUES (3, 1, 1, 4, 'test', '9bb610df8adde220720f23dabad486e0', '3305628230121721621', '测试账号2', '', 'resource/staticfile/avatar.png', '', '', '', '', 0, 0, 0, 1667142475, 0, '', '', '', '试试', '', '');
 INSERT INTO `admin_user` VALUES (4, 1, 1, 1, '123ss', '9bb610df8adde220720f23dabad486e0', '3305628230121721621', '销售员de', '', 'resource/staticfile/avatar.png', '', '', '', '', 0, 0, 0, 1667144713, 0, '', '', '', '', '', '');
 INSERT INTO `admin_user` VALUES (9, 1, 1, 1, '22334', '166d2832ebcc7672e59d13f37a79f59e', '3305628230121721621', '新增账号', '', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230309/162ba4b5924cc0fe399d7a2ffd1d1110.png', '', '', '', '', 0, 0, 0, 1678370986, 1678373636, '五华区霖雨路江东耀龙康城27幢二单元502', '昆明市', '', '云律科技（云南）有限公司', '', '');
@@ -215,7 +215,7 @@ CREATE TABLE `attachment`  (
   `updatetime` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
   `uploadtime` int(11) NOT NULL DEFAULT 0 COMMENT '上传时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 733 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '附件管理' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 734 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '附件管理' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of attachment
@@ -255,7 +255,7 @@ CREATE TABLE `business_attachment`  (
   `is_common` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否公共1=是',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '上传时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '客户端附件' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '客户端附件' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of business_attachment
@@ -342,7 +342,7 @@ CREATE TABLE `business_auth_dept`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '备注',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理后台部门' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理后台部门' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of business_auth_dept
@@ -460,110 +460,10 @@ INSERT INTO `business_auth_rule` VALUES (79, 1, '账号配置', '', 87, 1, 78, '
 INSERT INTO `business_auth_rule` VALUES (84, 1, '公众号菜单', '', 84, 1, 78, '', 'wxmenu', 'wxmenu', '/wxsys/wxmenu/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1680790715);
 INSERT INTO `business_auth_rule` VALUES (87, 1, '微信用户', '', 79, 1, 78, '', 'wxuser', 'wxuser', '/wxsys/wxuser/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1680791150);
 INSERT INTO `business_auth_rule` VALUES (97, 1, '生成代码', '', 97, 1, 74, '', 'generatecode', 'generatecode', '/developer/generatecode/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1685366576);
-INSERT INTO `business_auth_rule` VALUES (110, 1, '生成代码示例', '', 110, 0, 0, 'icon-english-fill', '/createcode', 'createcode', 'LAYOUT', '/createcode/test/index', '', 0, 0, 0, 1, 0, 0, 0, 0, 1685550835);
-INSERT INTO `business_auth_rule` VALUES (120, 1, '测试api代码生成', '', 120, 1, 110, '', 'api', 'api', 'createcode/api/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1686115348);
 INSERT INTO `business_auth_rule` VALUES (121, 1, '数据中心', '', 79, 0, 0, 'icon-storage', '/datacenter', 'datacenter', 'LAYOUT', '/datacenter/dictionary', '', 0, 0, 0, 1, 0, 0, 0, 0, 1686132257);
 INSERT INTO `business_auth_rule` VALUES (123, 1, '字典数据', '', 123, 1, 121, '', 'data', 'data', '/datacenter/dictionary/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1686132869);
 INSERT INTO `business_auth_rule` VALUES (137, 1, '附件管理', '', 137, 1, 121, '', 'attachment', 'attachment', 'datacenter/attachment/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1686286572);
-INSERT INTO `business_auth_rule` VALUES (141, 1, '测试代码生成', '', 141, 1, 110, '', 'code', 'code', 'createcode/code/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1687794349);
 INSERT INTO `business_auth_rule` VALUES (143, 1, '配置管理', '', 143, 1, 121, '', 'configuration', 'configuration', '/datacenter/configuration/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1690646744);
-INSERT INTO `business_auth_rule` VALUES (144, 1, '测试品牌', '', 144, 1, 110, '', 'band', 'band', 'createcode/band/index', '', '', 0, 0, 0, 1, 0, 0, 0, 0, 1692896109);
-
--- ----------------------------
--- Table structure for business_createcode_api
--- ----------------------------
-DROP TABLE IF EXISTS `business_createcode_api`;
-CREATE TABLE `business_createcode_api`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `accountID` int(11) NOT NULL DEFAULT 0 COMMENT '账号id',
-  `businessID` int(11) NOT NULL DEFAULT 0 COMMENT '业务主账号id',
-  `status` tinyint(1) NOT NULL COMMENT '状态',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '姓名',
-  `nickename` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '昵称',
-  `image` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片',
-  `file` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '附件',
-  `weigh` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
-  `des` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '备注',
-  `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '测试api代码生成' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of business_createcode_api
--- ----------------------------
-INSERT INTO `business_createcode_api` VALUES (2, 0, 1, 0, '张三', '第三', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230811/672ab21428230ea9d664cfb74a4b2095.png', '', 2, '测试', 1685722937, '<div data-element=\"root\" class=\"am-engine\"><p data-id=\"p1dr9j7ls-gksdbjfivbs0\"><br></p></div>');
-INSERT INTO `business_createcode_api` VALUES (5, 0, 1, 0, '张8', '第三', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230811/0bac4e160efa826f4d2637b999c614de.png', '', 5, '测试', 1685726627, '<div data-element=\"root\" class=\"am-engine\"><p data-id=\"p1dr9j7ls-1gu952f48yww0\"><br></p></div>');
-INSERT INTO `business_createcode_api` VALUES (6, 0, 1, 0, '李四', '李师傅', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230811/a67d2c864ad5b33dd628bcd5643c54a4.png', '', 6, '测2', 1685760124, '<div data-element=\"root\" class=\"am-engine\"><p data-id=\"p1dr9j7ls-1hw7ixeuxu5c0\"><br></p></div>');
-INSERT INTO `business_createcode_api` VALUES (8, 0, 1, 0, '刚睡醒', '是撒', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230608/e3ce4dc222fff37ec130ea7daff3b474.png', '', 8, '测4', 1685808707, '');
-INSERT INTO `business_createcode_api` VALUES (9, 0, 1, 0, 'www', 'ww', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230608/eaf1511fa669c7dd54af301d50c9478e.png', '', 9, 'ddd', 1686219848, '');
-INSERT INTO `business_createcode_api` VALUES (14, 0, 1, 0, '张三', '第三', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230811/f82c9410d28d5e7ea8efc992917bbb4e.png', '', 14, '测试', 1690645019, '<div data-element=\"root\" class=\"am-engine\"><p data-id=\"p1dr9j7ls-b2jazhoe0kg0\"><br></p></div>');
-INSERT INTO `business_createcode_api` VALUES (15, 0, 1, 0, 'dd', 'ffd', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230811/0bac4e160efa826f4d2637b999c614de.png', '', 15, 'dd', 1692894314, '<div data-element=\"root\" class=\"am-engine\"><p data-id=\"p1dr9j7ls-wshdjnfmbo00\"><br></p></div>');
-
--- ----------------------------
--- Table structure for business_createcode_band
--- ----------------------------
-DROP TABLE IF EXISTS `business_createcode_band`;
-CREATE TABLE `business_createcode_band`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `des` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '描述',
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态:0=启用,1=禁用',
-  `businessID` int(11) NOT NULL DEFAULT 0 COMMENT '业务主账号id',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '测试品牌' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of business_createcode_band
--- ----------------------------
-INSERT INTO `business_createcode_band` VALUES (1, '测试', '测试备注', 0, 0, '');
-INSERT INTO `business_createcode_band` VALUES (3, '大众', '德国品牌', 0, 1, '<div data-element=\"root\" class=\"am-engine\"><p data-id=\"p1dr9j7ls-3lj9sbsgnle0\"><br></p></div>');
-
--- ----------------------------
--- Table structure for business_createcode_cate
--- ----------------------------
-DROP TABLE IF EXISTS `business_createcode_cate`;
-CREATE TABLE `business_createcode_cate`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `accountID` int(11) NOT NULL DEFAULT 0 COMMENT '账号id',
-  `businessID` int(11) NOT NULL DEFAULT 0 COMMENT '业务主账号id',
-  `status` tinyint(1) NOT NULL COMMENT '状态',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '姓名',
-  `weigh` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
-  `des` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '备注',
-  `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '测试代码生成分类' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of business_createcode_cate
--- ----------------------------
-INSERT INTO `business_createcode_cate` VALUES (1, 0, 1, 0, '分类1', 1, '等等', 1685635749);
-INSERT INTO `business_createcode_cate` VALUES (2, 0, 1, 0, '大类', 2, '测试', 1686227141);
-INSERT INTO `business_createcode_cate` VALUES (3, 0, 1, 0, '单服', 3, '等等', 1686228675);
-
--- ----------------------------
--- Table structure for business_createcode_code
--- ----------------------------
-DROP TABLE IF EXISTS `business_createcode_code`;
-CREATE TABLE `business_createcode_code`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `accountID` int(11) NOT NULL DEFAULT 0 COMMENT '账号id',
-  `businessID` int(11) NOT NULL DEFAULT 0 COMMENT '业务主账号id',
-  `cid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分类',
-  `age` int(11) NOT NULL COMMENT '年龄',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '姓名',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
-  `image` varchar(145) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '测试代码生成' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of business_createcode_code
--- ----------------------------
-INSERT INTO `business_createcode_code` VALUES (1, 0, 0, 0, 0, '测试数据', '', '');
-INSERT INTO `business_createcode_code` VALUES (4, 0, 1, 3, 25, '张三', '<div data-element=\"root\" class=\"am-engine\"><p data-id=\"p1dr9j7ls-1ifj69ez4uqo0\">大中华</p></div>', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230811/f82c9410d28d5e7ea8efc992917bbb4e.png');
 
 -- ----------------------------
 -- Table structure for business_email
@@ -580,7 +480,7 @@ CREATE TABLE `business_email`  (
   `service_host` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮件服务器',
   `service_port` int(11) NOT NULL DEFAULT 0 COMMENT '邮件服务器端口',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '业务端邮箱' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '业务端邮箱' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of business_email
@@ -648,7 +548,7 @@ CREATE TABLE `business_user`  (
 -- ----------------------------
 -- Records of business_user
 -- ----------------------------
-INSERT INTO `business_user` VALUES (1, 1, 1, 1, 3, 'gofly', '131ffac800502aee306d42a3c83ff6c4', '1693074293', '开发管理员', '黄师傅', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230506/d4bb8324ee87699ed727bc1fd0479b34.jpg', '88422345', '18988347563', '550325@qq.com', '', 1668909071, 0, 0, 1666161776, 1678544449, '王府井', '昆明', '开发测试账号', 'GoFLy科技1', '', 'chaoyang', 2147483647);
+INSERT INTO `business_user` VALUES (1, 1, 1, 1, 3, 'gofly', '561f2fd0ceaf2e26afb193c4610a6eea', '1696612960', '开发管理员', '黄师傅', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230506/d4bb8324ee87699ed727bc1fd0479b34.jpg', '88422345', '18988347563', '550325@qq.com', '', 1668909071, 0, 0, 1666161776, 1678544449, '王府井', '昆明', '开发测试账号', 'GoFLy科技1', '', 'chaoyang', 2147483647);
 INSERT INTO `business_user` VALUES (3, 1, 1, 3, 4, 'test', '9bb610df8adde220720f23dabad486e0', '3305628230121721621', '测试账号biz', '', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/staticfile/avatar.png', '', '', '', '', 0, 0, 0, 1667142475, 1678550309, '', '', '', '试试', '', '', 2147483647);
 INSERT INTO `business_user` VALUES (4, 1, 1, 4, 1, '123ss', '9bb610df8adde220720f23dabad486e0', '3305628230121721621', '销售员de', '', 'resource/staticfile/avatar.png', '', '', '', '', 0, 0, 0, 1667144713, 0, '', '', '', '', '', '', 2147483647);
 INSERT INTO `business_user` VALUES (9, 1, 1, 9, 1, '22334', '166d2832ebcc7672e59d13f37a79f59e', '3305628230121721621', '新增账号', '', 'https://sg.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230309/162ba4b5924cc0fe399d7a2ffd1d1110.png', '', '', '', '', 0, 0, 0, 1678370986, 1678373636, '五华区霖雨路江东耀龙康城27幢二单元502', '昆明市', '', '云律科技（云南）有限公司', '', '', 2147483647);
@@ -677,7 +577,7 @@ CREATE TABLE `business_wxsys_officonfig`  (
   `EncodingAESKey` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '消息加密密钥由43位字符组成',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号配置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号配置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of business_wxsys_officonfig
@@ -698,13 +598,13 @@ CREATE TABLE `business_wxsys_user`  (
   `password` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `salt` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码盐',
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
+  `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '昵称',
+  `avatar` varchar(145) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '头像',
   `openid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户的标识，对当前公众号唯一',
   `wxapp_openid` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '小程序的openid',
   `unionid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。',
   `subscribe` tinyint(1) NOT NULL COMMENT '用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。',
   `subscribe_time` int(11) NOT NULL DEFAULT 0 COMMENT '用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间',
-  `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '昵称',
-  `avatar` varchar(145) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '头像',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '备注',
   `mobile` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号码',
   `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
@@ -714,11 +614,16 @@ CREATE TABLE `business_wxsys_user`  (
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态 1=禁用',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信关注用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信关注用户' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of business_wxsys_user
 -- ----------------------------
+INSERT INTO `business_wxsys_user` VALUES (6, 1, 1, 0, '', '', '', '黄师傅', '', 'resource/staticfile/avatar.png', '', 'ocTvS0jwEaJt-zCFPkJmHAhjGd4s', '', 0, 0, '', '', '', '', '', '', 0, 1688655071);
+INSERT INTO `business_wxsys_user` VALUES (7, 1, 1, 0, '', '', '', 'hl_7', '', 'resource/staticfile/avatar.png', '', 'ocTvS0nSxEtIqBi3dfKGyjLGd75w', '', 0, 0, '', '', '', '', '', '', 0, 1688656204);
+INSERT INTO `business_wxsys_user` VALUES (8, 1, 1, 0, '', '', '', '', 'U_8', 'resource/staticfile/avatar.png', 'oMx4V6dkwwKAspxmnxomd1v3dAPY', '', '', 1, 0, '', '', '', '', '', '', 0, 1691380005);
+INSERT INTO `business_wxsys_user` VALUES (9, 1, 1, 0, '', '', '', '', 'U_9', 'resource/staticfile/avatar.png', 'oMx4V6QfjT8qAHu7ofc2ACzfK9vk', '', '', 1, 0, '', '', '', '', '', '', 0, 1692857920);
+INSERT INTO `business_wxsys_user` VALUES (10, 1, 1, 0, '', '', '', '', 'U_10', 'resource/staticfile/avatar.png', 'oMx4V6ag1-qQCHwMIUor5v_zfIkA', '', '', 1, 0, '', '', '', '', '', '', 0, 1693377042);
 
 -- ----------------------------
 -- Table structure for business_wxsys_wxappconfig
@@ -739,7 +644,7 @@ CREATE TABLE `business_wxsys_wxappconfig`  (
   `EncodingAESKey` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '消息加密密钥由43位字符组成',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信小程序配置' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信小程序配置' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of business_wxsys_wxappconfig
@@ -760,7 +665,7 @@ CREATE TABLE `business_wxsys_wxmenu`  (
   `menu` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单内容',
   `select` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否选择用1=是',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微站微信菜单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微站微信菜单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of business_wxsys_wxmenu
@@ -768,75 +673,6 @@ CREATE TABLE `business_wxsys_wxmenu`  (
 INSERT INTO `business_wxsys_wxmenu` VALUES (9, 1, 1, '测试号管理', 'sssdsss', '{\"button\":[{\"name\":\"菜单名称\",\"type\":\"view\",\"url\":\"\",\"sub_button\":{\"list\":[{\"name\":\"子菜单名称\",\"url\":\"\",\"type\":\"view\"}]}}]}', 0);
 INSERT INTO `business_wxsys_wxmenu` VALUES (11, 1, 1, '测试号管理', '', '{\"button\":[{\"type\":\"view\",\"url\":\"\",\"sub_button\":{\"list\":[{\"type\":\"view\",\"name\":\"子菜单名称\",\"url\":\"\"}]},\"name\":\"菜单名称\"}]}', 0);
 INSERT INTO `business_wxsys_wxmenu` VALUES (13, 1, 1, '公众号菜单1', '', '{\"button\":[{\"type\":\"view\",\"url\":\"\",\"sub_button\":{\"list\":[{\"type\":\"view\",\"name\":\"子菜单名称\",\"url\":\"\"}]},\"name\":\"菜单名称\"},{\"type\":\"view\",\"name\":\"菜单名称\",\"url\":\"\"},{\"type\":\"view\",\"name\":\"菜单名称\",\"url\":\"\"}]}', 0);
-
--- ----------------------------
--- Table structure for common_apitest
--- ----------------------------
-DROP TABLE IF EXISTS `common_apitest`;
-CREATE TABLE `common_apitest`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'admin' COMMENT '分类接口属于那端，admin=管理，biz=B端，client=C端',
-  `cid` int(11) NOT NULL DEFAULT 0 COMMENT '分组',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '接口名称',
-  `des` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '说明',
-  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '接口路径',
-  `param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '参数',
-  `method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '方法get,post,delete',
-  `tablename` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '数据表名',
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态1=禁用',
-  `istoken` tinyint(1) NOT NULL DEFAULT 1 COMMENT '需要token 1=需要',
-  `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '上传时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '接口测试数据' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of common_apitest
--- ----------------------------
-INSERT INTO `common_apitest` VALUES (1, 'biz', 2, '登录接口-获取openid', '1请求参数：\ncode： wx.login()中的code\nappid：wx.getAccountInfoSync().miniProgram.appId中取\n2返回参数：\nuserinfo:用户信息\ntoken：用户token，统一在请求中封装返回', '/user/get_openid', '{\n\"code\":\"\",\n\"appid\":\"\"\n}', 'get', 'business_wxsys_user', 0, 0, 1683386592);
-INSERT INTO `common_apitest` VALUES (5, 'biz', 3, '后端测试接口', '业务端测试端，请求接口', '/test/api/get_data', '', 'get', '', 0, 1, 1683380403);
-INSERT INTO `common_apitest` VALUES (6, 'biz', 3, '测试获取列表数据接口', '', '/test/api/get_list', '', 'get', 'business_auth_rule', 0, 1, 1683380802);
-INSERT INTO `common_apitest` VALUES (7, 'biz', 2, '获取小程序数据', '', '/test/wxapi/get_data', '', 'get', '', 0, 1, 1683386443);
-
--- ----------------------------
--- Table structure for common_apitest_group
--- ----------------------------
-DROP TABLE IF EXISTS `common_apitest_group`;
-CREATE TABLE `common_apitest_group`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'admin' COMMENT '分类接口属于那端，admin=管理，biz=B端，client=C端',
-  `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父级',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '分类名称',
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态1=禁用',
-  `type_id` int(11) NOT NULL DEFAULT 0 COMMENT '接口类型',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台端接口测试分组' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of common_apitest_group
--- ----------------------------
-INSERT INTO `common_apitest_group` VALUES (1, 'biz', 0, 'app端', 0, 3);
-INSERT INTO `common_apitest_group` VALUES (2, 'biz', 0, '小程序', 0, 1);
-INSERT INTO `common_apitest_group` VALUES (3, 'biz', 0, '后台管理', 0, 2);
-
--- ----------------------------
--- Table structure for common_apitest_type
--- ----------------------------
-DROP TABLE IF EXISTS `common_apitest_type`;
-CREATE TABLE `common_apitest_type`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型名称',
-  `rooturl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求服务器地址',
-  `verifyEncrypt` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '加密验证字符串',
-  `isself` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否是本端1=是',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '接口类型' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of common_apitest_type
--- ----------------------------
-INSERT INTO `common_apitest_type` VALUES (1, '小程序', 'https://sg.goflys.cn/wxapp', 'gofly@888', 0);
-INSERT INTO `common_apitest_type` VALUES (2, '本端', '', '', 1);
-INSERT INTO `common_apitest_type` VALUES (3, '手机APP', 'https://sg.goflys.cn/mbapp', 'gofly@888', 0);
 
 -- ----------------------------
 -- Table structure for common_apitext
@@ -860,24 +696,15 @@ CREATE TABLE `common_apitext`  (
   `getdata_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '获取数据类型list=多条，detail=单条',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '上传时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '接口测试数据' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '接口测试数据' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_apitext
 -- ----------------------------
-INSERT INTO `common_apitext` VALUES (1, 'biz', 2, '登录接口-获取openid', '1请求参数：\ncode： wx.login()中的code\n2返回参数：\nuserinfo:用户信息\ntoken：用户token，统一在请求中封装返回', '/user/get_openid', '{\n\"code\": \"\"\n}', 'get', 'business_wxsys_user', 0, 0, 0, 0, '', '', 1690649631);
-INSERT INTO `common_apitext` VALUES (5, 'biz', 3, '后端测试接口', '业务端测试端，请求接口', '/test/api/get_data', '', 'get', '', 0, 1, 0, 0, '', '', 1683380403);
-INSERT INTO `common_apitext` VALUES (6, 'biz', 3, '测试获取列表数据接口', '', '/test/api/get_list', '', 'get', 'business_auth_rule', 0, 1, 0, 0, '', '', 1683380802);
-INSERT INTO `common_apitext` VALUES (7, 'biz', 2, '获取小程序数据', '', '/test/wxapi/get_data', '', 'get', '', 0, 0, 0, 0, '', '', 1685722258);
-INSERT INTO `common_apitext` VALUES (8, 'biz', 2, '测试代码生成接口', '', '/testcode/codes/get_list', '{\n\"cid\":1\n}', 'get', 'business_createcode_api', 0, 0, 1, 0, 'des,id,name,nickename,status,weigh', 'list', 1685726288);
-INSERT INTO `common_apitext` VALUES (9, 'biz', 2, '测试代码生成接口', '', '/testcode/codes/save', '{\n\"name\":\"张三\",\n\"nickename\":\"第三\",\n\"des\":\"测试\"\n\n}', 'post', 'business_createcode_api', 0, 1, 1, 0, '', 'list', 1685726614);
-INSERT INTO `common_apitext` VALUES (10, 'biz', 2, '删除', '', '/testcode/codes/del', '{\n\"ids\":[1]\n}', 'delete', '', 0, 0, 1, 0, '', 'list', 1685726578);
-INSERT INTO `common_apitext` VALUES (11, 'biz', 2, '测试生成获取详情', '', '/testcode/codes/get_detail', '{\n\"id\":2\n}', 'get', 'business_createcode_api', 0, 0, 1, 0, 'accountID,businessID,id,des', 'detail', 1685726269);
-INSERT INTO `common_apitext` VALUES (12, 'biz', 2, '通用_list', '', '/common/api/get_list', '', 'get', 'business_createcode_api', 0, 0, 2, 0, 'name,id,nickename,des,status,createtime', 'list', 1685760228);
-INSERT INTO `common_apitext` VALUES (14, 'biz', 2, '通用接口_detail', '', '/common/api/get_detail', '{\n\"id\":5\n}', 'get', 'business_createcode_api', 0, 0, 2, 0, 'accountID,createtime,businessID,des,id,name,nickename,status,weigh', 'detail', 1685757846);
-INSERT INTO `common_apitext` VALUES (15, 'biz', 2, '通用接口_添加数据save', '', '/common/api/save', '', 'post', 'business_createcode_api', 0, 1, 2, 0, '', 'list', 1690209824);
-INSERT INTO `common_apitext` VALUES (17, 'biz', 1, '通用接口_删除del', '', '/common/api/del', '', 'delete', 'business_createcode_api', 0, 0, 2, 0, '', 'list', 1685882013);
-INSERT INTO `common_apitext` VALUES (18, 'biz', 2, '生成api代码', '', '/createcode/api/get_list', '', 'get', 'business_createcode_api', 0, 0, 1, 0, 'accountID,businessID,createtime,des,id,name,weigh,status', 'list', 1685965785);
+INSERT INTO `common_apitext` VALUES (1, 'biz', 2, '登录接口-获取openid', '1请求参数：\ncode： wx.login()中的code\n2返回参数：\nuserinfo:用户信息\ntoken：用户token，统一在请求中封装返回', '/wxapp/user/get_openid', '{\n\"code\": \"\"\n}', 'get', 'business_wxsys_user', 0, 0, 0, 0, '', '', 1697535606);
+INSERT INTO `common_apitext` VALUES (5, 'biz', 3, '后端测试接口', '业务端测试端，请求接口', '/wxapp//test/api/get_data', '', 'get', '', 0, 1, 0, 0, '', '', 1697535611);
+INSERT INTO `common_apitext` VALUES (6, 'biz', 3, '测试获取列表数据接口', '', '/business/test/api/get_list', '', 'get', 'business_auth_rule', 0, 1, 0, 0, '', '', 1697535645);
+INSERT INTO `common_apitext` VALUES (7, 'biz', 2, '获取小程序数据', '', '/wxapp/test/wxapi/get_data', '', 'get', '', 0, 0, 0, 0, '', '', 1697535559);
 
 -- ----------------------------
 -- Table structure for common_apitext_group
@@ -886,12 +713,12 @@ DROP TABLE IF EXISTS `common_apitext_group`;
 CREATE TABLE `common_apitext_group`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'admin' COMMENT '分类接口属于那端，admin=管理，biz=B端，client=C端',
-  `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父级',
+  `pid` int(11) NOT NULL DEFAULT 0 COMMENT '父级0=一级',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '分类名称',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态1=禁用',
   `type_id` int(11) NOT NULL DEFAULT 0 COMMENT '接口类型',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '后台端接口测试分组' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '后台端接口测试分组' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_apitext_group
@@ -899,6 +726,7 @@ CREATE TABLE `common_apitext_group`  (
 INSERT INTO `common_apitext_group` VALUES (1, 'biz', 0, 'app端', 0, 3);
 INSERT INTO `common_apitext_group` VALUES (2, 'biz', 0, '小程序', 0, 1);
 INSERT INTO `common_apitext_group` VALUES (3, 'biz', 0, '后台管理', 0, 2);
+INSERT INTO `common_apitext_group` VALUES (4, 'biz', 2, '小程序-疫苗计划', 0, 1);
 
 -- ----------------------------
 -- Table structure for common_apitext_type
@@ -910,15 +738,19 @@ CREATE TABLE `common_apitext_type`  (
   `rooturl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求服务器地址',
   `verifyEncrypt` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '加密验证字符串',
   `isself` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否是本端1=是',
+  `user_tablename` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '测试授权用户数据表名',
+  `user_id` int(10) NOT NULL DEFAULT 0 COMMENT '测试用户id',
+  `login_url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录地址',
+  `model_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模块目录',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '接口类型' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '接口类型' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_apitext_type
 -- ----------------------------
-INSERT INTO `common_apitext_type` VALUES (1, '小程序', 'https://sg.goflys.cn/wxapp', 'gofly@888', 0);
-INSERT INTO `common_apitext_type` VALUES (2, '本端', '', '', 1);
-INSERT INTO `common_apitext_type` VALUES (3, '手机APP', 'https://sg.goflys.cn/mbapp', 'gofly@888', 0);
+INSERT INTO `common_apitext_type` VALUES (1, '小程序', 'https://yg.goflys.cn', 'gofly@888', 0, 'business_wxsys_user', 6, '/wxapp/user/get_apitoken', 'wxapp');
+INSERT INTO `common_apitext_type` VALUES (2, '本端', '', '', 1, '', 0, '', '');
+INSERT INTO `common_apitext_type` VALUES (3, '手机APP', 'https://yg.goflys.cn', 'gofly@888', 0, '', 0, '', '');
 
 -- ----------------------------
 -- Table structure for common_config
@@ -955,7 +787,7 @@ CREATE TABLE `common_dictionary_data`  (
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   `updatetime` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据-测试数据' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典数据-测试数据' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_dictionary_data
@@ -978,7 +810,7 @@ CREATE TABLE `common_dictionary_integral`  (
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   `updatetime` int(11) NOT NULL DEFAULT 0 COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分等级-测试数据' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分等级-测试数据' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_dictionary_integral
@@ -1002,7 +834,7 @@ CREATE TABLE `common_dictionary_table`  (
   `weigh` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_dictionary_table
@@ -1025,7 +857,7 @@ CREATE TABLE `common_email`  (
   `service_host` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '邮件服务器',
   `service_port` int(11) NOT NULL DEFAULT 0 COMMENT '邮件服务器端口',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '业务端邮箱' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '业务端邮箱' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_email
@@ -1061,51 +893,51 @@ CREATE TABLE `common_generatecode`  (
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '上传时间',
   `updatetime` int(11) NOT NULL DEFAULT 0 COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '代码生成' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_generatecode
 -- ----------------------------
-INSERT INTO `common_generatecode` VALUES (1, 'admin_auth_dept', '管理后台部门', 'InnoDB', 2, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (2, 'admin_auth_role', '权限分组', 'InnoDB', 8, 'utf8mb4_general_ci', 17, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (3, 'admin_auth_role_access', 'admin端菜单权限', 'InnoDB', 6, 'utf8mb4_general_ci', 0, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (4, 'admin_auth_rule', 'C端-菜单', 'InnoDB', 22, 'utf8mb4_general_ci', 81, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (5, 'admin_user', '用户端-用户信息', 'InnoDB', 4, 'utf8mb4_general_ci', 10, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (6, 'attachment', '附件管理', 'InnoDB', 9, 'utf8mb4_general_ci', 734, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (7, 'business_attachment', '客户端附件', 'InnoDB', 66, 'utf8mb4_general_ci', 107, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (8, 'business_auth_dept', '管理后台部门', 'InnoDB', 5, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (9, 'business_auth_role', '权限分组', 'InnoDB', 10, 'utf8mb4_general_ci', 21, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (10, 'business_auth_role_access', '商务端菜单授权', 'InnoDB', 10, 'utf8mb4_general_ci', 0, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (11, 'business_auth_rule', 'C端-菜单', 'InnoDB', 25, 'utf8mb4_general_ci', 144, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (12, 'business_createcode_api', '测试api代码生成', 'InnoDB', 6, 'utf8mb4_general_ci', 15, 0, 110, '', 'api', 'api', 'createcode/api/index', 'business/createcode', 'api.go', 'id,accountID,businessID,status,name,nickename,image,file,weigh,createtime,des,content', 120, 1, 'list', 'business_createcode_cate', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (13, 'business_createcode_band', '测试品牌', 'InnoDB', 2, 'utf8mb4_general_ci', 4, 0, 110, '', 'band', 'band', 'createcode/band/index', 'business/createcode', 'band.go', 'id,name,des,status,businessID,content', 144, 1, 'list', 'business_createcode_cate', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (14, 'business_createcode_cate', '测试代码生成分类', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (15, 'business_createcode_code', '测试代码生成', 'InnoDB', 2, 'utf8mb4_general_ci', 5, 0, 110, '', 'code', 'code', 'createcode/code/index', 'business/createcode', 'code.go', 'accountID,businessID,cid,age,id,name,content,image', 141, 1, 'cate', 'business_createcode_cate', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (16, 'business_home_quickop', '首页快捷操作', 'InnoDB', 2, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (17, 'business_user', '用户端-用户信息', 'InnoDB', 7, 'utf8mb4_general_ci', 14, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (18, 'business_wxsys_officonfig', '微信公众号配置', 'InnoDB', 2, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (19, 'business_wxsys_user', '微信关注用户', 'InnoDB', 0, 'utf8mb4_general_ci', 1, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (20, 'business_wxsys_wxappconfig', '微信小程序配置', 'InnoDB', 2, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (21, 'business_wxsys_wxmenu', '微站微信菜单', 'InnoDB', 3, 'utf8mb4_general_ci', 14, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (22, 'common_apitext', '接口测试数据', 'InnoDB', 13, 'utf8mb4_general_ci', 19, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (23, 'common_apitext_group', '后台端接口测试分组', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (24, 'common_apitext_type', '接口类型', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (25, 'common_config', '系统配置参数', 'InnoDB', 0, 'utf8mb4_general_ci', 3, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (26, 'common_dictionary_data', '字典数据-测试数据', 'InnoDB', 2, 'utf8mb4_general_ci', 3, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (27, 'common_dictionary_integral', '积分等级-测试数据', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (28, 'common_dictionary_table', '字典表', 'InnoDB', 0, 'utf8mb4_general_ci', 10, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (29, 'common_email', '业务端邮箱', 'InnoDB', 0, 'utf8mb4_general_ci', 3, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (30, 'common_generatecode', '代码生成', 'InnoDB', 0, 'utf8mb4_general_ci', 346, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (31, 'common_logininfo', '登录页面内容', 'InnoDB', 0, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (32, 'common_message', '系统通用消息', 'InnoDB', 0, 'utf8mb4_general_ci', 0, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (33, 'common_picture', '图片库', 'InnoDB', 0, 'utf8mb4_general_ci', 9, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (34, 'common_picture_cate', '分类名称', 'InnoDB', 0, 'utf8mb4_general_ci', 28, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (35, 'common_verify_code', '验证码存储', 'InnoDB', 0, 'utf8mb4_general_ci', 2, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (36, 'login_logs', '（平台及客户）后台登录日志', 'InnoDB', 337, 'utf8mb4_general_ci', 897, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1692897217);
-INSERT INTO `common_generatecode` VALUES (37, 'business_email', '业务端邮箱', 'InnoDB', 0, 'utf8mb4_general_ci', 2, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1692897217);
-INSERT INTO `common_generatecode` VALUES (38, 'common_apitest', '接口测试数据', 'InnoDB', 4, 'utf8mb4_general_ci', 8, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1692897217);
-INSERT INTO `common_generatecode` VALUES (39, 'common_apitest_group', '后台端接口测试分组', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1692897217);
-INSERT INTO `common_generatecode` VALUES (40, 'common_apitest_type', '接口类型', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1692897217);
+INSERT INTO `common_generatecode` VALUES (1, 'admin_auth_dept', '管理后台部门', 'InnoDB', 2, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (2, 'admin_auth_role', '权限分组', 'InnoDB', 8, 'utf8mb4_general_ci', 17, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (3, 'admin_auth_role_access', 'admin端菜单权限', 'InnoDB', 6, 'utf8mb4_general_ci', 0, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (4, 'admin_auth_rule', 'C端-菜单', 'InnoDB', 22, 'utf8mb4_general_ci', 81, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (5, 'admin_user', '用户端-用户信息', 'InnoDB', 4, 'utf8mb4_general_ci', 10, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (6, 'attachment', '附件管理', 'InnoDB', 9, 'utf8mb4_general_ci', 734, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (7, 'business_attachment', '客户端附件', 'InnoDB', 66, 'utf8mb4_general_ci', 107, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (8, 'business_auth_dept', '管理后台部门', 'InnoDB', 5, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (9, 'business_auth_role', '权限分组', 'InnoDB', 10, 'utf8mb4_general_ci', 21, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (10, 'business_auth_role_access', '商务端菜单授权', 'InnoDB', 10, 'utf8mb4_general_ci', 0, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (11, 'business_auth_rule', 'C端-菜单', 'InnoDB', 25, 'utf8mb4_general_ci', 145, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (12, 'business_createcode_api', '测试api代码生成', 'InnoDB', 7, 'utf8mb4_general_ci', 16, 0, 110, '', 'api', 'api', 'createcode/api/index', 'business/createcode', 'api.go', 'id,accountID,businessID,status,name,nickename,image,file,weigh,createtime,des,content', 120, 0, 'list', 'business_createcode_cate', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (13, 'business_createcode_band', '测试品牌', 'InnoDB', 2, 'utf8mb4_general_ci', 4, 0, 110, '', 'band', 'band', 'createcode/band/index', 'business/createcode', 'band.go', 'id,name,des,status,businessID,content', 144, 0, 'list', 'business_createcode_cate', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (14, 'business_createcode_cate', '测试代码生成分类', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (15, 'business_createcode_code', '测试代码生成', 'InnoDB', 2, 'utf8mb4_general_ci', 5, 0, 110, '', 'code', 'code', 'createcode/code/index', 'business/createcode', 'code.go', 'accountID,businessID,cid,age,id,name,content,image', 141, 0, 'cate', 'business_createcode_cate', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (16, 'business_home_quickop', '首页快捷操作', 'InnoDB', 2, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (17, 'business_user', '用户端-用户信息', 'InnoDB', 7, 'utf8mb4_general_ci', 14, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (18, 'business_wxsys_officonfig', '微信公众号配置', 'InnoDB', 2, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (19, 'business_wxsys_user', '微信关注用户', 'InnoDB', 5, 'utf8mb4_general_ci', 11, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (20, 'business_wxsys_wxappconfig', '微信小程序配置', 'InnoDB', 2, 'utf8mb4_general_ci', 7, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (21, 'business_wxsys_wxmenu', '微站微信菜单', 'InnoDB', 3, 'utf8mb4_general_ci', 14, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (22, 'common_apitext', '接口测试数据', 'InnoDB', 13, 'utf8mb4_general_ci', 19, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (23, 'common_apitext_group', '后台端接口测试分组', 'InnoDB', 4, 'utf8mb4_0900_ai_ci', 5, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (24, 'common_apitext_type', '接口类型', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (25, 'common_config', '系统配置参数', 'InnoDB', 0, 'utf8mb4_general_ci', 3, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (26, 'common_dictionary_data', '字典数据-测试数据', 'InnoDB', 2, 'utf8mb4_general_ci', 3, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (27, 'common_dictionary_integral', '积分等级-测试数据', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (28, 'common_dictionary_table', '字典表', 'InnoDB', 0, 'utf8mb4_general_ci', 3, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (29, 'common_email', '业务端邮箱', 'InnoDB', 0, 'utf8mb4_general_ci', 3, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (30, 'common_generatecode', '代码生成', 'InnoDB', 0, 'utf8mb4_general_ci', 41, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (31, 'common_logininfo', '登录页面内容', 'InnoDB', 0, 'utf8mb4_general_ci', 4, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (32, 'common_message', '系统通用消息', 'InnoDB', 0, 'utf8mb4_general_ci', 0, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (33, 'common_picture', '图片库', 'InnoDB', 0, 'utf8mb4_general_ci', 9, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (34, 'common_picture_cate', '分类名称', 'InnoDB', 0, 'utf8mb4_general_ci', 28, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (35, 'common_verify_code', '验证码存储', 'InnoDB', 0, 'utf8mb4_general_ci', 2, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (36, 'login_logs', '（平台及客户）后台登录日志', 'InnoDB', 347, 'utf8mb4_general_ci', 907, 1, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692894701, 1697556334);
+INSERT INTO `common_generatecode` VALUES (37, 'business_email', '业务端邮箱', 'InnoDB', 0, 'utf8mb4_general_ci', 2, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1697556334);
+INSERT INTO `common_generatecode` VALUES (38, 'common_apitest', '接口测试数据', 'InnoDB', 4, 'utf8mb4_general_ci', 8, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1697556334);
+INSERT INTO `common_generatecode` VALUES (39, 'common_apitest_group', '后台端接口测试分组', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1697556334);
+INSERT INTO `common_generatecode` VALUES (40, 'common_apitest_type', '接口类型', 'InnoDB', 3, 'utf8mb4_general_ci', 4, 0, 0, '', '', '', '', '', '', '', 0, 0, 'list', '', 1692896953, 1697556334);
 
 -- ----------------------------
 -- Table structure for common_logininfo
@@ -1176,7 +1008,7 @@ CREATE TABLE `common_picture`  (
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '上传时间',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态1=禁用',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片库' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片库' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_picture
@@ -1200,7 +1032,7 @@ CREATE TABLE `common_picture_cate`  (
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '备注',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '上传时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类名称' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '分类名称' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_picture_cate
@@ -1243,7 +1075,7 @@ CREATE TABLE `common_verify_code`  (
   `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '验证码',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '验证码存储' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '验证码存储' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of common_verify_code
@@ -1262,7 +1094,7 @@ CREATE TABLE `login_logs`  (
   `loginIP` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录IP',
   `createtime` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 904 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '（平台及客户）后台登录日志' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 907 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '（平台及客户）后台登录日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of login_logs
@@ -1613,5 +1445,7 @@ INSERT INTO `login_logs` VALUES (902, 1, 1, 'in', '', 1693106816);
 INSERT INTO `login_logs` VALUES (903, 1, 1, 'in', '', 1694235940);
 INSERT INTO `login_logs` VALUES (904, 1, 1, 'in', '', 1694236616);
 INSERT INTO `login_logs` VALUES (905, 1, 1, 'in', '', 1694237243);
+INSERT INTO `login_logs` VALUES (906, 1, 1, 'in', '', 1697549617);
+INSERT INTO `login_logs` VALUES (907, 1, 1, 'in', '', 1697556632);
 
 SET FOREIGN_KEY_CHECKS = 1;

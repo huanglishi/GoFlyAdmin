@@ -5,7 +5,7 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -27,7 +27,7 @@ func (api *Configuration) Get_email(c *gin.Context) {
 
 // 保存邮箱
 func (api *Configuration) SaveEmail(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	GetID, _ := model.DB().Table("common_email").Where("data_from", "common").Value("id")

@@ -7,7 +7,8 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -54,9 +55,14 @@ func (api *Devapi) Get_list(c *gin.Context) {
 		results.Failed(c, err.Error(), nil)
 	} else {
 		for _, val := range list {
-			groupdata, _ := model.DB().Table("common_apitext_group").Where("id", val["cid"]).Fields("name,type_id").First()
+			groupdata, _ := model.DB().Table("common_apitext_group a").
+				Join("common_apitext_type t", "t.id", "=", "a.type_id").
+				Where("a.id", val["cid"]).Fields("a.name,a.type_id,t.model_name").First()
 			val["groupname"] = groupdata["name"]
 			val["type_id"] = groupdata["type_id"]
+			if utils.GetInterfaceToInt(val["apicode_type"]) == 2 {
+				val["url"] = fmt.Sprintf("/%v%v", groupdata["model_name"], val["url"])
+			}
 		}
 		var totalCount int64
 		totalCount, _ = CDB.Count()
@@ -81,7 +87,7 @@ func (api *Devapi) Get_group(c *gin.Context) {
 // 保存
 func (api *Devapi) Save(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	//当前用户
@@ -116,7 +122,7 @@ func (api *Devapi) Save(c *gin.Context) {
 // 更新状态
 func (api *Devapi) UpStatus(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	res2, err := model.DB().Table("common_apitext").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
@@ -134,7 +140,7 @@ func (api *Devapi) UpStatus(c *gin.Context) {
 // 删除
 func (api *Devapi) Del(c *gin.Context) {
 	//获取post传过来的data
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]
@@ -183,6 +189,22 @@ func (api *Devapi) Get_routes(c *gin.Context) {
 	filePath := "runtime/app/routers.txt"
 	list := utils.ReaderFileByline(filePath)
 	results.Success(c, "获取所有路由列表", list, nil)
+}
+
+// 获取模块列表
+func (api *Devapi) GetModel(c *gin.Context) {
+	var list []string
+	files, err := os.ReadDir("./app")
+	if err != nil {
+		results.Failed(c, "获取目录错误", err)
+		return
+	}
+	for _, file := range files {
+		if file.IsDir() {
+			list = append(list, file.Name())
+		}
+	}
+	results.Success(c, "获取模块目录列表", list, nil)
 }
 
 // 获取指定数据库表的数据
