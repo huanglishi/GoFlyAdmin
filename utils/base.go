@@ -207,6 +207,15 @@ func GetInterfaceToInt(data interface{}) int {
 	return t2
 }
 
+// interface{}转string
+func InterfaceTostring(i interface{}) string {
+	if i == nil {
+		return ""
+	} else {
+		return fmt.Sprintf("%v", i)
+	}
+}
+
 // 字符串首字母大写
 func FirstUpper(s string) string {
 	if s == "" {
