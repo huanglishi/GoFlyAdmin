@@ -26,7 +26,7 @@ func init() {
 func (api *Data) Get_user(c *gin.Context) {
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	data, err := model.DB().Table("business_user").Where("id", user.ID).Fields("id,status,nickname,name,mobile,email,company,remark,city,area,address,createtime").First()
+	data, err := model.DB().Table("business_account").Where("id", user.ID).Fields("id,status,nickname,name,mobile,email,company,remark,city,area,address,createtime").First()
 	if err != nil {
 		results.Failed(c, "获取账号信息失败", err)
 	} else {
@@ -43,7 +43,7 @@ func (api *Data) SaveInfo(c *gin.Context) {
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
 	delete(parameter, "id")
-	res, err := model.DB().Table("business_user").
+	res, err := model.DB().Table("business_account").
 		Data(parameter).
 		Where("id", user.ID).
 		Update()
@@ -62,7 +62,7 @@ func (api *Data) CheckPassword(c *gin.Context) {
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	data, err := model.DB().Table("business_user").Where("id", user.ID).Fields("password,salt").First()
+	data, err := model.DB().Table("business_account").Where("id", user.ID).Fields("password,salt").First()
 	if err != nil {
 		results.Success(c, "账号不存在", false, nil)
 	} else {
@@ -87,7 +87,7 @@ func (api *Data) ChangePassword(c *gin.Context) {
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	data, err := model.DB().Table("business_user").Where("id", user.ID).Fields("password,salt").First()
+	data, err := model.DB().Table("business_account").Where("id", user.ID).Fields("password,salt").First()
 	if err != nil {
 		results.Failed(c, "账号不存在", nil)
 	} else {
@@ -99,7 +99,7 @@ func (api *Data) ChangePassword(c *gin.Context) {
 				results.Success(c, "您输入的原来密码不正确！", false, nil)
 			} else {
 				newpass := utils.Md5(parameter["password"].(string) + data["salt"].(string))
-				model.DB().Table("business_user").
+				model.DB().Table("business_account").
 					Data(map[string]interface{}{"password": newpass}).
 					Where("id", user.ID).
 					Update()

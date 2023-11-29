@@ -43,7 +43,7 @@ func (api *Index) Login(c *gin.Context) {
 	}
 	username := parameter["username"].(string)
 	password := parameter["password"].(string)
-	res, err := model.DB().Table("business_user").Fields("id,accountID,businessID,password,salt,name").Where("username", username).OrWhere("email", username).First()
+	res, err := model.DB().Table("business_account").Fields("id,accountID,businessID,password,salt,name").Where("username", username).OrWhere("email", username).First()
 	if res == nil || err != nil {
 		results.Failed(c, "账号不存在！", nil)
 		return
@@ -60,7 +60,7 @@ func (api *Index) Login(c *gin.Context) {
 		BusinessID:     res["businessID"].(int64),
 		StandardClaims: jwt.StandardClaims{},
 	})
-	model.DB().Table("business_user").Where("id", res["id"]).Data(map[string]interface{}{"loginstatus": 1, "lastLoginTime": time.Now().Unix(), "lastLoginIp": utils.GetIp(c)}).Update()
+	model.DB().Table("business_account").Where("id", res["id"]).Data(map[string]interface{}{"loginstatus": 1, "lastLoginTime": time.Now().Unix(), "lastLoginIp": utils.GetIp(c)}).Update()
 	//登录日志
 	model.DB().Table("login_logs").
 		Data(map[string]interface{}{"type": 1, "uid": res["id"], "out_in": "in",
@@ -81,12 +81,12 @@ func (api *Index) RegisterUser(c *gin.Context) {
 		return
 	}
 	password := parameter["password"].(string)
-	userdata, _ := model.DB().Table("business_user").Fields("id").Where("username", parameter["username"]).First()
+	userdata, _ := model.DB().Table("business_account").Fields("id").Where("username", parameter["username"]).First()
 	if userdata != nil {
 		results.Failed(c, "账号已存在！", nil)
 		return
 	}
-	userdata2, _ := model.DB().Table("business_user").Fields("id").Where("email", parameter["email"]).First()
+	userdata2, _ := model.DB().Table("business_account").Fields("id").Where("email", parameter["email"]).First()
 	if userdata2 != nil {
 		results.Failed(c, "邮箱已存在！", nil)
 		return
@@ -94,7 +94,7 @@ func (api *Index) RegisterUser(c *gin.Context) {
 	rnd := rand.New(rand.NewSource(6))
 	salt := strconv.Itoa(rnd.Int())
 	pass := utils.Md5(password + salt)
-	userid, err := model.DB().Table("business_user").Data(map[string]interface{}{
+	userid, err := model.DB().Table("business_account").Data(map[string]interface{}{
 		"salt":       salt,
 		"username":   parameter["username"],
 		"password":   pass,
@@ -115,7 +115,7 @@ func (api *Index) RegisterUser(c *gin.Context) {
 func (api *Index) Get_userinfo(c *gin.Context) {
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	userdata, err := model.DB().Table("business_user").Fields("id,businessID,username,name,nickname,city,company,avatar,status").Where("id", user.ID).First()
+	userdata, err := model.DB().Table("business_account").Fields("id,businessID,username,name,nickname,city,company,avatar,status").Where("id", user.ID).First()
 	if err != nil {
 		results.Failed(c, "查找用户数据！", err)
 	} else {
@@ -160,7 +160,7 @@ func (api *Index) Logout(c *gin.Context) {
 		getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 		if getuser != nil {
 			user := getuser.(*middleware.UserClaims)
-			model.DB().Table("business_user").Where("id", user.ID).Data(map[string]interface{}{"loginstatus": 0}).Update()
+			model.DB().Table("business_account").Where("id", user.ID).Data(map[string]interface{}{"loginstatus": 0}).Update()
 		}
 	}
 	results.Success(c, "退出登录", true, nil)
@@ -202,7 +202,7 @@ func (api *Index) Get_code(c *gin.Context) {
 			}
 			service_port := 587
 			if _, ok := emailConfig["service_port"]; ok {
-				service_port = utils.GetInterfaceToInt(emailConfig["service_port"])
+				service_port = utils.InterfaceToInt(emailConfig["service_port"])
 			}
 			d := gomail.NewDialer(service_host, service_port, sender, authCode)
 			err := d.DialAndSend(m)
@@ -229,7 +229,7 @@ func (api *Index) ResetPassword(c *gin.Context) {
 		return
 	}
 	password := parameter["password"].(string)
-	userdata2, _ := model.DB().Table("business_user").Where("email", parameter["email"]).Fields("id").First()
+	userdata2, _ := model.DB().Table("business_account").Where("email", parameter["email"]).Fields("id").First()
 	if userdata2 == nil {
 		results.Failed(c, "邮箱不存在！", nil)
 		return
@@ -242,7 +242,7 @@ func (api *Index) ResetPassword(c *gin.Context) {
 	rnd := rand.New(rand.NewSource(6))
 	salt := strconv.Itoa(rnd.Int())
 	pass := utils.Md5(password + salt)
-	res, err := model.DB().Table("business_user").Where("id", userdata2["id"]).Data(map[string]interface{}{
+	res, err := model.DB().Table("business_account").Where("id", userdata2["id"]).Data(map[string]interface{}{
 		"salt":     salt,
 		"password": pass,
 	}).Update()

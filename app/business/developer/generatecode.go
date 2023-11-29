@@ -2,7 +2,6 @@ package developer
 
 import (
 	"encoding/json"
-	"fmt"
 	"gofly/global"
 	"gofly/model"
 	"gofly/route/middleware"
@@ -10,6 +9,7 @@ import (
 	"gofly/utils/results"
 	"io"
 	"os"
+	"path/filepath"
 	"reflect"
 	"strconv"
 	"strings"
@@ -18,6 +18,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/**
+* 代码安装
+ */
 // 用于自动注册路由
 type Generatecode struct{}
 
@@ -82,7 +85,7 @@ func (api *Generatecode) Get_tablelist(c *gin.Context) {
 	results.Success(c, "获取数据库列表", dbtalbelist, nil)
 }
 
-// 保存
+// 保存-安装
 func (api *Generatecode) Save(c *gin.Context) {
 	//获取post传过来的data
 	body, _ := io.ReadAll(c.Request.Body)
@@ -93,6 +96,7 @@ func (api *Generatecode) Save(c *gin.Context) {
 		f_id = parameter["id"].(float64)
 	}
 	if f_id == 0 {
+		//一般不走这里
 		delete(parameter, "id")
 		//获取数据库名
 		tablenames, _ := model.DB().Table("common_generatecode").Pluck("tablename")
@@ -145,7 +149,7 @@ func (api *Generatecode) Save(c *gin.Context) {
 			getId, err := model.DB().Table("business_auth_rule").Data(save_arr).InsertGetId()
 			if err != nil {
 				results.Failed(c, "添加菜单失败", err)
-			} else {
+			} else { //更新排序
 				model.DB().Table("business_auth_rule").
 					Data(map[string]interface{}{"orderNo": getId}).
 					Where("id", getId).
@@ -157,64 +161,60 @@ func (api *Generatecode) Save(c *gin.Context) {
 			isok = true
 			parameter["rule_id"] = findrule["id"]
 		}
+		//菜单添加好后添加代码
 		if isok {
-			//1判断添前后端文件目录
-			//1.1后端
-			file_path := fmt.Sprintf("%s%s%s", "app/", parameter["api_path"], "/")
-			//如果没有filepath文件目录就创建一个
+			/***************************后端**************************/
+			file_path := filepath.Join("app/", utils.InterfaceTostring(parameter["api_path"]))
+			//1. 如果没有filepath文件目录就创建一个
 			if _, err := os.Stat(file_path); err != nil {
 				if !os.IsExist(err) {
 					os.MkdirAll(file_path, os.ModePerm)
 				}
 			}
-			//替换文件内容
-			filename_arr := strings.Split(parameter["api_filename"].(string), `.`)
+			//2. 替换文件内容
+			filename_arr := strings.Split(parameter["api_filename"].(string), `.`) //文件名称
 			packgename_arr := strings.Split(parameter["api_path"].(string), `/`)
-			go CaertReplaystr(file_path, filename_arr[0], packgename_arr[len(packgename_arr)-1], parameter["tablename"].(string), parameter["cate_tablename"].(string), parameter["fields"].(string))
-			if parameter["tpl_type"] == "cate" {
-				//创建cate.go
-				go CaertReplaystr(file_path, filename_arr[0]+"cate", packgename_arr[len(packgename_arr)-1], parameter["cate_tablename"].(string), "", parameter["fields"].(string))
+			//2.1 模块名称
+			modelname := "business"
+			if len(packgename_arr) > 0 {
+				modelname = packgename_arr[0]
 			}
-			//查看是否添加文件到控制器文件
-			go CheckIsAddController(packgename_arr[0], parameter["api_path"].(string))
-			// //1.2前端
+			//2.2 文件名称
+			filename := "index"
+			if len(filename_arr) > 0 {
+				filename = filename_arr[0]
+			}
+			//2.3 包名
+			packageName := ""
+			if len(packgename_arr) > 0 {
+				packageName = packgename_arr[len(packgename_arr)-1]
+			}
+			// //创建后端代码
+			go MarkeGoCode(file_path, filename, packageName, parameter)
+			// // //3. 查看是否添加文件到控制器文件
+			go CheckIsAddController(modelname, utils.InterfaceTostring(parameter["api_path"]))
+			/******************************前端******************************/
 			component_arr := strings.Split(parameter["component"].(string), `/`)
 			componentpah_arr := strings.Split(parameter["component"].(string), (component_arr[len(component_arr)-1]))
-			vue_path := fmt.Sprintf("%s%s%s", global.App.Config.App.Vueobjroot+"/src/views/", componentpah_arr[0], "/")
-			//如果没有filepath文件目录就创建一个
+			vue_path := filepath.Join(global.App.Config.App.Vueobjroot, "/src/views/", componentpah_arr[0]) //前端文件路径
+			//1. 如果没有filepath文件目录就创建一个
 			if _, err := os.Stat(vue_path); err != nil {
 				if !os.IsExist(err) {
 					os.MkdirAll(vue_path, os.ModePerm)
 				}
 			}
-			//创建api下的文件夹
-			ts_path := fmt.Sprintf("%s%s%s", global.App.Config.App.Vueobjroot+"/src/api/", component_arr[0], "/")
-			//如果没有filepath文件目录就创建一个
-			if _, err := os.Stat(ts_path); err != nil {
-				if !os.IsExist(err) {
-					os.MkdirAll(ts_path, os.ModePerm)
-				}
+			//2. 复制前端模板到新创建文件夹下
+			CopyAllDir(filepath.Join("resource/staticfile/codetpl/vue/", utils.InterfaceTostring(parameter["tpl_type"])), vue_path)
+			//3. 修改模板文件内容
+			if parameter["tpl_type"] == "contentcatelist" { //如果是关联分类则更新分类api.ts
+				ApitsReplay(filepath.Join(vue_path, "cate/api.ts"), packageName, filename+"cate")
 			}
-			//创建api.ts并修改文件
-			go CreateApitsAndReplay(ts_path, filename_arr[0], packgename_arr[len(packgename_arr)-1])
-			if parameter["tpl_type"] == "cate" {
-				//创建cateapi.ts并修改文件
-				go CreateApitsAndReplay(ts_path, filename_arr[0]+"cate", packgename_arr[len(packgename_arr)-1])
-				//复制带有分类
-				CopyDir("resource/staticfile/codetpl/listcateview/", vue_path)
-				//替换分类内容
-				VueFileReplay(vue_path+"cate/index.vue", fmt.Sprintf("%s/%s", packgename_arr[len(packgename_arr)-1], filename_arr[0]))
-				VueFileReplay(vue_path+"cate/AddForm.vue", fmt.Sprintf("%s/%s", packgename_arr[len(packgename_arr)-1], filename_arr[0]))
-			} else {
-				CopyDir("resource/staticfile/codetpl/listview/", vue_path)
-			}
-			//list替换文件内容
-			VueFileReplay(vue_path+"index.vue", fmt.Sprintf("%s/%s", packgename_arr[len(packgename_arr)-1], filename_arr[0]))
-			VueFileReplay(vue_path+"AddForm.vue", fmt.Sprintf("%s/%s", packgename_arr[len(packgename_arr)-1], filename_arr[0]))
-			//替换-根据读取（parameter["tablefieldname"]）字段data.ts
-			UpFieldData(vue_path+"data.ts", parameter["tablefieldname"]) //更新data.ts
-			//替换-根据读取（parameter["tablefieldname"]）修vue
-			UpFieldAddForm(vue_path+"AddForm.vue", parameter["fields"].(string), parameter["tablefieldname"]) //更新表单
+			//修改api/index.ts文件
+			ApitsReplay(filepath.Join(vue_path, "api/index.ts"), packageName, filename)
+			//替换data.ts
+			UpFieldData(filepath.Join(vue_path, "data.ts"), parameter["tablefieldname"]) //更新data.ts
+			//替换AddForm.vue表单-根据读取（parameter["tablefieldname"]）修vue
+			UpFieldAddForm(filepath.Join(vue_path, "AddForm.vue"), utils.InterfaceTostring(parameter["fields"]), parameter["tablefieldname"]) //更新表单
 			parameter["is_install"] = 1
 			delete(parameter, "tablefieldname")
 			res, err := model.DB().Table("common_generatecode").
@@ -226,7 +226,6 @@ func (api *Generatecode) Save(c *gin.Context) {
 			} else {
 				results.Success(c, "更新成功！", res, nil)
 			}
-
 		}
 	}
 }
@@ -249,22 +248,27 @@ func (api *Generatecode) UpStatus(c *gin.Context) {
 	}
 }
 
-// 删除
+// 删除/卸载
 func (api *Generatecode) Del(c *gin.Context) {
 	//获取post传过来的data
 	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
-	isok, err := common_uninstall(parameter["id"])
-	if isok {
+	if parameter["is_install"] != nil && utils.InterfaceToInt(parameter["is_install"]) == 1 { //卸载
+		isok, err := common_uninstall(parameter["id"])
+		if isok {
+			model.DB().Table("common_generatecode").Where("id", parameter["id"]).Data(map[string]interface{}{"is_install": 2}).Update()
+			results.Success(c, "卸载成功！", nil, nil)
+		} else {
+			results.Failed(c, "卸载失败", err)
+		}
+	} else { //删除
 		res2, err := model.DB().Table("common_generatecode").Where("id", parameter["id"]).Delete()
 		if err != nil {
 			results.Failed(c, "删除失败", err)
 		} else {
 			results.Success(c, "删除成功！", res2, nil)
 		}
-	} else {
-		results.Failed(c, "卸载失败", err)
 	}
 }
 
@@ -288,10 +292,15 @@ func common_uninstall(id interface{}) (bool, error) {
 	if err != nil {
 		return false, err
 	} else {
-		//删除菜单
-		model.DB().Table("business_auth_rule").Where("id", data["rule_id"]).Delete()
-		model.DB().Table("common_generatecode").Data(map[string]interface{}{"is_install": 0}).Where("id", id).Update()
-		go UnInstallCodeFile(data)
+		file_path := filepath.Join("app/", utils.InterfaceTostring(data["api_path"]))
+		//判断后端代码是否存在删除后端代码
+		filego_path := filepath.Join(file_path, utils.InterfaceTostring(data["api_filename"]))
+		if _, err := os.Stat(filego_path); err == nil {
+			//删除菜单
+			model.DB().Table("business_auth_rule").Where("id", data["rule_id"]).Delete()
+			model.DB().Table("common_generatecode").Data(map[string]interface{}{"is_install": 0}).Where("id", id).Update()
+			go UnInstallCodeFile(data)
+		}
 		return true, nil
 	}
 }

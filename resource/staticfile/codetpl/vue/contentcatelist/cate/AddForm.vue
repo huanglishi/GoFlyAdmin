@@ -19,7 +19,7 @@
   import useLoading from '@/hooks/loading';
   import { cloneDeep } from 'lodash-es';
   //api
-  import { save } from '@/api/modname/filenamecate';
+  import { save } from './api';
   import { Message } from '@arco-design/web-vue';
   export default defineComponent({
     name: 'AddForm',

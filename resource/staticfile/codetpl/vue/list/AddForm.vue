@@ -1,29 +1,17 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" :isPadding="false" :loading="loading" width="1000px" @height-change="onHeightChange" :minHeight="modelHeight" :title="getTitle" @ok="handleSubmit">
+  <BasicModal v-bind="$attrs" @register="registerModal" :isPadding="false" :loading="loading" width="800px" @height-change="onHeightChange" :minHeight="modelHeight" :title="getTitle" @ok="handleSubmit">
     <div class="addFormbox" :style="{'min-height':`${windHeight}px`}">
-      <div class="tabs-header" v-if="isEditor">
-        <div class="tabs-nav-wrap">
-            <div class="tap_item" v-for="iten in tapList" :class="{item_active:activeKey==iten.id}" @click="()=>{activeKey=iten.id}">
-                <div class="label">{{iten.name}}</div>
-            </div>
-        </div>
-        <div class="tabs-bar" :style="{top: `${(activeKey-1)*64}px`,height: `64px`}"></div>
-      </div>
-      <div class="tabs-content" :class="{addpadding:!isEditor}">
+      <div class="tabs-content" >
         <a-form ref="formRef" :model="formData" auto-label-width>
           <div class="content_box">
               <!--基础信息-->
-              <a-scrollbar v-show="activeKey==1" style="overflow: auto;" :style="{height:`${windHeight}px`}">
+              <a-scrollbar   style="overflow: auto;" :style="{height:`${windHeight}px`}">
                 <div class="besecontent" >
                   <a-row :gutter="16">
 <!--replaceTpl-->
                   </a-row>
                 </div>
               </a-scrollbar>
-              <!--高级信息-->
-              <div class="hcontent"  v-show="activeKey==2" :style="{height:`${windHeight}px`}">
-                <Editor :minHeight="windHeight" ref="editorRef" @updata="handleEditUpdta"/>
-              </div>
           </div>
         </a-form>
       </div>
@@ -39,25 +27,21 @@
   import useLoading from '@/hooks/loading';
   import { cloneDeep } from 'lodash-es';
   //api
-  import { save,getContent } from '@/api/modname/filename';
+  import { save } from './api';
   import { Message } from '@arco-design/web-vue';
   import type { RequestOption} from '@arco-design/web-vue/es/upload/interfaces';
   import { userUploadApi } from '@/api/common';
-  import Editor from "@/components/Editor/Main.vue"; // @ is an alias to /src
   import FileManage from '@/views/datacenter/attachment/components/FileManage.vue';
   export default defineComponent({
     name: 'AddBook',
-    components: { BasicModal,Editor,FileManage },
+    components: { BasicModal,FileManage },
     emits: ['success'],
     setup(_, { emit }) {
       const [registerFileModal, { openModal:openFileModal }] = useModal();
       const visibleimage=ref(false);
-      //判断是否存在编辑器
-      const isEditor=ref(false);
       const isUpdate = ref(false);
-      const activeKey= ref(1);
-      const modelHeight= ref(620);
-      const windHeight= ref(620);
+      const modelHeight= ref(420);
+      const windHeight= ref(420);
       //表单
       const formRef = ref<FormInstance>();
       //表单字段
@@ -70,15 +54,10 @@ replaceField:null
       const editorRef = ref();
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
           formRef.value?.resetFields()
-          activeKey.value=1
           setModalProps({ confirmLoading: false });
           isUpdate.value = !!data?.isUpdate;
           if (unref(isUpdate)) {
             formData.value=cloneDeep(data.record)
-            const mewdata = await getContent({id:data.record.id});
-            formData.value=Object.assign({},formData.value,mewdata)
-            if(editorRef.value)
-            editorRef.value.setVal(mewdata.content)
           }else{
             formData.value=basedata
           }
@@ -127,8 +106,8 @@ replaceField:null
                 //开始手动上传
                 const filename=fileItem?.name||""
                 const resdata = await userUploadApi({ name: 'file', file: fileItem.file as Blob, filename,data:{cid:0}},onUploadProgress);
-                //更新附件
-                if(resdata){
+               //更新附件
+               if(resdata){
                   formData.value['replaceFile']=resdata.url
                 }
                 Message.success({content:"上传成功",id:"upStatus",duration:2000})
@@ -161,10 +140,6 @@ replaceField:null
             formData.value['replaceimage']=item.url
           }
       }
-      //编辑器返回数据
-      const handleEditUpdta=(val:string)=>{
-        formData.value["content"]=val
-      }
        //监听高度
        const onHeightChange=(val:any)=>{
         windHeight.value=val
@@ -184,17 +159,10 @@ replaceField:null
             { label: '正常', value: 0 },
             { label: '禁用', value: 1 },
         ],
-        tapList:[
-          {id:1,name:"基础内容"},
-          {id:2,name:"详细内容"},
-        ],
-        activeKey,
         customupFile,
-        handleEditUpdta,
         modelHeight,
         editorRef,
         onHeightChange,windHeight,
-        isEditor,
         registerFileModal,selectImg,UpImage,visibleimage,
       };
     },

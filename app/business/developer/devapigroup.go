@@ -12,6 +12,9 @@ import (
 	"github.com/gohouse/gorose/v2"
 )
 
+/**
+* 接口分类
+ */
 // 用于自动注册路由
 type Devapigroup struct{}
 
@@ -22,12 +25,12 @@ func init() {
 
 // 获取列表
 func (api *Devapigroup) Get_list(c *gin.Context) {
-	list, err := model.DB().Table("common_apitext_group").Order("id asc").Get()
+	list, err := model.DB().Table("common_apidoc_group").Order("id asc").Get()
 	if err != nil {
 		results.Failed(c, err.Error(), nil)
 	} else {
 		for _, val := range list {
-			typename, _ := model.DB().Table("common_apitext_type").Where("id", val["type_id"]).Value("name")
+			typename, _ := model.DB().Table("common_apidoc_type").Where("id", val["type_id"]).Value("name")
 			val["typename"] = typename
 		}
 		results.Success(c, "获取数据列表", list, nil)
@@ -36,7 +39,7 @@ func (api *Devapigroup) Get_list(c *gin.Context) {
 
 // 获取父级数据
 func (api *Devapigroup) Get_parent(c *gin.Context) {
-	list, _ := model.DB().Table("common_apitext_group").Fields("id,pid,name").Order("id asc").Get()
+	list, _ := model.DB().Table("common_apidoc_group").Fields("id,pid,name").Order("id asc").Get()
 	list = utils.GetMenuChildrenArray(list, 0, "pid")
 	if list == nil {
 		list = make([]gorose.Data, 0)
@@ -57,14 +60,14 @@ func (api *Devapigroup) Save(c *gin.Context) {
 	}
 	if f_id == 0 {
 		delete(parameter, "id")
-		addId, err := model.DB().Table("common_apitext_group").Data(parameter).InsertGetId()
+		addId, err := model.DB().Table("common_apidoc_group").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)
 		} else {
 			results.Success(c, "添加成功！", addId, nil)
 		}
 	} else {
-		res, err := model.DB().Table("common_apitext_group").
+		res, err := model.DB().Table("common_apidoc_group").
 			Data(parameter).
 			Where("id", f_id).
 			Update()
@@ -82,7 +85,7 @@ func (api *Devapigroup) UpStatus(c *gin.Context) {
 	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
-	res2, err := model.DB().Table("common_apitext_group").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
+	res2, err := model.DB().Table("common_apidoc_group").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
 	if err != nil {
 		results.Failed(c, "更新失败！", err)
 	} else {
@@ -101,7 +104,7 @@ func (api *Devapigroup) Del(c *gin.Context) {
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]
-	res2, err := model.DB().Table("common_apitext_group").WhereIn("id", ids.([]interface{})).Delete()
+	res2, err := model.DB().Table("common_apidoc_group").WhereIn("id", ids.([]interface{})).Delete()
 	if err != nil {
 		results.Failed(c, "删除失败", err)
 	} else {

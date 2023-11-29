@@ -58,7 +58,7 @@ func (api *Workplace) Get_statistical(c *gin.Context) {
 			"leavemessage_count":     leavemessage_count,
 			"visit_record_yesterday": visit_record_yesterday,
 			"visit_record_today":     visit_record_today,
-			"visit_record":           utils.GetInterfaceToInt(visit_record),
+			"visit_record":           utils.InterfaceToInt(visit_record),
 			"visit_ratio":            visit_ratio}, nil)
 	}
 }

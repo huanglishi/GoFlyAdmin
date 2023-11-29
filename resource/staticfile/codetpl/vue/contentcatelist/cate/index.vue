@@ -83,9 +83,9 @@
   import { columns} from './data';
   import dayjs from 'dayjs';
   //api
-  import { getList,upStatus, del} from '@/api/modname/filenamecate';
+  import { getList,upStatus, del} from './api';
   import { IconPicker ,Icon} from '@/components/Icon';
-  import { Message ,TreeNodeData} from '@arco-design/web-vue';
+  import { Message } from '@arco-design/web-vue';
   import AddForm from './AddForm.vue';
   export default defineComponent({
     name: 'cateindex',

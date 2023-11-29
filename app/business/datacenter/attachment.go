@@ -72,7 +72,7 @@ func (api *Attachment) Get_list(c *gin.Context) {
 		var fileSize interface{}
 		allnumber, _ = model.DB().Table("business_attachment").Where("businessID", user.BusinessID).Where("type", 0).Count()
 		usesize, _ = model.DB().Table("business_attachment").Where("businessID", user.BusinessID).Where("type", 0).Sum("filesize")
-		fileSize, _ = model.DB().Table("business_user").Where("id", user.BusinessID).Value("fileSize")
+		fileSize, _ = model.DB().Table("business_account").Where("id", user.BusinessID).Value("fileSize")
 		datainfo := map[string]interface{}{"allnumber": allnumber, "usesize": usesize, "fileSize": fileSize}
 		var totalCount int64
 		totalCount, _ = MDBC.Count("*")
@@ -159,7 +159,7 @@ func (api *Attachment) Save(c *gin.Context) {
 		parameter["createtime"] = time.Now().Unix()
 		parameter["businessID"] = user.BusinessID
 		getcount, _ := model.DB().Table("business_attachment").Where("businessID", user.BusinessID).Where("pid", parameter["pid"]).Where("title", "like", fmt.Sprintf("%s%v%s", "%", parameter["title"], "%")).Count()
-		parameter["title"] = fmt.Sprintf("%s%v", parameter["title"], utils.GetInterfaceToInt(getcount)+1)
+		parameter["title"] = fmt.Sprintf("%s%v", parameter["title"], utils.InterfaceToInt(getcount)+1)
 		addId, err := model.DB().Table("business_attachment").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)

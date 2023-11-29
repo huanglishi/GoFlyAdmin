@@ -4,8 +4,10 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"gofly/model"
+	"io"
 	"math/rand"
 	"os"
 	"strconv"
@@ -15,6 +17,47 @@ import (
 	"github.com/gin-gonic/gin"
 	jsoniter "github.com/json-iterator/go"
 )
+
+// 获取post传过来的data
+func PostParam(c *gin.Context) (map[string]interface{}, error) {
+	body, _ := io.ReadAll(c.Request.Body)
+	var parameter map[string]interface{}
+	err := json.Unmarshal(body, &parameter)
+	if err != nil {
+		return nil, err
+	}
+	return parameter, nil
+}
+
+// 批量获取请求参数-通用
+func RequestParam(c *gin.Context) (dataMap map[string]interface{}, err error) {
+	c.Request.ParseForm()
+	dataMap = make(map[string]interface{})
+	if c.Request.Method == "POST" || c.Request.Method == "PUT" || c.Request.Method == "DELETE" {
+		if strings.Contains(c.Request.Header.Get("Content-Type"), "application/json") {
+			body, _ := io.ReadAll(c.Request.Body)
+			var parameter map[string]interface{}
+			err := json.Unmarshal(body, &parameter)
+			if err != nil {
+				return nil, err
+			}
+			dataMap = parameter
+		} else {
+			//说明:须post方法,加: 'Content-Type': 'application/x-www-form-urlencoded'
+			for key, valueArray := range c.Request.PostForm {
+				if len(valueArray) > 1 {
+					errMsg := fmt.Sprintf("#ERROR#[%s]参数设置了[%d]次,只能设置一次.", key, len(valueArray))
+					return nil, errors.New(errMsg)
+				}
+				dataMap[key] = c.PostForm(key)
+			}
+		}
+	}
+	for key, _ := range c.Request.URL.Query() {
+		dataMap[key] = c.Query(key)
+	}
+	return
+}
 
 // 判断路径是否存在
 func PathExists(path string) (bool, error) {
@@ -151,7 +194,7 @@ func UniqueArr(m []interface{}) []interface{} {
 	d := make([]interface{}, 0)
 	tempMap := make(map[int]bool, len(m))
 	for _, v := range m { // 以值作为键名
-		keyv := GetInterfaceToInt(v)
+		keyv := InterfaceToInt(v)
 		if tempMap[keyv] == false {
 			tempMap[keyv] = true
 			d = append(d, v)
@@ -161,7 +204,7 @@ func UniqueArr(m []interface{}) []interface{} {
 }
 
 // interface{}转int
-func GetInterfaceToInt(data interface{}) int {
+func InterfaceToInt(data interface{}) int {
 	var t2 int
 	switch data.(type) {
 	case uint:

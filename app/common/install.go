@@ -91,8 +91,8 @@ func (api *Install) Save(c *gin.Context) {
 	salt := time.Now().Unix()
 	adminpass := fmt.Sprintf("%v%v", utils.Md5(parameter["adminPassword"].(string)), salt)
 	businesspass := fmt.Sprintf("%v%v", utils.Md5(parameter["businessPassword"].(string)), salt)
-	model.DB().Table("admin_user").Data(map[string]interface{}{"username": parameter["adminUsername"], "password": utils.Md5(adminpass), "salt": salt}).Where("id", 1).Update()
-	model.DB().Table("business_user").Data(map[string]interface{}{"username": parameter["businessUsername"], "password": utils.Md5(businesspass), "salt": salt}).Where("id", 1).Update()
+	model.DB().Table("admin_account").Data(map[string]interface{}{"username": parameter["adminUsername"], "password": utils.Md5(adminpass), "salt": salt}).Where("id", 1).Update()
+	model.DB().Table("business_account").Data(map[string]interface{}{"username": parameter["businessUsername"], "password": utils.Md5(businesspass), "salt": salt}).Where("id", 1).Update()
 	//4.创建安装锁文件
 	filePath := filepath.Join(path, "/resource/staticfile/template/install.lock")
 	os.Create(filePath)

@@ -18,6 +18,9 @@ import (
 	"github.com/gohouse/gorose/v2"
 )
 
+/**
+* 接口文档
+ */
 // 用于自动注册路由
 type Devapi struct {
 }
@@ -36,8 +39,8 @@ func (api *Devapi) Get_list(c *gin.Context) {
 	_pageSize := c.DefaultQuery("pageSize", "10")
 	pageNo, _ := strconv.Atoi(page)
 	pageSize, _ := strconv.Atoi(_pageSize)
-	MDB := model.DB().Table("common_apitext")
-	CDB := model.DB().Table("common_apitext")
+	MDB := model.DB().Table("common_apidoc")
+	CDB := model.DB().Table("common_apidoc")
 	if cid != "0" {
 		MDB.Where("cid", cid)
 		CDB.Where("cid", cid)
@@ -55,12 +58,12 @@ func (api *Devapi) Get_list(c *gin.Context) {
 		results.Failed(c, err.Error(), nil)
 	} else {
 		for _, val := range list {
-			groupdata, _ := model.DB().Table("common_apitext_group a").
-				Join("common_apitext_type t", "t.id", "=", "a.type_id").
+			groupdata, _ := model.DB().Table("common_apidoc_group a").
+				Join("common_apidoc_type t", "t.id", "=", "a.type_id").
 				Where("a.id", val["cid"]).Fields("a.name,a.type_id,t.model_name").First()
 			val["groupname"] = groupdata["name"]
 			val["type_id"] = groupdata["type_id"]
-			if utils.GetInterfaceToInt(val["apicode_type"]) == 2 {
+			if utils.InterfaceToInt(val["apicode_type"]) == 2 {
 				val["url"] = fmt.Sprintf("/%v%v", groupdata["model_name"], val["url"])
 			}
 		}
@@ -76,7 +79,7 @@ func (api *Devapi) Get_list(c *gin.Context) {
 
 // 获取分组
 func (api *Devapi) Get_group(c *gin.Context) {
-	list, _ := model.DB().Table("common_apitext_group").Fields("id,pid,name").Order("id asc").Get()
+	list, _ := model.DB().Table("common_apidoc_group").Fields("id,pid,name").Order("id asc").Get()
 	list = utils.GetMenuChildrenArray(list, 0, "pid")
 	if list == nil {
 		list = make([]gorose.Data, 0)
@@ -98,7 +101,7 @@ func (api *Devapi) Save(c *gin.Context) {
 	parameter["createtime"] = time.Now().Unix()
 	if f_id == 0 {
 		delete(parameter, "id")
-		addId, err := model.DB().Table("common_apitext").Data(parameter).InsertGetId()
+		addId, err := model.DB().Table("common_apidoc").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)
 		} else {
@@ -107,7 +110,7 @@ func (api *Devapi) Save(c *gin.Context) {
 	} else {
 		delete(parameter, "groupname")
 		delete(parameter, "type_id")
-		res, err := model.DB().Table("common_apitext").
+		res, err := model.DB().Table("common_apidoc").
 			Data(parameter).
 			Where("id", f_id).
 			Update()
@@ -125,7 +128,7 @@ func (api *Devapi) UpStatus(c *gin.Context) {
 	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
-	res2, err := model.DB().Table("common_apitext").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
+	res2, err := model.DB().Table("common_apidoc").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
 	if err != nil {
 		results.Failed(c, "更新失败！", err)
 	} else {
@@ -144,7 +147,7 @@ func (api *Devapi) Del(c *gin.Context) {
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]
-	res2, err := model.DB().Table("common_apitext").WhereIn("id", ids.([]interface{})).Delete()
+	res2, err := model.DB().Table("common_apidoc").WhereIn("id", ids.([]interface{})).Delete()
 	if err != nil {
 		results.Failed(c, "删除失败", err)
 	} else {
@@ -219,7 +222,7 @@ func (api *Devapi) Get_tablelist(c *gin.Context) {
 		if seachword != "" {
 			MDB.Where("name", "like", "%"+seachword+"%")
 		}
-		list, err := MDB.Limit(utils.GetInterfaceToInt(pageSize)).Order("id desc").Get()
+		list, err := MDB.Limit(utils.InterfaceToInt(pageSize)).Order("id desc").Get()
 		if err != nil {
 			results.Failed(c, err.Error(), nil)
 		} else {

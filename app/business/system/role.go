@@ -123,7 +123,7 @@ func (api *Role) Save(c *gin.Context) {
 		f_id = parameter["id"].(float64)
 	}
 	if parameter["menu"] != nil && parameter["menu"] != "*" {
-		rules := utils.GetRulesID("business_auth_role", "pid", parameter["menu"]) //获取子菜单包含的父级ID
+		rules := utils.GetRulesID("business_auth_rule", "pid", parameter["menu"]) //获取子菜单包含的父级ID
 		rudata := rules.([]interface{})
 		var rulesStr []string
 		for _, v := range rudata {

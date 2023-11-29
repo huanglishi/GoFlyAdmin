@@ -5,7 +5,7 @@ import (
 	"gofly/model"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
 	"strconv"
 	"strings"
@@ -23,7 +23,7 @@ func init() {
 	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
-// 获取成员列表
+// 获取列表
 func (api *Replace) get_list(c *gin.Context) {
 	businessID := c.GetHeader("Businessid")
 	title := c.DefaultQuery("title", "")

@@ -44,8 +44,8 @@
   import useLoading from '@/hooks/loading';
   import { cloneDeep } from 'lodash-es';
   //api
-  import { save,getContent } from '@/api/modname/filename';
-  import { getCate } from '@/api/modname/filenamecate';
+  import { save,getContent } from './api';
+  import { getCate } from './cate/api';
   import { Message ,TreeNodeData} from '@arco-design/web-vue';
   import type { RequestOption} from '@arco-design/web-vue/es/upload/interfaces';
   import { userUploadApi } from '@/api/common';

@@ -51,7 +51,7 @@ func (api *Index) Get_list(c *gin.Context) {
 			}
 		}
 		var totalCount int64
-		totalCount, _ = model.DB().Table("business_user").Count()
+		totalCount, _ = model.DB().Table("business_account").Count()
 		results.Success(c, "获取产品列表", map[string]interface{}{
 			"page":     pageNo,
 			"pageSize": pageSize,

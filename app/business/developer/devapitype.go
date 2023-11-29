@@ -21,7 +21,7 @@ func init() {
 
 // 获取列表
 func (api *Devapitype) Get_list(c *gin.Context) {
-	list, err := model.DB().Table("common_apitext_type").Order("id asc").Get()
+	list, err := model.DB().Table("common_apidoc_type").Order("id asc").Get()
 	if err != nil {
 		results.Failed(c, err.Error(), nil)
 	} else {
@@ -35,7 +35,7 @@ func (api *Devapitype) Get_typeinfo(c *gin.Context) {
 	if id == "" {
 		results.Failed(c, "参数id不能为空", nil)
 	} else {
-		data, _ := model.DB().Table("common_apitext_type").Where("id", id).First()
+		data, _ := model.DB().Table("common_apidoc_type").Where("id", id).First()
 		results.Success(c, "获取单条接口类型", data, nil)
 	}
 }
@@ -53,14 +53,14 @@ func (api *Devapitype) Save(c *gin.Context) {
 	}
 	if f_id == 0 {
 		delete(parameter, "id")
-		addId, err := model.DB().Table("common_apitext_type").Data(parameter).InsertGetId()
+		addId, err := model.DB().Table("common_apidoc_type").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)
 		} else {
 			results.Success(c, "添加成功！", addId, nil)
 		}
 	} else {
-		res, err := model.DB().Table("common_apitext_type").
+		res, err := model.DB().Table("common_apidoc_type").
 			Data(parameter).
 			Where("id", f_id).
 			Update()
@@ -79,7 +79,7 @@ func (api *Devapitype) Del(c *gin.Context) {
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]
-	res2, err := model.DB().Table("common_apitext_type").WhereIn("id", ids.([]interface{})).Delete()
+	res2, err := model.DB().Table("common_apidoc_type").WhereIn("id", ids.([]interface{})).Delete()
 	if err != nil {
 		results.Failed(c, "删除失败", err)
 	} else {

@@ -6,9 +6,8 @@ import (
 	"gofly/route/middleware"
 	"gofly/utils"
 	"gofly/utils/results"
-	"io/ioutil"
+	"io"
 	"reflect"
-	"strconv"
 	"strings"
 	"time"
 
@@ -25,20 +24,33 @@ func init() {
 
 // 获取列表
 func (api *Replace) Get_list(c *gin.Context) {
-	getuser, _ := c.Get("user")
-	user := getuser.(*middleware.UserClaims)
-	name := c.DefaultQuery("name", "")
-	page := c.DefaultQuery("page", "1")
-	_pageSize := c.DefaultQuery("pageSize", "10")
-	pageNo, _ := strconv.Atoi(page)
-	pageSize, _ := strconv.Atoi(_pageSize)
-	MDB := model.DB().Table("{tablename}").Where("businessID", user.BusinessID)
-	MDBC := model.DB().Table("{tablename}").Where("businessID", user.BusinessID)
-	if name != "" {
-		MDB.Where("name", "like", "%"+name+"%")
-		MDBC.Where("name", "like", "%"+name+"%")
+	//请求参数
+	params, _ := utils.RequestParam(c)
+	MDB := model.DB().Table("{tablename}").
+		Fields("{fields}")
+	MDBC := model.DB().Table("{tablename}")
+	if utils.IsHaseField("{tablename}", "businessID") {
+		getuser, _ := c.Get("user")
+		user := getuser.(*middleware.UserClaims)
+		MDB.Where("businessID", user.BusinessID)
+		MDBC.Where("businessID", user.BusinessID)
 	}
-	list, err := MDB.Limit(pageSize).Page(pageNo).Order("id desc").Get()
+	if valname, ok := params["name"]; ok && valname != "" {
+		MDB.Where("name", "like", "%"+valname.(string)+"%")
+		MDBC.Where("name", "like", "%"+valname.(string)+"%")
+	}
+	if valstatus, ok := params["status"]; ok && valstatus != "" {
+		MDB.Where("status", valstatus)
+		MDBC.Where("status", valstatus)
+	}
+	if valTime, ok := params["createdTime"]; ok && valTime != "" {
+		datetime_arr := strings.Split(valTime.(string), ",")
+		star_time := utils.StringTimestamp(datetime_arr[0]+" 00:00", "datetime")
+		end_time := utils.StringTimestamp(datetime_arr[1]+" 23:59", "datetime")
+		MDB.WhereBetween("createtime", []interface{}{star_time, end_time})
+		MDBC.WhereBetween("createtime", []interface{}{star_time, end_time})
+	}
+	list, err := MDB.Limit(utils.InterfaceToInt(params["pageSize"])).Page(utils.InterfaceToInt(params["page"])).Order("id desc").Get()
 	if err != nil {
 		results.Failed(c, err.Error(), nil)
 	} else {
@@ -47,26 +59,18 @@ func (api *Replace) Get_list(c *gin.Context) {
 			if _, ok := val["image"]; ok && val["image"] != "" && !strings.Contains(val["image"].(string), "http") && rooturl != nil {
 				val["image"] = rooturl.(string) + val["image"].(string)
 			}
+			if _, ok := val["cid"]; ok {
+				catename, _ := model.DB().Table("{tablenamecate}").Where("id", val["cid"]).Value("name")
+				val["catename"] = catename
+			}
 		}
 		var totalCount int64
 		totalCount, _ = MDBC.Count("*")
 		results.Success(c, "获取全部列表", map[string]interface{}{
-			"page":     pageNo,
-			"pageSize": pageSize,
+			"page":     params["page"],
+			"pageSize": params["pageSize"],
 			"total":    totalCount,
 			"items":    list}, nil)
-	}
-}
-
-// 获取分类列表
-func (api *Replace) Get_cate(c *gin.Context) {
-	getuser, _ := c.Get("user")
-	user := getuser.(*middleware.UserClaims)
-	list, err := model.DB().Table("{tablename}").Where("businessID", user.BusinessID).Fields("id as value,name as label").Order("weigh desc,id desc").Get()
-	if err != nil {
-		results.Failed(c, err.Error(), nil)
-	} else {
-		results.Success(c, "获取选择列表", list, nil)
 	}
 }
 
@@ -83,8 +87,12 @@ func (api *Replace) Save(c *gin.Context) {
 	}
 	if f_id == 0 {
 		delete(parameter, "id")
-		parameter["createtime"] = time.Now().Unix()
-		parameter["businessID"] = user.BusinessID
+		if utils.IsHaseField("{tablename}", "createtime") {
+			parameter["createtime"] = time.Now().Unix()
+		}
+		if utils.IsHaseField("{tablename}", "businessID") {
+			parameter["businessID"] = user.BusinessID
+		}
 		addId, err := model.DB().Table("{tablename}").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)

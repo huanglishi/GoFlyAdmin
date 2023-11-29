@@ -24,7 +24,7 @@ type Account struct {
 func (api *Account) Get_userdata(c *gin.Context) {
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	userdata, err := model.DB().Table("admin_user").Fields("id,accountID,username,nickname,avatar,status,password,salt,tel,email,city,remark").Where("id", user.ID).First()
+	userdata, err := model.DB().Table("admin_account").Fields("id,accountID,username,nickname,avatar,status,password,salt,tel,email,city,remark").Where("id", user.ID).First()
 	if err != nil {
 		results.Failed(c, " 获取用户数据失败", err)
 	} else {
@@ -72,7 +72,7 @@ func (api *Account) Upuserinfo(c *gin.Context) {
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	res, err := model.DB().Table("admin_user").
+	res, err := model.DB().Table("admin_account").
 		Data(parameter).
 		Where("id", user.ID).
 		Update()
@@ -90,7 +90,7 @@ func (api *Account) Upavatar(c *gin.Context) {
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	res, err := model.DB().Table("admin_user").Where("id", user.ID).Data(map[string]interface{}{"avatar": parameter["url"]}).Update()
+	res, err := model.DB().Table("admin_account").Where("id", user.ID).Data(map[string]interface{}{"avatar": parameter["url"]}).Update()
 	if err != nil {
 		results.Failed(c, "更新头像失败！", err)
 	} else {
@@ -105,7 +105,7 @@ func (api *Account) Changepwd(c *gin.Context) {
 	_ = json.Unmarshal(body, &parameter)
 	getuser, _ := c.Get("user") //取值 实现了跨中间件取值
 	user := getuser.(*middleware.UserClaims)
-	userdata, err := model.DB().Table("admin_user").Where("id", user.ID).Fields("password,salt").First()
+	userdata, err := model.DB().Table("admin_account").Where("id", user.ID).Fields("password,salt").First()
 	if err != nil {
 		results.Failed(c, "查找账号失败！", err)
 	} else {
@@ -114,7 +114,7 @@ func (api *Account) Changepwd(c *gin.Context) {
 			results.Failed(c, "原来密码输入错误！", err)
 		} else {
 			newpass := utils.Md5(parameter["passwordNew"].(string) + userdata["salt"].(string))
-			res, err := model.DB().Table("admin_user").
+			res, err := model.DB().Table("admin_account").
 				Data(map[string]interface{}{"password": newpass}).
 				Where("id", user.ID).
 				Update()

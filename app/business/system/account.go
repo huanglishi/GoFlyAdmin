@@ -36,7 +36,7 @@ func (api *Account) Get_list(c *gin.Context) {
 	_pageSize := c.DefaultQuery("pageSize", "10")
 	pageNo, _ := strconv.Atoi(page)
 	pageSize, _ := strconv.Atoi(_pageSize)
-	MDB := model.DB().Table("business_user").Fields("id,status,name,username,avatar,tel,mobile,email,remark,dept_id,remark,city,address,company,createtime").
+	MDB := model.DB().Table("business_account").Fields("id,status,name,username,avatar,tel,mobile,email,remark,dept_id,remark,city,address,company,createtime").
 		Where("businessID", user.BusinessID)
 	if cid != "0" {
 		MDB.Where("dept_id", cid)
@@ -67,7 +67,7 @@ func (api *Account) Get_list(c *gin.Context) {
 			}
 		}
 		var totalCount int64
-		totalCount, _ = model.DB().Table("business_user").Count()
+		totalCount, _ = model.DB().Table("business_account").Count()
 		results.Success(c, "获取全部列表", map[string]interface{}{
 			"page":     pageNo,
 			"pageSize": pageSize,
@@ -110,7 +110,7 @@ func (api *Account) Save(c *gin.Context) {
 		parameter["uid"] = user.ID
 		parameter["accountID"] = user.Accountid
 		parameter["businessID"] = user.BusinessID
-		addId, err := model.DB().Table("business_user").Data(parameter).InsertGetId()
+		addId, err := model.DB().Table("business_account").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)
 		} else {
@@ -122,7 +122,7 @@ func (api *Account) Save(c *gin.Context) {
 		delete(parameter, "rolename")
 		delete(parameter, "depname")
 		parameter["updatetime"] = time.Now().Unix()
-		res, err := model.DB().Table("business_user").
+		res, err := model.DB().Table("business_account").
 			Data(parameter).
 			Where("id", f_id).
 			Update()
@@ -143,7 +143,7 @@ func (api *Account) UpStatus(c *gin.Context) {
 	body, _ := io.ReadAll(c.Request.Body)
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
-	res2, err := model.DB().Table("business_user").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
+	res2, err := model.DB().Table("business_account").Where("id", parameter["id"]).Data(map[string]interface{}{"status": parameter["status"]}).Update()
 	if err != nil {
 		results.Failed(c, "更新失败！", err)
 	} else {
@@ -162,7 +162,7 @@ func (api *Account) Del(c *gin.Context) {
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	ids := parameter["ids"]
-	res2, err := model.DB().Table("business_user").WhereIn("id", ids.([]interface{})).Delete()
+	res2, err := model.DB().Table("business_account").WhereIn("id", ids.([]interface{})).Delete()
 	if err != nil {
 		results.Failed(c, "删除失败", err)
 	} else {
@@ -186,7 +186,7 @@ func appRoleAccess(roleids []interface{}, uid interface{}) {
 func (api *Account) Get_account(c *gin.Context) {
 	getuser, _ := c.Get("user")
 	user := getuser.(*middleware.UserClaims)
-	data, _ := model.DB().Table("business_user").Where("id", user.ID).First()
+	data, _ := model.DB().Table("business_account").Where("id", user.ID).First()
 	results.Success(c, "获取账号信息", data, nil)
 }
 
@@ -226,7 +226,7 @@ func (api *Account) Isaccountexist(c *gin.Context) {
 	var parameter map[string]interface{}
 	_ = json.Unmarshal(body, &parameter)
 	if parameter["id"] != nil {
-		res1, err := model.DB().Table("business_user").Where("id", "!=", parameter["id"]).Where("username", parameter["username"]).Value("id")
+		res1, err := model.DB().Table("business_account").Where("id", "!=", parameter["id"]).Where("username", parameter["username"]).Value("id")
 		if err != nil {
 			results.Failed(c, "验证失败", err)
 		} else if res1 != nil {
@@ -235,7 +235,7 @@ func (api *Account) Isaccountexist(c *gin.Context) {
 			results.Success(c, "验证通过", res1, nil)
 		}
 	} else {
-		res2, err := model.DB().Table("business_user").Where("username", parameter["username"]).Value("id")
+		res2, err := model.DB().Table("business_account").Where("username", parameter["username"]).Value("id")
 		if err != nil {
 			results.Failed(c, "验证失败", err)
 		} else if res2 != nil {

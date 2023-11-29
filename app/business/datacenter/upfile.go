@@ -40,11 +40,11 @@ func (api *Upfile) UploadFile(c *gin.Context) {
 	if usesize == nil {
 		usesize = 0
 	}
-	fileSize, _ = model.DB().Table("business_user").Where("id", user.BusinessID).Value("fileSize")
+	fileSize, _ = model.DB().Table("business_account").Where("id", user.BusinessID).Value("fileSize")
 	if fileSize == nil {
 		fileSize = 0
 	}
-	if utils.GetInterfaceToInt(usesize) >= utils.GetInterfaceToInt(fileSize) {
+	if utils.InterfaceToInt(usesize) >= utils.InterfaceToInt(fileSize) {
 		results.Failed(c, "您的存储空间已满,请您先去购买存储空间！", nil)
 		return
 	}

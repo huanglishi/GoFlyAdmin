@@ -33,7 +33,7 @@ func (api *Workplace) Get_statistical(c *gin.Context) {
 	if err != nil {
 		results.Failed(c, "统计访问数据失败", err)
 	} else {
-		results.Success(c, "统计总数据", map[string]interface{}{"totalData": map[string]interface{}{"allBook": allBook, "allFile": allFile, "visitNum": utils.GetInterfaceToInt(visitNum)}}, err)
+		results.Success(c, "统计总数据", map[string]interface{}{"totalData": map[string]interface{}{"allBook": allBook, "allFile": allFile, "visitNum": utils.InterfaceToInt(visitNum)}}, err)
 	}
 }
 
@@ -84,9 +84,9 @@ func (api *Workplace) Get_popular(c *gin.Context) {
 			list = make([]gorose.Data, 0) //赋空值
 		}
 		countnum, _ := model.DB().Table("doc_file").Where("status", 0).Where("admin_id", user.ID).Sum("visit")
-		countnum_int := utils.GetInterfaceToInt(countnum)
+		countnum_int := utils.InterfaceToInt(countnum)
 		for key, val := range list {
-			visit_int := utils.GetInterfaceToInt(val["visit"])
+			visit_int := utils.InterfaceToInt(val["visit"])
 			val["increases"] = fmt.Sprintf("%.2f%%", float32(visit_int)/float32(countnum_int)*100)
 			val["keys"] = key + 1
 		}

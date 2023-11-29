@@ -37,7 +37,7 @@ func (api *Api) Get_list(c *gin.Context) {
 		results.Failed(c, "请传参数apiID", nil)
 	} else {
 		//获取接口数据信息
-		apitext, _ := model.DB().Table("common_apitext").Where("id", apiID).Fields("tablename,fields").First()
+		apitext, _ := model.DB().Table("common_apidoc").Where("id", apiID).Fields("tablename,fields").First()
 		MDB := model.DB().Table(apitext["tablename"]).Fields(apitext["fields"].(string)).Where("businessID", businessID)
 		MDBC := model.DB().Table(apitext["tablename"]).Where("businessID", businessID)
 		if title != "" {
@@ -83,7 +83,7 @@ func (api *Api) Get_detail(c *gin.Context) {
 		results.Failed(c, "请传参数id", nil)
 	} else {
 		//获取接口数据信息
-		apitext, _ := model.DB().Table("common_apitext").Where("id", apiID).Fields("tablename,fields").First()
+		apitext, _ := model.DB().Table("common_apidoc").Where("id", apiID).Fields("tablename,fields").First()
 		data, err := model.DB().Table(apitext["tablename"]).Where("id", id).Fields(apitext["fields"].(string)).First()
 		if err != nil {
 			results.Failed(c, "获取详情失败", err)
@@ -112,7 +112,7 @@ func (api *Api) Save(c *gin.Context) {
 		if parameter["id"] != nil {
 			f_id = parameter["id"].(float64)
 		}
-		apitext, _ := model.DB().Table("common_apitext").Where("id", apiID).Fields("tablename").First()
+		apitext, _ := model.DB().Table("common_apidoc").Where("id", apiID).Fields("tablename").First()
 		if f_id == 0 {
 			delete(parameter, "id")
 			if IsHaseField(apitext["tablename"].(string), "createtime") {
@@ -153,7 +153,7 @@ func (api *Api) Del(c *gin.Context) {
 	if apiID == "" {
 		results.Failed(c, "请传参数apiID", nil)
 	} else {
-		apitext, _ := model.DB().Table("common_apitext").Where("id", apiID).Fields("tablename").First()
+		apitext, _ := model.DB().Table("common_apidoc").Where("id", apiID).Fields("tablename").First()
 		body, _ := io.ReadAll(c.Request.Body)
 		var parameter map[string]interface{}
 		_ = json.Unmarshal(body, &parameter)

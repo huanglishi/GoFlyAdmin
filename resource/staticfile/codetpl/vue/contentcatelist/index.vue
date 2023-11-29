@@ -1,7 +1,7 @@
 <template>
   <div class="container" >
     <Breadcrumb :items="[route.matched[0].meta.locale, route.meta.locale]" />
-    <a-card class="general-card onelineCard" style="height: calc(100% - 50px);">
+    <a-card class="general-card onelineCard" ref="onelineCardRef" style="height: calc(100% - 50px);">
       <a-row style="margin-bottom: 10px">
         <a-col :span="16" >
           <a-space>
@@ -64,6 +64,7 @@
         :size="size"
         :default-expand-all-rows="true"
         ref="artable"
+        :scroll="{x:cardboxWidth}"
         @page-change="handlePaageChange" 
         @page-size-change="handlePaageSizeChange" 
       >
@@ -108,13 +109,14 @@
 <script lang="ts" setup>
   import { computed, ref, reactive, watch, onMounted,nextTick } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { getList,upStatus,del} from '@/api/modname/filename';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import cloneDeep from 'lodash/cloneDeep';
-  import dayjs from 'dayjs';
+  //api
+  import { getList,upStatus,del} from './api';
   //数据
   import { columns} from './data';
+  import dayjs from 'dayjs';
   //表单
   import { useModal } from '/@/components/Modal';
   import AddForm from './AddForm.vue';
@@ -128,7 +130,8 @@
   const { t } = useI18n();
   const [registerModal, { openModal }] = useModal();
   const [registerCateIndexModal, { openModal:cateModdal }] = useModal();
- 
+  const onelineCardRef = ref(null);
+  const cardboxWidth= computed(() => (onelineCardRef.value ? onelineCardRef.value["$el"]["offsetWidth"] -100: 1200));
   const densityList = computed(() => [
     {
       name: t('searchTable.size.mini'),

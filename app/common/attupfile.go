@@ -32,11 +32,11 @@ func (api *Attupfile) Upfile(c *gin.Context) {
 	var usesize interface{}
 	var fileSize interface{}
 	usesize, _ = model.DB().Table("business_attachment").Where("businessID", user.BusinessID).Where("type", 0).Sum("filesize")
-	fileSize, _ = model.DB().Table("business_user").Where("id", user.BusinessID).Value("fileSize")
+	fileSize, _ = model.DB().Table("business_account").Where("id", user.BusinessID).Value("fileSize")
 	if usesize == nil {
 		usesize = '0'
 	}
-	if utils.GetInterfaceToInt(usesize) >= utils.GetInterfaceToInt(fileSize) {
+	if utils.InterfaceToInt(usesize) >= utils.InterfaceToInt(fileSize) {
 		results.Failed(c, "您的存储空间已满,请您先去购买存储空间！", nil)
 		return
 	}

@@ -89,6 +89,8 @@ func (api *Dept) Save(c *gin.Context) {
 			results.Success(c, "添加成功！", addId, nil)
 		}
 	} else {
+		delete(parameter, "children")
+		delete(parameter, "spacer")
 		res, err := model.DB().Table("business_auth_dept").
 			Data(parameter).
 			Where("id", f_id).

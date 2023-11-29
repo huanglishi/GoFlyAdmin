@@ -14,15 +14,6 @@ func main() {
 	// 初始化日志
 	global.App.Log = bootstrap.InitializeLog()
 	global.App.Log.Info("项目启动成功")
-	//将对象，转换成json格式
-	// data_config, err := json.Marshal(conf)
-
-	// if err != nil {
-	// 	fmt.Println("err:\t", err.Error())
-	// 	return
-	// }
-	// fmt.Println("data_config:\t", string(data_config))
-	// fmt.Println("config.Database.Driver=", conf.App.Port)
 	//加载配置
 	cpu_num, _ := strconv.Atoi(global.App.Config.App.CPUnum)
 	mycpu := runtime.NumCPU()
