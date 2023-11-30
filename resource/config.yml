@@ -10,7 +10,7 @@ dbconf:
      #密码
      password: root
      #数据库名
-     database: gofly_base
+     database: gofly_admin
      #数据表前缀
      prefix: 
 jwt:
@@ -34,7 +34,7 @@ app:
      # Gin 框架在运行的时候默认是debug模式 有： 开发：debug，生产：release，测试模式：test
      runlogtype: debug
      # 配置代码生成时-前端代码根目录位置(开发必改)
-     vueobjroot: D:/Project/develop/vue/gofly_base/gofly_business
+     vueobjroot: D:\Project\develop\vue\gofly_admin\business
      # 配置根域名访问重定向路径,默认是业务端后台
      rootview: webbusiness
      #不需要token-根模块

@@ -1,7 +1,7 @@
 package global
 
 import (
-	"gofly/config"
+	"gofly/utils/config"
 
 	"github.com/spf13/viper"
 	"go.uber.org/zap"

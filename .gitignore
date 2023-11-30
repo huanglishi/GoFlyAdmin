@@ -3,8 +3,7 @@ tmp
 .github
 tmp
 gofly
-runtime/app
-runtime/logs
+runtime
 
 .local
 # local env files
