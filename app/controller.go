@@ -13,6 +13,7 @@ import (
 	_ "gofly/app/business"
 	_ "gofly/app/common"
 	_ "gofly/app/home"
+	_ "gofly/app/user"
 	_ "gofly/app/wxapp"
 	_ "gofly/app/wxoffi"
 )
