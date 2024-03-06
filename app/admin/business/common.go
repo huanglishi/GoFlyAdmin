@@ -3,12 +3,12 @@ package business
 import (
 	"strings"
 
-	"github.com/gohouse/gorose/v2"
+	"gofly/utils/gform"
 )
 
 // 获取菜单子树结构
-func GetMenuChildrenArray(pdata []gorose.Data, parent_id int64) []gorose.Data {
-	var returnList []gorose.Data
+func GetMenuChildrenArray(pdata []gform.Data, parent_id int64) []gform.Data {
+	var returnList []gform.Data
 	for _, v := range pdata {
 		if v["pid"].(int64) == parent_id {
 			children := GetMenuChildrenArray(pdata, v["id"].(int64))
@@ -22,9 +22,9 @@ func GetMenuChildrenArray(pdata []gorose.Data, parent_id int64) []gorose.Data {
 }
 
 // tool-获取树状数组
-func GetTreeArray(num []gorose.Data, pid int64, itemprefix string) []gorose.Data {
+func GetTreeArray(num []gform.Data, pid int64, itemprefix string) []gform.Data {
 	childs := ToolFar(num, pid) //获取pid下的所有数据
-	var chridnum []gorose.Data
+	var chridnum []gform.Data
 	if childs != nil {
 		var number int = 1
 		var total int = len(childs)
@@ -59,14 +59,14 @@ func GetTreeArray(num []gorose.Data, pid int64, itemprefix string) []gorose.Data
 }
 
 // 2.将getTreeArray的结果返回为二维数组
-func getTreeList_txt(data []gorose.Data, field string) []gorose.Data {
-	var midleArr []gorose.Data
+func getTreeList_txt(data []gform.Data, field string) []gform.Data {
+	var midleArr []gform.Data
 	for _, v := range data {
-		var childlist []gorose.Data
+		var childlist []gform.Data
 		if _, ok := v["childlist"]; ok {
-			childlist = v["childlist"].([]gorose.Data)
+			childlist = v["childlist"].([]gform.Data)
 		} else {
-			childlist = make([]gorose.Data, 0)
+			childlist = make([]gform.Data, 0)
 		}
 		delete(v, "childlist")
 		v[field+"_txt"] = v["spacer"].(string) + " " + v[field+""].(string)
@@ -87,8 +87,8 @@ func getTreeList_txt(data []gorose.Data, field string) []gorose.Data {
 }
 
 // base_tool-获取pid下所有数组
-func ToolFar(data []gorose.Data, pid int64) []gorose.Data {
-	var mapString []gorose.Data
+func ToolFar(data []gform.Data, pid int64) []gform.Data {
+	var mapString []gform.Data
 	for _, v := range data {
 		if v["pid"].(int64) == pid {
 			mapString = append(mapString, v)
@@ -98,12 +98,12 @@ func ToolFar(data []gorose.Data, pid int64) []gorose.Data {
 }
 
 // 数组拼接
-func ArrayMerge(ss ...[]gorose.Data) []gorose.Data {
+func ArrayMerge(ss ...[]gform.Data) []gform.Data {
 	n := 0
 	for _, v := range ss {
 		n += len(v)
 	}
-	s := make([]gorose.Data, 0, n)
+	s := make([]gform.Data, 0, n)
 	for _, v := range ss {
 		s = append(s, v...)
 	}

@@ -2,7 +2,7 @@ package bootstrap
 
 import (
 	"gofly/global"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"os"
 	"time"
 
@@ -32,7 +32,7 @@ func InitializeLog() *zap.Logger {
 }
 
 func createRootDir() {
-	if ok, _ := utils.PathExists(global.App.Config.Log.RootDir); !ok {
+	if ok, _ := gf.PathExists(global.App.Config.Log.RootDir); !ok {
 		_ = os.Mkdir(global.App.Config.Log.RootDir, os.ModePerm)
 	}
 }

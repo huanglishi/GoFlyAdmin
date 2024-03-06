@@ -3,7 +3,7 @@ package common
 import (
 	"encoding/json"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -16,7 +16,7 @@ type Table struct {
 
 func init() {
 	fpath := Table{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 数据通用排序

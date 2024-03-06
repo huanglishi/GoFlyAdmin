@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -21,7 +21,7 @@ type Attachment struct{}
 
 func init() {
 	fpath := Attachment{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取列表
@@ -47,8 +47,8 @@ func (api *Attachment) Get_list(c *gin.Context) {
 	}
 	if createdTime != "" {
 		datetime_arr := strings.Split(createdTime, ",")
-		star_time := utils.StringTimestamp(datetime_arr[0]+" 00:00", "datetime")
-		end_time := utils.StringTimestamp(datetime_arr[1]+" 23:59", "datetime")
+		star_time := gf.StringTimestamp(datetime_arr[0]+" 00:00", "datetime")
+		end_time := gf.StringTimestamp(datetime_arr[1]+" 23:59", "datetime")
 		MDB.WhereBetween("createtime", []interface{}{star_time, end_time})
 		MDBC.WhereBetween("createtime", []interface{}{star_time, end_time})
 	}
@@ -118,8 +118,8 @@ func (api *Attachment) Get_picture(c *gin.Context) {
 	}
 	if createdTime != "" {
 		datetime_arr := strings.Split(createdTime, ",")
-		star_time := utils.StringTimestamp(datetime_arr[0]+" 00:00", "datetime")
-		end_time := utils.StringTimestamp(datetime_arr[1]+" 23:59", "datetime")
+		star_time := gf.StringTimestamp(datetime_arr[0]+" 00:00", "datetime")
+		end_time := gf.StringTimestamp(datetime_arr[1]+" 23:59", "datetime")
 		MDB.WhereBetween("createtime", []interface{}{star_time, end_time})
 		MDBC.WhereBetween("createtime", []interface{}{star_time, end_time})
 	}
@@ -159,7 +159,7 @@ func (api *Attachment) Save(c *gin.Context) {
 		parameter["createtime"] = time.Now().Unix()
 		parameter["businessID"] = user.BusinessID
 		getcount, _ := model.DB().Table("business_attachment").Where("businessID", user.BusinessID).Where("pid", parameter["pid"]).Where("title", "like", fmt.Sprintf("%s%v%s", "%", parameter["title"], "%")).Count()
-		parameter["title"] = fmt.Sprintf("%s%v", parameter["title"], utils.InterfaceToInt(getcount)+1)
+		parameter["title"] = fmt.Sprintf("%s%v", parameter["title"], gf.InterfaceToInt(getcount)+1)
 		addId, err := model.DB().Table("business_attachment").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)
@@ -195,7 +195,7 @@ func (api *Attachment) Del(c *gin.Context) {
 		results.Failed(c, "删除失败", err)
 	} else {
 		if file_list != nil {
-			utils.Del_file(file_list.([]interface{}))
+			gf.Del_file(file_list.([]interface{}))
 		}
 		results.Success(c, "删除成功！", res2, nil)
 	}

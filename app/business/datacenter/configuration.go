@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -17,7 +17,7 @@ type Configuration struct{}
 
 func init() {
 	fpath := Configuration{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取邮箱

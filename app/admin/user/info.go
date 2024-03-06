@@ -2,7 +2,7 @@ package user
 
 import (
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"math/rand"
 	"reflect"
@@ -16,7 +16,7 @@ type Info struct {
 
 func init() {
 	fpath := Info{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 /**

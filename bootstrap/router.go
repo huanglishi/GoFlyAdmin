@@ -6,7 +6,7 @@ import (
 	"gofly/global"
 	"gofly/model"
 	"gofly/route"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"net/http"
 	"os"
 	"os/signal"
@@ -26,7 +26,7 @@ func RunServer() {
 		}
 	}
 	filePath := "runtime/app/routers.txt"
-	utils.WriteToFile(filePath, routes)
+	gf.WriteToFile(filePath, routes)
 	model.MyInit(1) //初始化数据
 	if global.App.Config.App.Env == "dev" {
 		fmt.Printf("\n %c[1;40;32m%s%c[0m\n", 0x1B, "在浏览器访问：​​http://127.0.0.1:"+global.App.Config.App.Port+"/common/install/index ​进行​安装​", 0x1B)

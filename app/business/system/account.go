@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -18,7 +18,7 @@ import (
 
 func init() {
 	fpath := Account{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 用于自动注册路由
@@ -98,7 +98,7 @@ func (api *Account) Save(c *gin.Context) {
 	if parameter["password"] != nil && parameter["password"] != "" {
 		salt := time.Now().Unix()
 		mdpass := fmt.Sprintf("%v%v", parameter["password"], salt)
-		parameter["password"] = utils.Md5(mdpass)
+		parameter["password"] = gf.Md5(mdpass)
 		parameter["salt"] = salt
 	}
 	if parameter["avatar"] == "" {
@@ -195,8 +195,8 @@ func (api *Account) Get_role(c *gin.Context) {
 	getuser, _ := c.Get("user") //当前用户
 	user := getuser.(*middleware.UserClaims)
 	role_id, _ := model.DB().Table("business_auth_role_access").Where("uid", user.ID).Pluck("role_id")
-	role_ids := utils.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
-	all_role_id := utils.MergeArr(role_id.([]interface{}), role_ids)
+	role_ids := gf.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
+	all_role_id := gf.MergeArr(role_id.([]interface{}), role_ids)
 	menuList, _ := model.DB().Table("business_auth_role").WhereIn("id", all_role_id).Where("status", 0).Fields("id ,pid,name").Order("weigh asc").Get()
 	results.Success(c, "表单选择角色多选用数据", menuList, nil)
 }

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -19,7 +19,7 @@ type Attachment struct{}
 
 func init() {
 	fpath := Attachment{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取列表
@@ -46,8 +46,8 @@ func (api *Attachment) Get_list(c *gin.Context) {
 	}
 	if createdTime != "" {
 		datetime_arr := strings.Split(createdTime, ",")
-		star_time := utils.StringTimestamp(datetime_arr[0]+" 00:00", "datetime")
-		end_time := utils.StringTimestamp(datetime_arr[1]+" 23:59", "datetime")
+		star_time := gf.StringTimestamp(datetime_arr[0]+" 00:00", "datetime")
+		end_time := gf.StringTimestamp(datetime_arr[1]+" 23:59", "datetime")
 		MDB.WhereBetween("createtime", []interface{}{star_time, end_time})
 		MDBC.WhereBetween("createtime", []interface{}{star_time, end_time})
 	}
@@ -83,7 +83,7 @@ func (api *Attachment) Del(c *gin.Context) {
 		results.Failed(c, "删除失败", err)
 	} else {
 		if file_list != nil {
-			utils.Del_file(file_list.([]interface{}))
+			gf.Del_file(file_list.([]interface{}))
 		}
 		results.Success(c, "删除成功！", res2, nil)
 	}

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"math/rand"
@@ -22,7 +22,7 @@ type Bizuser struct {
 
 func init() {
 	fpath := Bizuser{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取成员列表
@@ -93,7 +93,7 @@ func (api *Bizuser) Save(c *gin.Context) {
 		rnd := rand.New(rand.NewSource(6))
 		salt := strconv.Itoa(rnd.Int())
 		mdpass := parameter["password"].(string) + salt
-		parameter["password"] = utils.Md5(mdpass)
+		parameter["password"] = gf.Md5(mdpass)
 		parameter["salt"] = salt
 	}
 	if parameter["avatar"] == "" {
@@ -222,8 +222,8 @@ func (api *Bizuser) Get_role(c *gin.Context) {
 	getuser, _ := c.Get("user") //当前用户
 	user := getuser.(*middleware.UserClaims)
 	role_id, _ := model.DB().Table("business_auth_role_access").Where("uid", user.ID).Pluck("role_id")
-	role_ids := utils.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
-	all_role_id := utils.MergeArr(role_id.([]interface{}), role_ids)
+	role_ids := gf.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
+	all_role_id := gf.MergeArr(role_id.([]interface{}), role_ids)
 	menuList, _ := model.DB().Table("business_auth_role").WhereIn("id", all_role_id).Where("status", 0).Fields("id ,pid,name").Order("weigh asc").Get()
 	results.Success(c, "表单选择角色多选用数据", menuList, nil)
 }

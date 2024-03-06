@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"os"
 	"os/exec"
@@ -26,7 +26,7 @@ type Upfile struct{}
 
 func init() {
 	fpath := Upfile{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 上传图片
@@ -44,7 +44,7 @@ func (api *Upfile) UploadFile(c *gin.Context) {
 	if fileSize == nil {
 		fileSize = 0
 	}
-	if utils.InterfaceToInt(usesize) >= utils.InterfaceToInt(fileSize) {
+	if gf.InterfaceToInt(usesize) >= gf.InterfaceToInt(fileSize) {
 		results.Failed(c, "您的存储空间已满,请您先去购买存储空间！", nil)
 		return
 	}

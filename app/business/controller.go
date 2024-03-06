@@ -14,5 +14,5 @@ import (
 	_ "gofly/app/business/developer"
 	_ "gofly/app/business/system"
 	_ "gofly/app/business/user"
-	_ "gofly/app/business/wxsys"
+	_ "gofly/app/business/makecode"
 )

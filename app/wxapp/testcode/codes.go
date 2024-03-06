@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -21,7 +21,7 @@ type Codes struct {
 
 func init() {
 	fpath := Codes{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取成员列表

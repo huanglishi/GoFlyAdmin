@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"os"
 	"path/filepath"
@@ -17,7 +17,7 @@ import (
 
 func init() {
 	fpath := Upload{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 type Upload struct {
@@ -39,7 +39,7 @@ func (api *Upload) Image(c *gin.Context) {
 	day_time := time.Now().Format("2006-01-02")
 	//文件唯一性
 	file_uniname := fmt.Sprintf("%s%s%v", file.Filename, day_time, user.ID)
-	sha1_str := utils.Md5(file_uniname)
+	sha1_str := gf.Md5(file_uniname)
 	//开始
 	day_star, _ := time.Parse("2006-01-02 15:04:05", day_time+" 00:00:00")
 	day_star_times := day_star.Unix() //时间戳
@@ -72,7 +72,7 @@ func (api *Upload) Image(c *gin.Context) {
 	}
 	//上传到的路径
 	filename_arr := strings.Split(file.Filename, ".")
-	name_str := utils.Md5(fmt.Sprintf("%v%s", nowTime, filename_arr[0])) //组装文件保存名字
+	name_str := gf.Md5(fmt.Sprintf("%v%s", nowTime, filename_arr[0])) //组装文件保存名字
 	//path := 'resource/uploads/20060102150405test.xlsx'
 	file_Filename := fmt.Sprintf("%s%s%s", name_str, ".", filename_arr[1]) //文件加.后缀
 	path := file_path + file_Filename
@@ -133,7 +133,7 @@ func (api *Upload) File(c *gin.Context) {
 	day_time := time.Now().Format("2006-01-02")
 	//文件唯一性
 	file_uniname := fmt.Sprintf("%s%s%v", file.Filename, day_time, user.ID)
-	sha1_str := utils.Md5(file_uniname)
+	sha1_str := gf.Md5(file_uniname)
 	//开始
 	day_star, _ := time.Parse("2006-01-02 15:04:05", day_time+" 00:00:00")
 	day_star_times := day_star.Unix() //时间戳
@@ -165,7 +165,7 @@ func (api *Upload) File(c *gin.Context) {
 	}
 	//上传到的路径
 	filename_arr := strings.Split(file.Filename, ".")
-	name_str := utils.Md5(fmt.Sprintf("%v%s", nowTime, filename_arr[0])) //组装文件保存名字
+	name_str := gf.Md5(fmt.Sprintf("%v%s", nowTime, filename_arr[0])) //组装文件保存名字
 	//path := 'resource/uploads/20060102150405test.xlsx'
 	file_Filename := fmt.Sprintf("%s%s%s", name_str, ".", filename_arr[1]) //文件加.后缀
 	path := file_path + file_Filename
@@ -205,6 +205,40 @@ func (api *Upload) File(c *gin.Context) {
 				"preview":  fmt.Sprintf("%s%s", rooturl, path),
 				"url":      fmt.Sprintf("%s%s", rooturl, path),
 			},
+			"message": "上传成功",
+		})
+	}
+}
+
+// 编辑器保存第三方图片到本地
+func (api *Upload) ThirdImage(c *gin.Context) {
+	params, _ := gf.RequestParam(c)
+	if url, ok := params["url"]; !ok || url == "" {
+		c.JSON(200, gin.H{
+			"code":   400,
+			"result": false,
+			"data": map[string]interface{}{
+				"url": "",
+			},
+			"message": "地址无效",
+		})
+	} else {
+		file_path := fmt.Sprintf("%s%s%s", "resource/uploads/", time.Now().Format("20060102"), "/")
+		if _, err := os.Stat(file_path); err != nil {
+			if !os.IsExist(err) {
+				os.MkdirAll(file_path, os.ModePerm)
+			}
+		}
+		nowTime := time.Now().Unix() //当前时间
+		localPicName := fmt.Sprintf("%vthir_%v", file_path, nowTime)
+		imgtype, err := gf.DownPic(gf.InterfaceTostring(params["url"]), localPicName)
+		rooturl, _ := model.DB().Table("common_config").Where("keyname", "rooturl").Value("keyvalue")
+		c.JSON(200, gin.H{
+			"code":    200,
+			"result":  true,
+			"err":     err,
+			"status":  "done",
+			"url":     fmt.Sprintf("%s%s%s", rooturl, localPicName, imgtype),
 			"message": "上传成功",
 		})
 	}

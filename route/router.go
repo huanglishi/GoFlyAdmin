@@ -19,7 +19,7 @@ import (
 	"time"
 
 	//工具
-	"gofly/utils"
+	"gofly/utils/gf"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -38,7 +38,7 @@ func InitRouter() *gin.Engine {
 	//a.3.业务后台
 	R.Static("/webadmin", "./resource/webadmin")
 	R.Static("/webbusiness", "./resource/webbusiness")
-	R.LoadHTMLFiles("./resource/staticfile/template/install.html", "./resource/staticfile/template/isinstall.html")
+	R.LoadHTMLFiles("./resource/developer/template/install.html", "./resource/developer/template/isinstall.html")
 	//访问域名根目录重定向
 	R.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, global.App.Config.App.Rootview)
@@ -78,6 +78,6 @@ func InitRouter() *gin.Engine {
 		c.JSON(404, gin.H{"code": 404, "message": "您" + method + "请求地址：" + path + "不存在！"})
 	})
 	//绑定基本路由，访问路径：/User/List
-	utils.Bind(R)
+	gf.Bind(R)
 	return R
 }

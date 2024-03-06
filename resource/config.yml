@@ -10,7 +10,7 @@ dbconf:
      #密码
      password: root
      #数据库名
-     database: gofly_admin
+     database: gofly_enterprise
      #数据表前缀
      prefix: 
 jwt:
@@ -18,15 +18,15 @@ jwt:
      jwt_ttl: 43200
 app:
      #版本号
-     version: 1.2.5
+     version: 1.3.0
      #环境状态：dev=开发，pro=生产
      env: dev
      #运行服务端口（根据您的实际情况修改）
-     port: 8105
+     port: 8108
      #接口合法性验证
      apisecret: gofly@888
-     #接口JWT验证、跨域域名-不添加请求时报403 (开发、部署必改),部署域名时：“https://sg.goflys.cn”替换成您的域名
-     allowurl: http://localhost:9101,http://localhost:9102,https://sg.goflys.cn
+     #接口JWT验证、跨域域名-不添加请求时报403 (开发、部署必改),部署域名时：“https://en.goflys.cn”替换成您的域名
+     allowurl: http://localhost:9105,http://localhost:9106,https://en.goflys.cn,http://localhost:6020
      #token超时时间单位分钟 
      tokenouttime: 10 
      #调用cpu个数
@@ -34,17 +34,19 @@ app:
      # Gin 框架在运行的时候默认是debug模式 有： 开发：debug，生产：release，测试模式：test
      runlogtype: debug
      # 配置代码生成时-前端代码根目录位置(开发必改)
-     vueobjroot: D:\Project\develop\vue\gofly_admin\business
+     vueobjroot: D:/Project/develop/vue/gofly_enterprise/business
+     #配置企业私有仓网址
+     companyPrivateHouse: 
      # 配置根域名访问重定向路径,默认是业务端后台
      rootview: webbusiness
      #不需要token-根模块
-     noVerifyTokenRoot: resource,webbusiness,webadmin,wxapp,chat
+     noVerifyTokenRoot: resource,webbusiness,webadmin,wxapp
      #不需要api接口合法性验证-根模块md5加密
-     noVerifyAPIRoot: resource,webbusiness,webadmin,chat
+     noVerifyAPIRoot: resource,webbusiness,webadmin
      #不需要验证token-具体请求路径
      noVerifyToken: /common/uploadfile/get_image,/common/install/index,/common/install/save,/admin/user/login,/admin/user/logout,/admin/user/refreshtoken,/admin/user/get_code,/admin/user/resetPassword,/business/user/login,/business/user/logout,/business/user/refreshtoken,/business/user/get_code,/business/user/resetPassword,/wxoffi/service/getPost_api,/wxapp/user/get_openid,/admin/user/get_logininfo,/business/user/get_logininfo
      #不需要接口合法性-具体请求路径
-     noVerifyAPI: /wxoffi/service/getPost_api,/common/install/index,/common/install/save
+     noVerifyAPI: /wxoffi/service/getPost_api,/common/install/index,/common/install/save,
 log:
      level: info  # 日志等级debug
      root_dir: ./runtime/logs # 日志根目录

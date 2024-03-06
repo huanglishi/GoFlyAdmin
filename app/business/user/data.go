@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -19,7 +19,7 @@ type Data struct {
 // 初始化生成路由
 func init() {
 	fpath := Data{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取账号信息
@@ -69,7 +69,7 @@ func (api *Data) CheckPassword(c *gin.Context) {
 		if data == nil {
 			results.Success(c, "账号不存在", false, nil)
 		} else {
-			pass := utils.Md5(parameter["password"].(string) + data["salt"].(string))
+			pass := gf.Md5(parameter["password"].(string) + data["salt"].(string))
 			if pass != data["password"] {
 				results.Success(c, "您输入的密码不正确！", false, nil)
 			} else {
@@ -94,11 +94,11 @@ func (api *Data) ChangePassword(c *gin.Context) {
 		if data == nil {
 			results.Failed(c, "账号不存在", nil)
 		} else {
-			pass := utils.Md5(parameter["oldpassword"].(string) + data["salt"].(string))
+			pass := gf.Md5(parameter["oldpassword"].(string) + data["salt"].(string))
 			if pass != data["password"] {
 				results.Success(c, "您输入的原来密码不正确！", false, nil)
 			} else {
-				newpass := utils.Md5(parameter["password"].(string) + data["salt"].(string))
+				newpass := gf.Md5(parameter["password"].(string) + data["salt"].(string))
 				model.DB().Table("business_account").
 					Data(map[string]interface{}{"password": newpass}).
 					Where("id", user.ID).

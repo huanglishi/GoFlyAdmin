@@ -3,7 +3,7 @@ package middleware
 import (
 	"fmt"
 	"gofly/global"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"net/http"
 	"strconv"
 	"strings"
@@ -20,7 +20,7 @@ func ValidityAPi() gin.HandlerFunc {
 		var apisecret = conf.App.Apisecret
 		encrypt := c.Request.Header.Get("verify-encrypt")
 		verifytime := c.Request.Header.Get("verify-time")
-		mdsecret := utils.Md5(apisecret + verifytime)
+		mdsecret := gf.Md5(apisecret + verifytime)
 		// 验证-根目录
 		var NoVerifyAPIRoot_arr []string
 		if global.App.Config.App.NoVerifyAPIRoot != "" {

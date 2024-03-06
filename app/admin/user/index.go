@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"math/rand"
@@ -23,7 +23,7 @@ import (
 *本路径为： /admin/user/login -省去了index
  */
 func init() {
-	utils.Register(&Index{}, reflect.TypeOf(Index{}).PkgPath())
+	gf.Register(&Index{}, reflect.TypeOf(Index{}).PkgPath())
 }
 
 type Index struct {
@@ -48,7 +48,7 @@ func (api *Index) Login(c *gin.Context) {
 		results.Failed(c, "账号不存在！", nil)
 		return
 	}
-	pass := utils.Md5(password + res["salt"].(string))
+	pass := gf.Md5(password + res["salt"].(string))
 	if pass != res["password"] {
 		results.Failed(c, "您输入的密码不正确！", pass)
 		return
@@ -59,11 +59,11 @@ func (api *Index) Login(c *gin.Context) {
 		Accountid:      res["accountID"].(int64),
 		StandardClaims: jwt.StandardClaims{},
 	})
-	model.DB().Table("admin_account").Where("id", res["id"]).Data(map[string]interface{}{"loginstatus": 1, "lastLoginTime": time.Now().Unix(), "lastLoginIp": utils.GetIp(c)}).Update()
+	model.DB().Table("admin_account").Where("id", res["id"]).Data(map[string]interface{}{"loginstatus": 1, "lastLoginTime": time.Now().Unix(), "lastLoginIp": gf.GetIp(c)}).Update()
 	//登录日志
 	model.DB().Table("login_logs").
 		Data(map[string]interface{}{"type": 1, "uid": res["id"], "out_in": "in",
-			"createtime": time.Now().Unix(), "loginIP": utils.GetIp(c)}).Insert()
+			"createtime": time.Now().Unix(), "loginIP": gf.GetIp(c)}).Insert()
 	results.Success(c, "登录成功返回token！", token, nil)
 }
 
@@ -92,7 +92,7 @@ func (api *Index) RegisterUser(c *gin.Context) {
 	}
 	rnd := rand.New(rand.NewSource(6))
 	salt := strconv.Itoa(rnd.Int())
-	pass := utils.Md5(password + salt)
+	pass := gf.Md5(password + salt)
 	userid, err := model.DB().Table("admin_account").Data(map[string]interface{}{
 		"salt":       salt,
 		"username":   parameter["username"],
@@ -182,7 +182,7 @@ func (api *Index) Get_code(c *gin.Context) {
 		if emailConfig == nil {
 			results.Failed(c, "请到admin后台“配置管理”配置邮箱", nil)
 		} else {
-			code := utils.GenValidateCode(6)
+			code := gf.GenValidateCode(6)
 			sender := emailConfig["sender_email"].(string)  //发送者qq邮箱
 			authCode := emailConfig["auth_code"].(string)   //qq邮箱授权码
 			mailTitle := emailConfig["mail_title"].(string) //邮件标题
@@ -206,7 +206,7 @@ func (api *Index) Get_code(c *gin.Context) {
 			}
 			service_port := 587
 			if _, ok := emailConfig["service_port"]; ok {
-				service_port = utils.InterfaceToInt(emailConfig["service_port"])
+				service_port = gf.InterfaceToInt(emailConfig["service_port"])
 			}
 			d := gomail.NewDialer(service_host, service_port, sender, authCode)
 			err := d.DialAndSend(m)
@@ -245,7 +245,7 @@ func (api *Index) ResetPassword(c *gin.Context) {
 	}
 	rnd := rand.New(rand.NewSource(6))
 	salt := strconv.Itoa(rnd.Int())
-	pass := utils.Md5(password + salt)
+	pass := gf.Md5(password + salt)
 	res, err := model.DB().Table("admin_account").Where("id", userdata2["id"]).Data(map[string]interface{}{
 		"salt":     salt,
 		"password": pass,

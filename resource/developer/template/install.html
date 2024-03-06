@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=0.3,minimum-scale=0.3,maximum-scale=1,viewport-fit=cover">
+    <link rel="shortcut icon" type="image/x-icon" href="//doc.goflys.cn/logo.png">
+    <title>安装GoFly快速开发</title>
+	<style >
+		 body {
+            background: #E8F7FF;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body, input, button {
+            font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, 'Microsoft Yahei', Arial, sans-serif;
+            font-size: 14px;
+            color: #4e5969;
+        }
+		a {
+            color: #4e73df;
+            text-decoration: none;
+        }
+
+        a:hover {
+			color: #1b3fa8;
+        }
+		.form-field:first-child input {
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+         .form-field:last-child input {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .form-field input {
+            background: #fff;
+            border: 2px solid transparent;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+            width: 100%;
+            padding: 11px 11px 11px 180px;
+            box-sizing: border-box;
+			border-bottom: 2px #E8F7FF solid;
+        }
+
+        .form-field input:focus {
+            border-color: #94BFFF;
+            background: #fff;
+            color: #444;
+            outline: none;
+        }
+
+        .form-field label {
+            float: left;
+            width: 160px;
+            text-align: right;
+            margin-right: -160px;
+            position: relative;
+            margin-top: 11px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+		button, .btn {
+            background: #165DFF;
+            color: #fff;
+            border: 0;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 15px 80px;
+            -webkit-appearance: none;
+        }
+
+        button[disabled] {
+            opacity: 0.5;
+        }
+
+        .form-buttons {
+			margin-top: 20px;
+			text-align: center;
+            height: 52px;
+            line-height: 52px;
+        }
+
+        .form-buttons .btn {
+            margin-right: 5px;
+        }
+		.install{
+			width: 100%;
+		}
+		.install .formbox{
+			max-width: 600px;
+            margin: 0 auto;
+			margin-top: 10px;
+		}
+		.install .formbox .logo{
+			text-align: center;
+		}
+		.install .formbox .title{
+			text-align: center;
+		}
+		.install .formbox .content{
+		   margin-top: 10px;
+		}
+		.install .formbox .content form{
+			background: #ffffff;
+			padding: 15px 5px;
+			border-radius: 5px;
+		}
+		.install .formbox .content .link{
+			margin-top: 15px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+		.content .divider{
+			 padding-left: 50px;
+			 padding-bottom: 5px;
+		}
+		.content .divider .htitle{
+			font-size: 15px;
+			 font-weight: 600;
+			 display: flex;
+			 align-items: center;
+		}
+		.content .divider .titleRadio{
+			display: flex;
+			 align-items: center;
+		}
+		.content .divider .installtig{
+			 color: #c9cdd4;
+			 font-size: 12px;
+			 padding-left: 10px;
+		}
+		#error, #success,  #warmtips {
+            background: #D83E3E;
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        #success {
+            background: #00b42a;
+			font-size: 15px;
+        }
+
+        #warmtips {
+            background: #ffcdcd;
+            font-size: 14px;
+            color: #e74c3c;
+        }
+		input[type=text]::placeholder{
+		   color: #c9cdd4;
+		}
+	</style>
+  </head>
+  <body>
+	 <div class="install">
+        <div class="formbox">
+			<div class="logo">
+				<img src="https://doc.goflys.cn/logo.png">
+			</div>
+			<div class="title">
+				<h1>GoFly快速开发安装</h1>
+			</div>
+			<div class="content">
+				<div id="error" style="display:none"></div>
+				<div id="success" style="display:none"></div>
+				<div id="warmtips" style="display:none"></div>
+				<form action="" method="POST">
+					<div class="divider">
+						<div class="htitle">配置数据库：</div>
+					</div>
+					<div class="form-field">
+						<label>MySQL数据库地址</label>
+						<input type="text" name="hostname" value="127.0.0.1" required="">
+					</div>
+					<div class="form-field">
+						<label>MySQL 端  口  号</label>
+						<input type="text" name="hostport" value="3306" required="">
+					</div>
+					<div class="form-field">
+						<label>MySQL 用户名</label>
+						<input type="text" name="username" value="root" required="">
+					</div>
+					<div class="form-field">
+						<label>MySQL 密 码</label>
+						<input type="text" name="password" value="root" required="">
+					</div>
+					<div class="form-field">
+						<label>MySQL 数据库名</label>
+						<input type="text" name="database" value="gofly_single" required="">
+					</div>
+					<!-- <div class="form-field">
+						<label>MySQL 数据表前缀</label>
+						<input type="text" name="prefix" value="" required="">
+					</div> -->
+					<div class="divider" style="padding-top: 10px;">
+						<div class="titleRadio">
+							<div class="htitle">配置管理员账号：</div>
+							<div class="Radio">
+								<input type="radio" id="install" name="isInstalladmin" value="install" checked />
+								<label for="install">安装A端</label>
+								<input type="radio" id="uninstall" name="isInstalladmin" value="uninstall" />
+								<label for="uninstall">不安装A端</label>
+							</div>
+							<div class="installtig">项目不需要saas架构就不安装A端</div>
+						</div>
+					</div>
+					<div class="form-field" id="adminUsername">
+						<label>A端管理员用户名</label>
+						<input type="text" name="adminUsername" value="gofly" required="">
+					</div>
+					<div class="form-field" id="adminPassword">
+						<label>A端管理员密码</label>
+						<input type="text" name="adminPassword" value="gofly123" required="">
+					</div>
+					<div class="form-field">
+						<label>B端管理员用户名</label>
+						<input type="text" name="businessUsername" value="gofly" required="">
+					</div>
+					<div class="form-field">
+						<label>B端管理员密码</label>
+						<input type="text" name="businessPassword" value="gofly123" required="">
+					</div>
+					<div class="divider" style="padding-top: 10px;">
+						<div class="htitle">前端代码安装设置：</div>
+					</div>
+					<div class="form-field">
+						<label>前端安装路径(不装留空)</label>
+						<input type="text" name="vuepath" value="D:/Project/develop/vue/gofly_admin" placeholder="如果不安装前端代码就留空">
+					</div>
+					<div class="form-buttons">
+						<button type="submit" >立即安装</button>
+					</div>
+				</form>
+				<div class="link">
+					<span>中国·昆明 &amp; <a href="//goflys.cn/" target="_blank">GoFly技术团队</a> | <a href="//doc.goflys.cn/docview?id=25" target="_blank">GoFly快速开发文档</a></span> 
+				</div>
+			</div>
+		</div>
+	 </div>
+	  <!-- 引入jQuery -->
+	  <script src="https://cdn.staticfile.org/jquery/2.1.4/jquery.min.js"></script>
+	  <script>
+		function formToJson (data) {
+			data = decodeURIComponent(data)  // 解码
+			data=data.replaceAll("\\","/");
+			data=data.replace(/&/g,"\",\"");
+			data=data.replace(/=/g,"\":\"");
+			data="{\""+data+"\"}";
+			return data;
+		}
+		  $(function () {
+			  $('form').on('submit', function (e) {
+				  e.preventDefault();
+				  var form = this;
+				  var $error = $("#error");
+				  var $success = $("#success");
+				  var savedata=formToJson($(this).serialize())
+				  var $button = $(this).find('button')
+					  .text("安装中..")
+					  .prop('disabled', true);
+				  $.ajax({
+					  url: "/common/install/save",
+					  type: "POST",
+					  contentType:'application/json',
+                      dataType:'json',
+					  data: savedata,
+					  success: function (ret) {
+						  if (ret.code == 0) {
+							  var data = ret.data;
+							  $error.hide();
+							  $("#success").text(ret.message).show();
+							  $button.prop('disabled', false).text("重新安装");
+						  } else {
+							  $error.show().text(ret.message);
+							  $button.prop('disabled', false).text("重新安装");
+							  $("html,body").animate({
+								  scrollTop: 0
+							  }, 500);
+						  }
+					  },
+					  error: function (xhr) {
+						  $error.show().text(xhr.responseText);
+						  $button.prop('disabled', false).text("立即安装");
+						  $("html,body").animate({
+							  scrollTop: 0
+						  }, 500);
+					  }
+				  });
+				  return false;
+			  });
+			  $('input:radio[name="isInstalladmin"]').click(function(){
+				var checkValue = $('input:radio[name="isInstalladmin"]:checked').val(); 
+				 if(checkValue=="uninstall"){
+					$("#adminUsername").attr("style","display:none;");//隐藏div
+					$("#adminPassword").attr("style","display:none;");//隐藏div
+				 }else{
+					$("#adminUsername").attr("style","display:block;");//显示
+					$("#adminPassword").attr("style","display:block;");//显示
+				 }
+			});
+		  });
+	  </script>
+  </body>
+</html>
+

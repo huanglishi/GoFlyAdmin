@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"reflect"
 	"time"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 // 用于自动注册路由
@@ -20,7 +21,7 @@ type Workplace struct {
 // 初始化生成路由
 func init() {
 	fpath := Workplace{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 统计总数据
@@ -33,7 +34,7 @@ func (api *Workplace) Get_statistical(c *gin.Context) {
 	if err != nil {
 		results.Failed(c, "统计访问数据失败", err)
 	} else {
-		results.Success(c, "统计总数据", map[string]interface{}{"totalData": map[string]interface{}{"allBook": allBook, "allFile": allFile, "visitNum": utils.InterfaceToInt(visitNum)}}, err)
+		results.Success(c, "统计总数据", map[string]interface{}{"totalData": map[string]interface{}{"allBook": allBook, "allFile": allFile, "visitNum": gf.InterfaceToInt(visitNum)}}, err)
 	}
 }
 
@@ -46,7 +47,7 @@ func (api *Workplace) Get_visit(c *gin.Context) {
 		results.Failed(c, "统计访问数据失败", err)
 	} else {
 		if list == nil {
-			list = make([]gorose.Data, 0) //赋空值
+			list = make([]gform.Data, 0) //赋空值
 		}
 		nlist := []map[string]interface{}{}
 		for _, val := range list {
@@ -81,12 +82,12 @@ func (api *Workplace) Get_popular(c *gin.Context) {
 		results.Failed(c, "统计热门文档失败", err)
 	} else {
 		if list == nil {
-			list = make([]gorose.Data, 0) //赋空值
+			list = make([]gform.Data, 0) //赋空值
 		}
 		countnum, _ := model.DB().Table("doc_file").Where("status", 0).Where("admin_id", user.ID).Sum("visit")
-		countnum_int := utils.InterfaceToInt(countnum)
+		countnum_int := gf.InterfaceToInt(countnum)
 		for key, val := range list {
-			visit_int := utils.InterfaceToInt(val["visit"])
+			visit_int := gf.InterfaceToInt(val["visit"])
 			val["increases"] = fmt.Sprintf("%.2f%%", float32(visit_int)/float32(countnum_int)*100)
 			val["keys"] = key + 1
 		}

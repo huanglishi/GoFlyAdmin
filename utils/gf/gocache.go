@@ -13,7 +13,7 @@ func init() {
 }
 
 // 存储
-// expire 单位分钟
+// key expire 单位分钟
 func SetGoCacheData(key string, data interface{}, expire time.Duration) {
 	goCahce.Set(key, data, expire*time.Minute)
 }

@@ -3,7 +3,7 @@ package developer
 import (
 	"encoding/json"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -18,7 +18,7 @@ type Apicode struct {
 
 func init() {
 	fpath := Apicode{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 生成api接口代码
@@ -34,7 +34,7 @@ func (api *Apicode) Installcode(c *gin.Context) {
 		type_id, _ := model.DB().Table("common_apidoc_group").Where("id", data["cid"]).Value("type_id")
 		rooturl, _ := model.DB().Table("common_apidoc_type").Where("id", type_id).Value("model_name")
 		model_name := "business" //默认后台接口
-		model_name_str := utils.InterfaceTostring(rooturl)
+		model_name_str := gf.InterfaceTostring(rooturl)
 		if model_name_str != "" { //模块名称
 			model_name = model_name_str
 		}
@@ -83,7 +83,7 @@ func (api *Apicode) RemoveFile(c *gin.Context) {
 		type_id, _ := model.DB().Table("common_apidoc_group").Where("id", data["cid"]).Value("type_id")
 		rooturl, _ := model.DB().Table("common_apidoc_type").Where("id", type_id).Value("model_name")
 		model_name := "business" //默认后台接口
-		model_name_str := utils.InterfaceTostring(rooturl)
+		model_name_str := gf.InterfaceTostring(rooturl)
 		if model_name_str != "" { //模块名称
 			model_name = model_name_str
 		}

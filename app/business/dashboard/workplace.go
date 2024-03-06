@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
 	"strconv"
 	"time"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 // 用于自动注册路由
@@ -23,7 +24,7 @@ type Workplace struct {
 // 初始化生成路由
 func init() {
 	fpath := Workplace{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 统计总数据
@@ -36,11 +37,11 @@ func (api *Workplace) Get_statistical(c *gin.Context) {
 	now := time.Now()
 	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
 	yesterday := time.Date(now.Year(), now.Month(), now.Day()-1, 0, 0, 0, 0, time.Local)
-	yse_star_time := utils.StringTimestamp(yesterday.Format("2006-01-02")+" 00:00", "datetime")
-	yse_end_time := utils.StringTimestamp(yesterday.Format("2006-01-02")+" 23:59", "datetime")
+	yse_star_time := gf.StringTimestamp(yesterday.Format("2006-01-02")+" 00:00", "datetime")
+	yse_end_time := gf.StringTimestamp(yesterday.Format("2006-01-02")+" 23:59", "datetime")
 	visit_record_yesterday, _ := model.DB().Table("business_website_visit_record").Where("businessID", user.BusinessID).WhereBetween("createtime", []interface{}{yse_star_time, yse_end_time}).Count("*")
-	today_star_time := utils.StringTimestamp(today.Format("2006-01-02")+" 00:00", "datetime")
-	today_end_time := utils.StringTimestamp(today.Format("2006-01-02")+" 23:59", "datetime")
+	today_star_time := gf.StringTimestamp(today.Format("2006-01-02")+" 00:00", "datetime")
+	today_end_time := gf.StringTimestamp(today.Format("2006-01-02")+" 23:59", "datetime")
 	visit_record_today, _ := model.DB().Table("business_website_visit_record").Where("businessID", user.BusinessID).WhereBetween("createtime", []interface{}{today_star_time, today_end_time}).Count("*")
 	var visit_ratio float64 = 0
 	if visit_record_yesterday > 0 {
@@ -58,7 +59,7 @@ func (api *Workplace) Get_statistical(c *gin.Context) {
 			"leavemessage_count":     leavemessage_count,
 			"visit_record_yesterday": visit_record_yesterday,
 			"visit_record_today":     visit_record_today,
-			"visit_record":           utils.InterfaceToInt(visit_record),
+			"visit_record":           gf.InterfaceToInt(visit_record),
 			"visit_ratio":            visit_ratio}, nil)
 	}
 }
@@ -73,17 +74,17 @@ func (api *Workplace) Get_popular(c *gin.Context) {
 		results.Failed(c, "统计热门文章失败", err)
 	} else {
 		if list == nil {
-			list = make([]gorose.Data, 0) //赋空值
+			list = make([]gform.Data, 0) //赋空值
 		}
 		for _, val := range list {
 			now := time.Now()
 			today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
 			yesterday := time.Date(now.Year(), now.Month(), now.Day()-1, 0, 0, 0, 0, time.Local)
-			yse_star_time := utils.StringTimestamp(yesterday.Format("2006-01-02")+" 00:00", "datetime")
-			yse_end_time := utils.StringTimestamp(yesterday.Format("2006-01-02")+" 23:59", "datetime")
+			yse_star_time := gf.StringTimestamp(yesterday.Format("2006-01-02")+" 00:00", "datetime")
+			yse_end_time := gf.StringTimestamp(yesterday.Format("2006-01-02")+" 23:59", "datetime")
 			visit_record_yesterday, _ := model.DB().Table("business_website_visit_record").Where("article_id", val["id"]).WhereBetween("createtime", []interface{}{yse_star_time, yse_end_time}).Count("*")
-			today_star_time := utils.StringTimestamp(today.Format("2006-01-02")+" 00:00", "datetime")
-			today_end_time := utils.StringTimestamp(today.Format("2006-01-02")+" 23:59", "datetime")
+			today_star_time := gf.StringTimestamp(today.Format("2006-01-02")+" 00:00", "datetime")
+			today_end_time := gf.StringTimestamp(today.Format("2006-01-02")+" 23:59", "datetime")
 			visit_record_today, _ := model.DB().Table("business_website_visit_record").Where("article_id", val["id"]).WhereBetween("createtime", []interface{}{today_star_time, today_end_time}).Count("*")
 			var visit_ratio float64 = 0
 			if visit_record_yesterday > 0 {
@@ -125,7 +126,7 @@ func (api *Workplace) Get_message(c *gin.Context) {
 	user := getuser.(*middleware.UserClaims)
 	list, _ := model.DB().Table("common_message").WhereIn("usertype", []interface{}{0, 2}).Where("touid", 0).OrWhere("touid", user.ID).Limit(5).Fields("id,type,title,path,isread,createtime").Get()
 	if list == nil {
-		list = make([]gorose.Data, 0)
+		list = make([]gform.Data, 0)
 	}
 	countnum, _ := model.DB().Table("common_message").WhereIn("usertype", []interface{}{0, 2}).Where("touid", 0).OrWhere("touid", user.ID).Count("*")
 	results.Success(c, "获取公告信息", map[string]interface{}{"list": list, "count": countnum}, nil)

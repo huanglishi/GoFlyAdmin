@@ -3,13 +3,14 @@ package developer
 import (
 	"encoding/json"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 /**
@@ -20,7 +21,7 @@ type Devapigroup struct{}
 
 func init() {
 	fpath := Devapigroup{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取列表
@@ -40,9 +41,9 @@ func (api *Devapigroup) Get_list(c *gin.Context) {
 // 获取父级数据
 func (api *Devapigroup) Get_parent(c *gin.Context) {
 	list, _ := model.DB().Table("common_apidoc_group").Fields("id,pid,name").Order("id asc").Get()
-	list = utils.GetMenuChildrenArray(list, 0, "pid")
+	list = gf.GetMenuChildrenArray(list, 0, "pid")
 	if list == nil {
-		list = make([]gorose.Data, 0)
+		list = make([]gform.Data, 0)
 	}
 	results.Success(c, "获取分组列表", list, nil)
 }

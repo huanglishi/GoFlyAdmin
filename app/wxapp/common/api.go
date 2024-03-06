@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gofly/global"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -22,7 +22,7 @@ type Api struct {
 
 func init() {
 	fpath := Api{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取成员列表
@@ -179,5 +179,5 @@ func IsHaseField(tablename, fields string) bool {
 		json.Unmarshal(mdata, &valjson)
 		tablefields = append(tablefields, valjson["COLUMN_NAME"].(string))
 	}
-	return utils.IsContain(tablefields, fields)
+	return gf.IsContain(tablefields, fields)
 }

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"gofly/global"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"io/fs"
@@ -30,7 +30,7 @@ type Install struct {
 
 func init() {
 	fpath := Install{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 安装页面
@@ -40,7 +40,7 @@ func (api *Install) Index(context *gin.Context) {
 		results.Failed(context, "项目路径获取失败", nil)
 		return
 	}
-	filePath := filepath.Join(path, "/resource/staticfile/template/install.lock")
+	filePath := filepath.Join(path, "/resource/developer/template/install.lock")
 	if _, err := os.Stat(filePath); err == nil {
 		context.HTML(http.StatusOK, "isinstall.html", gin.H{
 			"title": "已经安装页面",
@@ -64,9 +64,17 @@ func (api *Install) Save(c *gin.Context) {
 		return
 	}
 	model.CreateDataBase(parameter["username"], parameter["password"], parameter["hostname"], parameter["hostport"], parameter["database"])
+	//2.修改数据库配置
+	cferr := gf.UpConfFieldData(path, parameter)
+	if cferr != nil {
+		results.Failed(c, "修改数据库配置失败", nil)
+		return
+	}
 	model.MyInit(2) //初始化数据
-	//导入书库配置
-	SqlPath := filepath.Join(path, "/resource/staticfile/template/gofly_base.sql")
+	time.Sleep(time.Second * 3)
+	//3创建数据库
+	//2.1导入基础数据库配置
+	SqlPath := filepath.Join(path, "/resource/developer/template/gofly_basedb.sql")
 	sqls, sqlerr := os.ReadFile(SqlPath)
 	if sqlerr != nil {
 		results.Failed(c, "数据库文件不存在："+SqlPath, nil)
@@ -80,82 +88,96 @@ func (api *Install) Save(c *gin.Context) {
 		}
 		model.ExecSql(sql)
 	}
-	//3.修改后台账号
+	// 安装admin端
+	if parameter["isInstalladmin"] == "install" {
+		adminSqlPath := filepath.Join(path, "/resource/developer/template/admin_db.sql")
+		adminsqls, adminsqlerr := os.ReadFile(adminSqlPath)
+		if adminsqlerr != nil {
+			results.Failed(c, "数据库文件不存在："+adminSqlPath, nil)
+			return
+		}
+		adminSqlArr := strings.Split(string(adminsqls), ";")
+		for _, adminsql := range adminSqlArr {
+			adminsql = strings.TrimSpace(adminsql)
+			if adminsql == "" {
+				continue
+			}
+			model.ExecSql(adminsql)
+		}
+	}
+	//4.修改后台账号
 	salt := time.Now().Unix()
-	adminpass := fmt.Sprintf("%v%v", utils.Md5(parameter["adminPassword"].(string)), salt)
-	businesspass := fmt.Sprintf("%v%v", utils.Md5(parameter["businessPassword"].(string)), salt)
-	model.DB().Table("admin_account").Data(map[string]interface{}{"username": parameter["adminUsername"], "password": utils.Md5(adminpass), "salt": salt}).Where("id", 1).Update()
-	model.DB().Table("business_account").Data(map[string]interface{}{"username": parameter["businessUsername"], "password": utils.Md5(businesspass), "salt": salt}).Where("id", 1).Update()
-	//4.创建安装锁文件
-	filePath := filepath.Join(path, "/resource/staticfile/template/install.lock")
+	businesspass := fmt.Sprintf("%v%v", gf.Md5(parameter["businessPassword"].(string)), salt)
+	model.DB().Table("business_account").Data(map[string]interface{}{"username": parameter["businessUsername"], "password": gf.Md5(businesspass), "salt": salt}).Where("id", 1).Update()
+	//安装admin端
+	if parameter["isInstalladmin"] == "install" {
+		adminpass := fmt.Sprintf("%v%v", gf.Md5(parameter["adminPassword"].(string)), salt)
+		model.DB().Table("admin_account").Data(map[string]interface{}{"username": parameter["adminUsername"], "password": gf.Md5(adminpass), "salt": salt}).Where("id", 1).Update()
+	}
+	//5.创建安装锁文件
+	filePath := filepath.Join(path, "/resource/developer/template/install.lock")
 	os.Create(filePath)
-	//5.安装前端页面
+	//6.安装前端页面
 	if _, ok := parameter["vuepath"]; ok && parameter["vuepath"] != "" {
-		parameter["vueobjroot"] = filepath.Join(utils.InterfaceTostring(parameter["vuepath"]), "/business") //更新前端路径
-		//1 如果没有filepath文件目录就创建一个
+		parameter["vueobjroot"] = filepath.Join(gf.InterfaceTostring(parameter["vuepath"]), "/business") //更新前端路径
+		//6.1 如果没有filepath文件目录就创建一个
 		file_path := fmt.Sprintf("%v", parameter["vuepath"])
 		if _, err := os.Stat(file_path); err != nil {
 			if !os.IsExist(err) {
 				os.MkdirAll(file_path, os.ModePerm)
 			}
 		}
-		//2 复制前端文件到指定位置
-		vuesoure_path := filepath.Join(path, "/resource/staticfile/template/vuecode/")
+		//6.2 复制前端文件到指定位置
+		vuesoure_path := filepath.Join(path, "/resource/developer/template/vuecode/")
 		CopyDir(vuesoure_path, file_path)
-		//3 解压文件
+		//6.3 解压文件
 		business_vue_path := filepath.Join(file_path, "/business.zip")
 		admin_vue_path := filepath.Join(file_path, "/admin.zip")
 		Unzip(business_vue_path, file_path)
-		Unzip(admin_vue_path, file_path)
-		//删除zip文件
+		//安装admin端
+		if parameter["isInstalladmin"] == "install" { //解压admin
+			Unzip(admin_vue_path, file_path)
+		} else { //不安装admin则把admin的后端代码删除
+			app_admin_path := filepath.Join(path, "/app/admin")
+			os.RemoveAll(app_admin_path)
+			ChecAdminRemoveController()
+		}
+		//6.4 删除zip文件
 		os.RemoveAll(business_vue_path)
 		os.RemoveAll(admin_vue_path)
 	}
 	results.Success(c, "安装成功,去前端刷新试试！", parameter, nil)
-	//2.修改数据库配置
-	cferr := upConfFieldData(path, parameter)
-	if cferr != nil {
-		results.Failed(c, "修改数据库配置失败", nil)
-		return
-	}
 }
 
-// 更新配置文件
-func upConfFieldData(path string, parameter map[string]interface{}) error {
-	file_path := filepath.Join(path, "/resource/config.yml")
-	f, err := os.Open(file_path)
+// 移除admin控制器 判断存在则移除
+func ChecAdminRemoveController() {
+	filePath := filepath.Join("app/controller.go")
+	con_path := "gofly/app/admin"
+	f, err := os.Open(filePath)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	defer f.Close()
 	buf := bufio.NewReader(f)
 	var result = ""
-	var is_hose = false
 	for {
-		is_hose = false
 		a, _, c := buf.ReadLine()
 		if c == io.EOF {
 			break
 		}
-		for keys, Val := range parameter {
-			if strings.Contains(string(a), keys) {
-				is_hose = true
-				datestr := strings.ReplaceAll(string(a), string(a), fmt.Sprintf("     %v: %v\n", keys, Val))
-				result += datestr
-			}
-		}
-		if !is_hose {
+		if strings.Contains(string(a), con_path) { //存在路由则移除
+			continue
+		} else {
 			result += string(a) + "\n"
 		}
 	}
-	fw, err := os.OpenFile(file_path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666) //os.O_TRUNC清空文件重新写入，否则原文件内容可能残留
+	fw, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666) //os.O_TRUNC清空文件重新写入，否则原文件内容可能残留
 	w := bufio.NewWriter(fw)
 	w.WriteString(result)
 	if err != nil {
 		panic(err)
 	}
 	w.Flush()
-	return nil
 }
 
 // DeCompress 解压文件 返回解压的目录

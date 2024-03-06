@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"os"
 	"path/filepath"
@@ -21,7 +21,7 @@ type Attupfile struct{}
 
 func init() {
 	fpath := Attupfile{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 上传到附件管理
@@ -36,7 +36,7 @@ func (api *Attupfile) Upfile(c *gin.Context) {
 	if usesize == nil {
 		usesize = '0'
 	}
-	if utils.InterfaceToInt(usesize) >= utils.InterfaceToInt(fileSize) {
+	if gf.InterfaceToInt(usesize) >= gf.InterfaceToInt(fileSize) {
 		results.Failed(c, "您的存储空间已满,请您先去购买存储空间！", nil)
 		return
 	}

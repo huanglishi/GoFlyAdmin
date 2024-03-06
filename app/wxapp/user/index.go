@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -24,7 +24,7 @@ type Index struct{}
 
 func init() {
 	fpath := Index{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 /**
@@ -34,7 +34,7 @@ func (api *Index) Get_openid(c *gin.Context) {
 	code := c.DefaultQuery("code", "")
 	businessID := c.GetHeader("Businessid")
 	account, _ := model.DB().Table("business_wxsys_wxappconfig").Where("businessID", businessID).Fields("id,accountID,businessID,AppID,AppSecret").First()
-	ref := utils.Get(fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?appid=%v&secret=%v&js_code=%v&grant_type=authorization_code", account["AppID"], account["AppSecret"], code))
+	ref := gf.Get(fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?appid=%v&secret=%v&js_code=%v&grant_type=authorization_code", account["AppID"], account["AppSecret"], code))
 	var parameter map[string]interface{}
 	if err := json.Unmarshal([]byte(ref), &parameter); err == nil {
 		rooturl, _ := model.DB().Table("common_config").Where("keyname", "rooturl").Value("keyvalue")
@@ -98,7 +98,7 @@ func (api *Index) Get_phone(c *gin.Context) {
 	nowtime := time.Now().Unix()
 	if expires_in-nowtime <= 0 {
 		url_str := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%v&secret=%v", account["expires_in"], account["secret"].(string))
-		access_ref := utils.Get(url_str)
+		access_ref := gf.Get(url_str)
 		var access_parameter map[string]interface{}
 		if err := json.Unmarshal([]byte(access_ref), &access_parameter); err == nil {
 			account["access_token"] = access_parameter["access_token"]
@@ -108,7 +108,7 @@ func (api *Index) Get_phone(c *gin.Context) {
 			return
 		}
 	}
-	ref := utils.Post("https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token="+account["access_token"].(string),
+	ref := gf.Post("https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token="+account["access_token"].(string),
 		map[string]interface{}{"code": code}, "application/json")
 	var parameter map[string]interface{}
 	if err := json.Unmarshal([]byte(ref), &parameter); err == nil {

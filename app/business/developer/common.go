@@ -2,6 +2,7 @@ package developer
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"io/fs"
 	"os"
@@ -9,41 +10,7 @@ import (
 	"strings"
 )
 
-// 检查该类控制器四否存在
-// 存在控制器则移除
-func CheckApiRemoveController(modelname, path string) {
-	filePath := filepath.Join("app/", modelname, "/controller.go")
-	con_path := "gofly/app/" + path
-	f, err := os.Open(filePath)
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-	buf := bufio.NewReader(f)
-	var result = ""
-	for {
-		a, _, c := buf.ReadLine()
-		if c == io.EOF {
-			break
-		}
-		if strings.Contains(string(a), con_path) { //存在路由则移除
-			// datestr := strings.ReplaceAll(string(a), utils.FirstUpper(methods), "get_list")
-			// result += datestr + "\n"
-		} else {
-			result += string(a) + "\n"
-		}
-
-	}
-	fw, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666) //os.O_TRUNC清空文件重新写入，否则原文件内容可能残留
-	w := bufio.NewWriter(fw)
-	w.WriteString(result)
-	if err != nil {
-		panic(err)
-	}
-	w.Flush()
-}
-
-// 检查该类是否添加到控制器
+// 1.1 检查该类是否添加到控制器
 func CheckIsAddController(modelname, path string) {
 	filePath := filepath.Join("app/", modelname, "/controller.go")
 	//1判断文件没有则添加
@@ -51,7 +18,7 @@ func CheckIsAddController(modelname, path string) {
 		if os.IsNotExist(err) {
 			os.Create(filePath)
 			//复制文件
-			err := CopyFileContents("resource/staticfile/codetpl/go/controller.gos", filePath)
+			err := CopyFileContents("resource/developer/codetpl/go/controller.gos", filePath)
 			if err != nil {
 				panic(err)
 			}
@@ -77,7 +44,7 @@ func CheckIsAddController(modelname, path string) {
 		result += string(a) + "\n"
 	}
 	if ishase == false {
-		addstr := "	_ \"" + con_path + "\"\n"
+		addstr := "	_ \"" + con_path + "\""
 		datestr := strings.ReplaceAll(result, ")", addstr)
 		result = datestr + ")\n"
 	}
@@ -88,6 +55,116 @@ func CheckIsAddController(modelname, path string) {
 		panic(err)
 	}
 	w.Flush()
+	fw.Close()
+}
+
+// 1.2 存在控制器则移除
+func CheckApiRemoveController(modelname, path string) {
+	filePath := filepath.Join("app/", modelname, "/controller.go")
+	if _, err := os.Stat(filePath); os.IsNotExist(err) { //不存在
+		return
+	}
+	con_path := "gofly/app/" + path
+	f, err := os.Open(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	buf := bufio.NewReader(f)
+	var result = ""
+	for {
+		a, _, c := buf.ReadLine()
+		if c == io.EOF {
+			break
+		}
+		if strings.Contains(string(a), con_path) { //存在路由则移除
+			// datestr := strings.ReplaceAll(string(a), gf.FirstUpper(methods), "get_list")
+			// result += datestr + "\n"
+			continue
+		} else {
+			result += string(a) + "\n"
+		}
+	}
+	fw, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666) //os.O_TRUNC清空文件重新写入，否则原文件内容可能残留
+	w := bufio.NewWriter(fw)
+	w.WriteString(result)
+	if err != nil {
+		panic(err)
+	}
+	w.Flush()
+	fw.Close()
+}
+
+// 2.1检查器模块是否存在app下的控制器不存在则添加
+func CheckIsAddAppController(modelname string) {
+	filePath := filepath.Join("app/controller.go")
+	con_path := "gofly/app/" + modelname
+	f, err := os.Open(filePath)
+	if err != nil {
+		fmt.Print(err)
+	}
+	defer f.Close()
+	buf := bufio.NewReader(f)
+	var result = ""
+	ishase := false
+	for {
+		a, _, c := buf.ReadLine()
+		if c == io.EOF {
+			break
+		}
+		if strings.Contains(string(a), con_path) {
+			ishase = true
+		}
+		result += string(a) + "\n"
+	}
+	if ishase == false {
+		addstr := "	_ \"" + con_path + "\""
+		datestr := strings.ReplaceAll(result, ")", addstr)
+		result = datestr + ")\n"
+	}
+	fw, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666) //os.O_TRUNC清空文件重新写入，否则原文件内容可能残留
+	w := bufio.NewWriter(fw)
+	w.WriteString(result)
+	if err != nil {
+		panic(err)
+	}
+	w.Flush()
+	fw.Close()
+}
+
+// 2.2 存在APP控制器则移除
+func CheckApiRemoveAppController(modelname string) {
+	filePath := filepath.Join("app/controller.go")
+	if _, err := os.Stat(filePath); os.IsNotExist(err) { //不存在
+		return
+	}
+	con_path := "gofly/app/" + modelname
+	f, err := os.Open(filePath)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer f.Close()
+	buf := bufio.NewReader(f)
+	var result = ""
+	for {
+		a, _, c := buf.ReadLine()
+		if c == io.EOF {
+			break
+		}
+		if strings.Contains(string(a), con_path) { //存在路由则移除
+			continue
+		} else {
+			result += string(a) + "\n"
+		}
+	}
+	fw, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666) //os.O_TRUNC清空文件重新写入，否则原文件内容可能残留
+	w := bufio.NewWriter(fw)
+	w.WriteString(result)
+	if err != nil {
+		panic(err)
+	}
+	w.Flush()
+	fw.Close()
 }
 
 // 单个文件复制
@@ -129,7 +206,6 @@ func CopyAllDir(targetPath string, destPath string) error {
 		}
 		//如果是文件则生成这个文件
 		return copyFile(path, destPath)
-
 	})
 	return err
 }

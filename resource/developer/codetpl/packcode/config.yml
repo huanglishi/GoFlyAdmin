@@ -1,0 +1,33 @@
+#应用信息
+app:
+     #版本号
+     version: 1.0.0
+     #名称
+     title: 
+     #描述
+     des: 
+     #标识包目录名
+     name: 
+     #安装状态
+     isinstall: false
+#安装前端代码
+installvue:
+     #安装views文件
+     viewsfiles: 
+     #安装views文件夹
+     viewsfolders: 
+     #安装组件文件
+     componentfiles: 
+     #安装组件文件
+     componentfolders: 
+#后端代码
+installgo:
+     #安装app下代码文件夹（多个,分开）
+     appfolders: 
+     #安装utils工具类代码文件
+     utilsfiles: 
+sqldb:
+     #数据库表名称（多个,分开）
+     packtables: 
+     #菜单ID
+     menuids: 

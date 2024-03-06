@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gofly/global"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"os"
@@ -14,8 +14,9 @@ import (
 	"strings"
 	"time"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 /**
@@ -27,7 +28,7 @@ type Devapi struct {
 
 func init() {
 	fpath := Devapi{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取部门列表
@@ -63,7 +64,7 @@ func (api *Devapi) Get_list(c *gin.Context) {
 				Where("a.id", val["cid"]).Fields("a.name,a.type_id,t.model_name").First()
 			val["groupname"] = groupdata["name"]
 			val["type_id"] = groupdata["type_id"]
-			if utils.InterfaceToInt(val["apicode_type"]) == 2 {
+			if gf.InterfaceToInt(val["apicode_type"]) == 2 {
 				val["url"] = fmt.Sprintf("/%v%v", groupdata["model_name"], val["url"])
 			}
 		}
@@ -80,9 +81,9 @@ func (api *Devapi) Get_list(c *gin.Context) {
 // 获取分组
 func (api *Devapi) Get_group(c *gin.Context) {
 	list, _ := model.DB().Table("common_apidoc_group").Fields("id,pid,name").Order("id asc").Get()
-	list = utils.GetMenuChildrenArray(list, 0, "pid")
+	list = gf.GetMenuChildrenArray(list, 0, "pid")
 	if list == nil {
-		list = make([]gorose.Data, 0)
+		list = make([]gform.Data, 0)
 	}
 	results.Success(c, "获取分组列表", list, nil)
 }
@@ -190,7 +191,7 @@ func (api *Devapi) Get_tables(c *gin.Context) {
 // 获取所有路由列表
 func (api *Devapi) Get_routes(c *gin.Context) {
 	filePath := "runtime/app/routers.txt"
-	list := utils.ReaderFileByline(filePath)
+	list := gf.ReaderFileByline(filePath)
 	results.Success(c, "获取所有路由列表", list, nil)
 }
 
@@ -222,7 +223,7 @@ func (api *Devapi) Get_tablelist(c *gin.Context) {
 		if seachword != "" {
 			MDB.Where("name", "like", "%"+seachword+"%")
 		}
-		list, err := MDB.Limit(utils.InterfaceToInt(pageSize)).Order("id desc").Get()
+		list, err := MDB.Limit(gf.InterfaceToInt(pageSize)).Order("id desc").Get()
 		if err != nil {
 			results.Failed(c, err.Error(), nil)
 		} else {

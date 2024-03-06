@@ -4,14 +4,15 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
 	"time"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 // 用于自动注册路由
@@ -19,14 +20,14 @@ type Tabledata struct{}
 
 func init() {
 	fpath := Tabledata{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取列表
 func (api *Tabledata) Get_list(c *gin.Context) {
 	list, _ := model.DB().Table("common_dictionary_table").Fields("id,businessID,title,remark,tablename,status,weigh,data_from").Order("weigh asc").Get()
 	if list == nil {
-		list = make([]gorose.Data, 0)
+		list = make([]gform.Data, 0)
 	}
 	results.Success(c, "获取列表", list, nil)
 }

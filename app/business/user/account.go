@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	utils.Register(&Account{}, reflect.TypeOf(Account{}).PkgPath())
+	gf.Register(&Account{}, reflect.TypeOf(Account{}).PkgPath())
 }
 
 // 用于自动注册路由
@@ -50,8 +50,8 @@ func (api *Account) Get_menu(c *gin.Context) {
 	}
 	RMDB := model.DB().Table("business_auth_rule")
 	var roles []interface{}
-	if !utils.IsContain(menu_ids.([]interface{}), "*") { //不是超级权限-过滤菜单权限
-		getmenus := utils.ArrayMerge(menu_ids.([]interface{}))
+	if !gf.IsContain(menu_ids.([]interface{}), "*") { //不是超级权限-过滤菜单权限
+		getmenus := gf.ArrayMerge(menu_ids.([]interface{}))
 		RMDB = RMDB.WhereIn("id", getmenus)
 		roles = getmenus
 	} else {
@@ -109,11 +109,11 @@ func (api *Account) Changepwd(c *gin.Context) {
 	if err != nil {
 		results.Failed(c, "查找账号失败！", err)
 	} else {
-		pass := utils.Md5(parameter["passwordOld"].(string) + userdata["salt"].(string))
+		pass := gf.Md5(parameter["passwordOld"].(string) + userdata["salt"].(string))
 		if userdata["password"] != pass {
 			results.Failed(c, "原来密码输入错误！", err)
 		} else {
-			newpass := utils.Md5(parameter["passwordNew"].(string) + userdata["salt"].(string))
+			newpass := gf.Md5(parameter["passwordNew"].(string) + userdata["salt"].(string))
 			res, err := model.DB().Table("business_account").
 				Data(map[string]interface{}{"password": newpass}).
 				Where("id", user.ID).

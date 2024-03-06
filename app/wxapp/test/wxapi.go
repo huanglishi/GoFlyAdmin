@@ -1,7 +1,7 @@
 package article
 
 import (
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"reflect"
 
@@ -14,7 +14,7 @@ type wxapi struct {
 
 func init() {
 	fpath := wxapi{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 测试获取数据接口

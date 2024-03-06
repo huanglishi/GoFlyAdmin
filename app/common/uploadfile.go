@@ -6,9 +6,8 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,7 +19,7 @@ import (
 )
 
 func init() {
-	utils.Register(&Uploadfile{}, reflect.TypeOf(Uploadfile{}).PkgPath())
+	gf.Register(&Uploadfile{}, reflect.TypeOf(Uploadfile{}).PkgPath())
 }
 
 type Uploadfile struct {
@@ -42,7 +41,7 @@ func (api *Uploadfile) Onefile(c *gin.Context) {
 	day_time := time.Now().Format("2006-01-02")
 	//文件唯一性
 	file_uniname := fmt.Sprintf("%s%s%v", file.Filename, day_time, user.ID)
-	sha1_str := utils.Md5(file_uniname)
+	sha1_str := gf.Md5(file_uniname)
 	//开始
 	day_star, _ := time.Parse("2006-01-02 15:04:05", day_time+" 00:00:00")
 	day_star_times := day_star.Unix() //时间戳
@@ -74,7 +73,7 @@ func (api *Uploadfile) Onefile(c *gin.Context) {
 	}
 	//上传到的路径
 	filename_arr := strings.Split(file.Filename, ".")
-	name_str := utils.Md5(fmt.Sprintf("%v%s", nowTime, filename_arr[0])) //组装文件保存名字
+	name_str := gf.Md5(fmt.Sprintf("%v%s", nowTime, filename_arr[0])) //组装文件保存名字
 	//path := 'resource/uploads/20060102150405test.xlsx'
 	file_Filename := fmt.Sprintf("%s%s%s", name_str, ".", filename_arr[1]) //文件加.后缀
 	path := file_path + file_Filename
@@ -172,6 +171,6 @@ func (api *Uploadfile) Get_image(c *gin.Context) {
 // 4.显示图片base64
 func (api *Uploadfile) Get_imagebase(c *gin.Context) {
 	imageName := c.Query("url")
-	file, _ := ioutil.ReadFile(imageName)
+	file, _ := os.ReadFile(imageName)
 	c.Writer.WriteString(string(file))
 }

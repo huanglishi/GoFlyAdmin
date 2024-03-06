@@ -4,14 +4,15 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
 	"time"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 // 用于自动注册路由
@@ -21,21 +22,21 @@ type Bizrule struct {
 // 初始化生成路由
 func init() {
 	fpath := Bizrule{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 1获取列表
 func (api *Bizrule) Get_list(c *gin.Context) {
 	menuList, _ := model.DB().Table("business_auth_rule").Order("orderNo asc").Get()
 	if menuList == nil {
-		menuList = make([]gorose.Data, 0)
+		menuList = make([]gform.Data, 0)
 	}
 	for _, val := range menuList {
 		if val["title"] == "" {
 			val["title"] = val["locale"]
 		}
 	}
-	menuList = utils.GetRuleTreeArray(menuList, 0, "")
+	menuList = gf.GetRuleTreeArray(menuList, 0, "")
 	results.Success(c, "获取全部菜单列表", menuList, nil)
 }
 
@@ -46,14 +47,14 @@ func (api *Bizrule) Get_parent(c *gin.Context) {
 		results.Failed(c, "获取选项列表失败", err)
 	} else {
 		if menuList == nil {
-			menuList = make([]gorose.Data, 0)
+			menuList = make([]gform.Data, 0)
 		}
 		for _, val := range menuList {
 			if val["title"] == "" {
 				val["title"] = val["locale"]
 			}
 		}
-		menuList = utils.GetMenuChildrenArray(menuList, 0, "pid")
+		menuList = gf.GetMenuChildrenArray(menuList, 0, "pid")
 		results.Success(c, "菜单父级数据！", menuList, nil)
 	}
 }

@@ -13,21 +13,22 @@ type DBconf struct {
 
 //应用配置
 type App struct {
-	Port              string `yaml:"port"`
-	Version           string `yaml:"version"`
-	Env               string `yaml:"env"`
-	Apisecret         string `yaml:"apisecret"`
-	Allowurl          string `yaml:"allowurl"`
-	TokenOutTime      string `yaml:"tokenouttime"`
-	CPUnum            string `yaml:"cpunum"`
-	Domain            string `yaml:"domain"`
-	Vueobjroot        string `yaml:"vueobjroot"`
-	Rootview          string `yaml:"rootview"`
-	RunlogType        string `yaml:"runlogtype"`
-	NoVerifyTokenRoot string `yaml:"noVerifyTokenRoot"`
-	NoVerifyAPIRoot   string `yaml:"noVerifyAPIRoot"`
-	NoVerifyToken     string `yaml:"noVerifyToken"`
-	NoVerifyAPI       string `yaml:"noVerifyAPI"`
+	Port                string `yaml:"port"`
+	Version             string `yaml:"version"`
+	Env                 string `yaml:"env"`
+	Apisecret           string `yaml:"apisecret"`
+	Allowurl            string `yaml:"allowurl"`
+	TokenOutTime        string `yaml:"tokenouttime"`
+	CPUnum              string `yaml:"cpunum"`
+	Domain              string `yaml:"domain"`
+	Vueobjroot          string `yaml:"vueobjroot"`
+	CompanyPrivateHouse string `yaml:"companyPrivateHouse"`
+	Rootview            string `yaml:"rootview"`
+	RunlogType          string `yaml:"runlogtype"`
+	NoVerifyTokenRoot   string `yaml:"noVerifyTokenRoot"`
+	NoVerifyAPIRoot     string `yaml:"noVerifyAPIRoot"`
+	NoVerifyToken       string `yaml:"noVerifyToken"`
+	NoVerifyAPI         string `yaml:"noVerifyAPI"`
 }
 
 //JWT验证

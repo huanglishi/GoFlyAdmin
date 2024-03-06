@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"gofly/global"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -21,5 +21,5 @@ func CustomRecovery() gin.HandlerFunc {
 			MaxAge:     conf.Log.MaxAge,
 			Compress:   conf.Log.Compress,
 		},
-		utils.ServerError)
+		gf.ServerError)
 }

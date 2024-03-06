@@ -6,15 +6,16 @@ import (
 	"encoding/xml"
 	"fmt"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"log"
 	"reflect"
 	"sort"
 	"strings"
 	"time"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 /**
@@ -22,11 +23,10 @@ import (
 *本路径为： /admin/user/login -省去了index
  */
 func init() {
-	utils.Register(&Index{}, reflect.TypeOf(Index{}).PkgPath())
+	gf.Register(&Index{}, reflect.TypeOf(Index{}).PkgPath())
 }
 
-type Index struct {
-}
+type Index struct{}
 
 /**
 * url接口配置
@@ -75,7 +75,7 @@ func (api *Index) GetPost_api(c *gin.Context) {
 }
 
 // 处理关注事件
-func Onsubscribe(msgText WxReceiveCommonMsg, openid string, Data gorose.Data) {
+func Onsubscribe(msgText WxReceiveCommonMsg, openid string, Data gform.Data) {
 	//判断账号是否存在
 	log.Println("判断账号是否存在!")
 	user, _ := model.DB().Table("business_wxsys_user").Where("openid", openid).Fields("id").First()

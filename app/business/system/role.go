@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
 	"strings"
 	"time"
 
+	"gofly/utils/gform"
+
 	"github.com/gin-gonic/gin"
-	"github.com/gohouse/gorose/v2"
 )
 
 // 用于自动注册路由
@@ -23,7 +24,7 @@ type Role struct {
 // 初始化生成路由
 func init() {
 	fpath := Role{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取数据列表-子树结构
@@ -33,8 +34,8 @@ func (api *Role) Get_list(c *gin.Context) {
 	getuser, _ := c.Get("user") //当前用户
 	user := getuser.(*middleware.UserClaims)
 	role_id, _ := model.DB().Table("business_auth_role_access").Where("uid", user.ID).Pluck("role_id")
-	role_ids := utils.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
-	all_role_id := utils.MergeArr(role_id.([]interface{}), role_ids)
+	role_ids := gf.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
+	all_role_id := gf.MergeArr(role_id.([]interface{}), role_ids)
 	//查找条件
 	MDB := model.DB().Table("business_auth_role")
 	roleList, _ := MDB.Where(func() {
@@ -54,9 +55,9 @@ func (api *Role) Get_list(c *gin.Context) {
 			MDB.Where("status", status)
 		}
 	}).Order("weigh asc").Get()
-	roleList = utils.GetTreeArray(roleList, 0, "")
+	roleList = gf.GetTreeArray(roleList, 0, "")
 	if roleList == nil {
-		roleList = make([]gorose.Data, 0)
+		roleList = make([]gform.Data, 0)
 	}
 	results.Success(c, "获取拥有角色列表", roleList, all_role_id)
 }
@@ -66,10 +67,10 @@ func (api *Role) Get_parent(c *gin.Context) {
 	getuser, _ := c.Get("user") //当前用户
 	user := getuser.(*middleware.UserClaims)
 	role_id, _ := model.DB().Table("business_auth_role_access").Where("uid", user.ID).Pluck("role_id")
-	role_ids := utils.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
-	all_role_id := utils.MergeArr(role_id.([]interface{}), role_ids)
+	role_ids := gf.GetAllChilIds("business_auth_role", role_id.([]interface{})) //批量获取子节点id
+	all_role_id := gf.MergeArr(role_id.([]interface{}), role_ids)
 	menuList, _ := model.DB().Table("business_auth_role").WhereIn("id", all_role_id).OrWhere("businessID", user.BusinessID).Fields("id,pid,name").Order("weigh asc").Get()
-	menuList = utils.GetMenuChildrenArray(menuList, 0, "pid")
+	menuList = gf.GetMenuChildrenArray(menuList, 0, "pid")
 	results.Success(c, "部门父级数据！", menuList, nil)
 }
 
@@ -123,7 +124,7 @@ func (api *Role) Save(c *gin.Context) {
 		f_id = parameter["id"].(float64)
 	}
 	if parameter["menu"] != nil && parameter["menu"] != "*" {
-		rules := utils.GetRulesID("business_auth_rule", "pid", parameter["menu"]) //获取子菜单包含的父级ID
+		rules := gf.GetRulesID("business_auth_rule", "pid", parameter["menu"]) //获取子菜单包含的父级ID
 		rudata := rules.([]interface{})
 		var rulesStr []string
 		for _, v := range rudata {
@@ -131,7 +132,7 @@ func (api *Role) Save(c *gin.Context) {
 			rulesStr = append(rulesStr, str)
 		}
 		parameter["rules"] = strings.Join(rulesStr, ",")
-		parameter["menu"] = utils.JSONMarshalToString(parameter["menu"])
+		parameter["menu"] = gf.JSONMarshalToString(parameter["menu"])
 	}
 	parameter["createtime"] = time.Now().Unix()
 	if f_id == 0 {

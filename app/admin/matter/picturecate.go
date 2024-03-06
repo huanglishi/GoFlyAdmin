@@ -3,7 +3,7 @@ package matter
 import (
 	"encoding/json"
 	"gofly/model"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -19,7 +19,7 @@ type Picturecate struct{}
 
 func init() {
 	fpath := Picturecate{}
-	utils.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
+	gf.Register(&fpath, reflect.TypeOf(fpath).PkgPath())
 }
 
 // 获取列表

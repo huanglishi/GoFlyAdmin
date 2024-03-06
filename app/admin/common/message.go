@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"gofly/model"
 	"gofly/route/middleware"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"gofly/utils/results"
 	"io"
 	"reflect"
@@ -16,7 +16,7 @@ import (
 )
 
 func init() {
-	utils.Register(&Message{}, reflect.TypeOf(Message{}).PkgPath())
+	gf.Register(&Message{}, reflect.TypeOf(Message{}).PkgPath())
 }
 
 type Message struct {

@@ -3,17 +3,17 @@ package developer
 import (
 	"bufio"
 	"fmt"
-	"gofly/utils"
+	"gofly/utils/gf"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/gohouse/gorose/v2"
+	"gofly/utils/gform"
 )
 
 // 判断文件是否存在不存在则创建
-func CreatApicodeFile(model_name string, data gorose.Data) {
+func CreatApicodeFile(model_name string, data gform.Data) {
 	url := data["url"].(string)
 	url_arr := strings.Split(url, `/`)
 	methods := url_arr[len(url_arr)-1]
@@ -37,12 +37,12 @@ func CreatApicodeFile(model_name string, data gorose.Data) {
 		if !os.IsExist(err) {
 			os.Create(filego_path)
 			//复制文件
-			err := CopyFileContents(filepath.Join("resource/staticfile/codetpl/go/apicode.gos"), filego_path)
+			err := CopyFileContents(filepath.Join("resource/developer/codetpl/go/apicode.gos"), filego_path)
 			if err != nil {
 				panic(err)
 			}
 			//修复go文件-数据表名称
-			ChangPackage(filego_path, packageName, filename, utils.InterfaceTostring(data["tablename"]))
+			ChangPackage(filego_path, packageName, filename, gf.InterfaceTostring(data["tablename"]))
 			//添加控制路由
 			CheckIsAddController(model_name, model_name+"/"+packageName)
 		}
@@ -77,7 +77,7 @@ func CreatList(filePath, methods, fields string) {
 			break
 		}
 		if strings.Contains(string(a), "get_list") {
-			datestr := strings.ReplaceAll(string(a), "get_list", utils.FirstUpper(methods))
+			datestr := strings.ReplaceAll(string(a), "get_list", gf.FirstUpper(methods))
 			result += datestr + "\n"
 		} else if strings.Contains(string(a), "{fields}") {
 			datestr := strings.ReplaceAll(string(a), "{fields}", fields)
@@ -111,7 +111,7 @@ func CreatDetail(filePath, methods, fields string) {
 			break
 		}
 		if strings.Contains(string(a), "get_detail") {
-			datestr := strings.ReplaceAll(string(a), "get_detail", utils.FirstUpper(methods))
+			datestr := strings.ReplaceAll(string(a), "get_detail", gf.FirstUpper(methods))
 			result += datestr + "\n"
 		} else if strings.Contains(string(a), "{fields}") {
 			datestr := strings.ReplaceAll(string(a), "{fields}", fields)
@@ -145,7 +145,7 @@ func CreatSave(filePath, methods string) {
 			break
 		}
 		if strings.Contains(string(a), "save(") {
-			datestr := strings.ReplaceAll(string(a), "save(", utils.FirstUpper(methods)+"(")
+			datestr := strings.ReplaceAll(string(a), "save(", gf.FirstUpper(methods)+"(")
 			result += datestr + "\n"
 		} else {
 			result += string(a) + "\n"
@@ -176,7 +176,7 @@ func CreatDel(filePath, methods string) {
 			break
 		}
 		if strings.Contains(string(a), "del(") {
-			datestr := strings.ReplaceAll(string(a), "del(", utils.FirstUpper(methods)+"(")
+			datestr := strings.ReplaceAll(string(a), "del(", gf.FirstUpper(methods)+"(")
 			result += datestr + "\n"
 		} else {
 			result += string(a) + "\n"
@@ -210,7 +210,7 @@ func ChangPackage(filePath, packageName, filename, tablename string) {
 			datestr := strings.ReplaceAll(string(a), "packageName", packageName)
 			result += datestr + "\n"
 		} else if strings.Contains(string(a), "Replace") {
-			datestr := strings.ReplaceAll(string(a), "Replace", utils.FirstUpper(filename))
+			datestr := strings.ReplaceAll(string(a), "Replace", gf.FirstUpper(filename))
 			result += datestr + "\n"
 		} else if strings.Contains(string(a), "{tablename}") {
 			datestr := strings.ReplaceAll(string(a), "{tablename}", tablename)
@@ -229,7 +229,7 @@ func ChangPackage(filePath, packageName, filename, tablename string) {
 }
 
 // 卸载接口
-func UnApicodeFile(data gorose.Data) {
+func UnApicodeFile(data gform.Data) {
 	url := data["url"].(string)
 	url_arr := strings.Split(url, `/`)
 	methods := url_arr[len(url_arr)-1]
@@ -241,9 +241,9 @@ func UnApicodeFile(data gorose.Data) {
 	if _, err := os.Stat(filego_path); err == nil {
 		if data["method"] == "get" {
 			if data["getdata_type"] == "list" {
-				UnList(filego_path, methods, utils.InterfaceTostring(data["fields"]))
+				UnList(filego_path, methods, gf.InterfaceTostring(data["fields"]))
 			} else if data["getdata_type"] == "detail" {
-				UnDetail(filego_path, methods, utils.InterfaceTostring(data["fields"]))
+				UnDetail(filego_path, methods, gf.InterfaceTostring(data["fields"]))
 			}
 		} else if data["method"] == "post" {
 			UnSave(filego_path, methods)
@@ -268,8 +268,8 @@ func UnList(filePath, methods, fields string) {
 		if c == io.EOF {
 			break
 		}
-		if strings.Contains(string(a), utils.FirstUpper(methods)) {
-			datestr := strings.ReplaceAll(string(a), utils.FirstUpper(methods), "get_list")
+		if strings.Contains(string(a), gf.FirstUpper(methods)) {
+			datestr := strings.ReplaceAll(string(a), gf.FirstUpper(methods), "get_list")
 			result += datestr + "\n"
 		} else if strings.Contains(string(a), fields) {
 			datestr := strings.ReplaceAll(string(a), fields, "{fields}")
@@ -302,8 +302,8 @@ func UnDetail(filePath, methods, fields string) {
 		if c == io.EOF {
 			break
 		}
-		if strings.Contains(string(a), utils.FirstUpper(methods)) {
-			datestr := strings.ReplaceAll(string(a), utils.FirstUpper(methods), "get_detail")
+		if strings.Contains(string(a), gf.FirstUpper(methods)) {
+			datestr := strings.ReplaceAll(string(a), gf.FirstUpper(methods), "get_detail")
 			result += datestr + "\n"
 		} else if strings.Contains(string(a), fields) {
 			datestr := strings.ReplaceAll(string(a), fields, "{fields}")
@@ -336,8 +336,8 @@ func UnSave(filePath, methods string) {
 		if c == io.EOF {
 			break
 		}
-		if strings.Contains(string(a), utils.FirstUpper(methods)+"(") {
-			datestr := strings.ReplaceAll(string(a), utils.FirstUpper(methods)+"(", "save(")
+		if strings.Contains(string(a), gf.FirstUpper(methods)+"(") {
+			datestr := strings.ReplaceAll(string(a), gf.FirstUpper(methods)+"(", "save(")
 			result += datestr + "\n"
 		} else {
 			result += string(a) + "\n"
@@ -367,8 +367,8 @@ func UnDel(filePath, methods string) {
 		if c == io.EOF {
 			break
 		}
-		if strings.Contains(string(a), utils.FirstUpper(methods)+"(") {
-			datestr := strings.ReplaceAll(string(a), utils.FirstUpper(methods)+"(", "del(")
+		if strings.Contains(string(a), gf.FirstUpper(methods)+"(") {
+			datestr := strings.ReplaceAll(string(a), gf.FirstUpper(methods)+"(", "del(")
 			result += datestr + "\n"
 		} else {
 			result += string(a) + "\n"
@@ -384,7 +384,7 @@ func UnDel(filePath, methods string) {
 }
 
 // 卸载时候删除文件
-func RemoveModel(model_name string, data gorose.Data) {
+func RemoveModel(model_name string, data gform.Data) {
 	url := data["url"].(string)
 	url_arr := strings.Split(url, `/`)
 	filename := url_arr[len(url_arr)-2]

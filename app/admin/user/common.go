@@ -3,12 +3,12 @@ package user
 import (
 	"gofly/model"
 
-	"github.com/gohouse/gorose/v2"
+	"gofly/utils/gform"
 )
 
 // 获取权限菜单
-func GetMenuArray(pdata []gorose.Data, parent_id int64, roles []interface{}) []gorose.Data {
-	var returnList []gorose.Data
+func GetMenuArray(pdata []gform.Data, parent_id int64, roles []interface{}) []gform.Data {
+	var returnList []gform.Data
 	var one int64 = 1
 	for _, v := range pdata {
 		if v["pid"].(int64) == parent_id {
