@@ -77,11 +77,11 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 
 ## 六、效果图片预览
 1.登录
-![登录](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230507/f7c95d545b8c6b2efcdc67411717dff9.png)
+![登录](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230507/f7c95d545b8c6b2efcdc67411717dff9.png?_t=1690908276)
 2.统计页
 ![统计页](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/b8304ca001cda4a94b86dad216ca5219.png?_t=1691428085)
 3.角色管理-auth权限
-![ 角色管理-auth权限](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c4de74ba182c5037a4fd0390fb7a6ecf.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
+![ 角色管理-auth权限](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c4de74ba182c5037a4fd0390fb7a6ecf.png?_t=1690908276)
 4.数据中心-数据字典
 ![数据中心-数据字典](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/f894c904f617b32a8da0bb5310ed95e0.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
 5. 数据中心-附件管理
