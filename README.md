@@ -79,34 +79,51 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 
  [5.B端在线预览](https://sg.goflys.cn/webbusiness)
 
+ [6.企业版代码仓在线预览](https://bs.goflys.cn/webbusiness/)
+
 ## 六、效果图片预览
-1.登录
-![登录](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230507/f7c95d545b8c6b2efcdc67411717dff9.png?_t=1690908276)
-2.统计页
-![统计页](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/b8304ca001cda4a94b86dad216ca5219.png?_t=1691428085)
-3.角色管理-auth权限
-![ 角色管理-auth权限](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c4de74ba182c5037a4fd0390fb7a6ecf.png?_t=1690908276)
-4.数据中心-数据字典
-![数据中心-数据字典](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/f894c904f617b32a8da0bb5310ed95e0.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-5. 数据中心-附件管理
-![附件管理列表](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c54d9d9141bad3aaa5a4923e7abcc32e.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-![附件管理器](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/23ec93d6787bfcbca2e6c930213671bd.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-6.数据中心-配置
-![配置](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/fba8e679546d1f3fe450b94e7f239a51.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-7.微信业务
-![微信菜单](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/79770e6d1fb7e4155c67f6637a4a33df.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-8.api接口管理
-![api接口管理列表及测试接口](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/10132ac752b08efd8b2b2c56c6492775.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-![api接口管理添加接口](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/595c0301371762910ea3c20c1ce737ca.png?_t=1690908276?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158)
-9.1 代码一键生成后端CRUD和前端代码
-![代码一键生成后端CRUD和前端代码列表](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/0708c3ad360324d3af90ebebbf47db67.png?_t=1691428879)
-![代码一键生成后端CRUD和前端代码添加](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240108/6425dacd4222bc81fc481fd906b49eb3.png)
-9.12 代码生成示例
-![生成列表](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/23d844127703ba85731097a305571b89.png?_t=1691428879)
-![生成添加表单](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/2622a5071f8f512e8f0a31e23990da3c.png)
-![生成添加表单-文本编辑器](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/85c36eef5e37779858f2e912885f71c5.png?_t=1690908444?_t=1690908471?_t=1690908494?_t=1690908849?_t=1691152158?_t=1691428879)
-10.简洁大方文本剪辑器
-![文本剪辑器](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240219/f9d6376f4ed31719be29838db64542ec.png)
+开源版界面
+<table>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230507/f7c95d545b8c6b2efcdc67411717dff9.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/b8304ca001cda4a94b86dad216ca5219.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c4de74ba182c5037a4fd0390fb7a6ecf.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/f894c904f617b32a8da0bb5310ed95e0.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/c54d9d9141bad3aaa5a4923e7abcc32e.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/23ec93d6787bfcbca2e6c930213671bd.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/fba8e679546d1f3fe450b94e7f239a51.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/79770e6d1fb7e4155c67f6637a4a33df.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/10132ac752b08efd8b2b2c56c6492775.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/595c0301371762910ea3c20c1ce737ca.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/0708c3ad360324d3af90ebebbf47db67.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240321/8eb6bf0697fed4a40cfba0e12cba0e9e.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230808/23d844127703ba85731097a305571b89.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/2622a5071f8f512e8f0a31e23990da3c.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230802/85c36eef5e37779858f2e912885f71c5.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240219/f9d6376f4ed31719be29838db64542ec.png"/></td>
+    </tr>
+</table>
+企业版效果
+<table>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240518/07abb7d17e4da3380ef1dbc0a685f734.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240316/92df3d63767a9619691710f1e5a01279.png"/></td>
+    </tr>
+</table>
 
 ## 七、安装及部署打包说明
 ### 1. 后端代码
