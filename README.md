@@ -186,7 +186,7 @@ go build main.go
 ### 2. 前端端代码
 #### 初始化依赖
  ```
- npm run install 或者 yarn install
+ npm install 或者 yarn install
  ```
 如果第一次使用Arco Design Pro install初始化可以报错，如果保存请运行下面命令（安装项目模版的工具）：
 ```
