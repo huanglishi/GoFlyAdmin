@@ -78,8 +78,10 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
  [4.A端在线预览](https://sg.goflys.cn/webadmin)
 
  [5.B端在线预览](https://sg.goflys.cn/webbusiness)
+ 
+ [6.企业版admin端在线体验](https://bs.goflys.cn/webadmin/)
 
- [6.企业版代码仓在线预览](https://bs.goflys.cn/webbusiness/)
+ [7.企业版business端在线体验](https://bs.goflys.cn/webbusiness/)
 
 ## 六、效果图片预览
 ### 开源版界面
