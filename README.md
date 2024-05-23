@@ -147,15 +147,21 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 ## 七、安装及部署打包说明
 ### 1. 后端代码
 #### 安装fresh 热更新-边开发边编译
+```
 go install github.com/pilu/fresh@latest
-
+```
 #### 初始化mod
+```
 go mod tidy
-
+```
 #### 热编译运行
-bee run 或 fresh 
+```
+bee run 或 fresh
+```
 #### 打包
+```
 go build main.go
+```
 #### 打包（此时会打包成Linux上可运行的二进制文件，不带后缀名的文件）
 ```
 SET GOOS=linux
