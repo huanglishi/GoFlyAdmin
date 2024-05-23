@@ -143,6 +143,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
         <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240522/ed4ad0ff3e402e12acd4edc5cddcfdf0.png"/></td>
     </tr>
 </table>
+
 ## 七、安装及部署打包说明
 ### 1. 后端代码
 #### 安装fresh 热更新-边开发边编译
