@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"gofly/global"
-	"time"
 
 	"gofly/utils/gform" //数据库操作
 
@@ -24,9 +23,6 @@ func MyInit(starType interface{}) {
 		global.App.Log.Info(fmt.Sprintf("数据库连接实例错误: %v", err))
 	} else {
 		global.App.Log.Info(fmt.Sprintf("连接数据库成功:%v", starType))
-		engin.GetExecuteDB().SetMaxIdleConns(10)                  //连接池最大空闲连接数,不设置, 默认无
-		engin.GetExecuteDB().SetMaxOpenConns(50)                  // 连接池最大连接数,不设置, 默认无限
-		engin.GetExecuteDB().SetConnMaxLifetime(59 * time.Second) //时间比超时时间短
 		engin.GetQueryDB().Exec("SET @@sql_mode='NO_ENGINE_SUBSTITUTION';")
 	}
 }
