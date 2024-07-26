@@ -142,6 +142,24 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
         <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240522/22a34fac7575b1e075f92ef6b7499398.png"/></td>
         <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240522/ed4ad0ff3e402e12acd4edc5cddcfdf0.png"/></td>
     </tr>
+    <tr >
+       <td colspan="2" align="center">定时任务</td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240606/c24c4400a774a77b8808ecfb866acdde.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240530/8dbe2abe66f893e5af957cc33418575a.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240530/65342de0e5e4d8f53d59fe7660d8c054.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240530/30698a566883c400f5614272382f1878.png"/></td>
+    </tr>
+    <tr >
+       <td colspan="2" align="center">附件管理</td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240725/0531a941abdc5a199ee5ff5dc24b0d0d.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240725/da794b591f4cfe88d58334ec94200315.png"/></td>
+    </tr>
 </table>
 
 ## 七、安装及部署打包说明
