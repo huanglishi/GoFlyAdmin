@@ -3,6 +3,7 @@ package gform
 import (
 	"database/sql"
 	"fmt"
+	"time"
 )
 
 // TAGNAME ...
@@ -220,6 +221,9 @@ func (c *Engin) bootReal(dbConf Config) (db *sql.DB, err error) {
 	}
 	if dbConf.SetMaxIdleConns > 0 {
 		db.SetMaxIdleConns(dbConf.SetMaxIdleConns)
+	}
+	if dbConf.SetConnMaxLifetime > 0 {
+		db.SetConnMaxLifetime(time.Duration(dbConf.SetConnMaxLifetime) * time.Second)
 	}
 
 	return
