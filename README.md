@@ -161,6 +161,13 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
         <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240725/0531a941abdc5a199ee5ff5dc24b0d0d.png"/></td>
         <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240725/da794b591f4cfe88d58334ec94200315.png"/></td>
     </tr>
+   <tr >
+       <td colspan="2" align="center">工作流、审批流</td>
+    </tr>
+    <tr>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240804/f239b37a48885c73c38866879ef596fd.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240807/39930d5ef8b901b48594d31f31690c17.png"/></td>
+    </tr>
 </table>
 
 ## 七、安装及部署打包说明
