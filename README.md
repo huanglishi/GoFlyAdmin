@@ -166,7 +166,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
     </tr>
     <tr>
         <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240804/f239b37a48885c73c38866879ef596fd.png"/></td>
-        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240807/39930d5ef8b901b48594d31f31690c17.png"/></td>
+        <td><img src="https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240807/39930d5ef8b901b48594d31f31690c17.png?_t=1723369499"/></td>
     </tr>
 </table>
 
