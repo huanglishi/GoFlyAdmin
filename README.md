@@ -247,7 +247,7 @@ vueobjroot: D:/Project/develop/vue/gofly_base/gofly_business
 
 如果以需要了解更多关于gofl社区框架，也可以移步到[GoFly全栈开发社区](https://goflys.cn/prdetail?id=6)了解或者下载最新版本。
 ## 联系我们
-如果使用过程有问题，可以添加GoFly技术客服咨询（微信：goflycn）:
+如果使用过程有问题，可以添加GoFly技术客服咨询（微信：goflycn）,社区不建群，唯一技术交流在：https://goflys.cn/knowhow
 <div align="center">
  <img src=https://goflys.cn/assets/itservice-6334c7e6.jpg width=220 />
 </div>
