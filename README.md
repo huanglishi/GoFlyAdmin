@@ -69,20 +69,27 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 ![安装界面](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240219/30b533c7a6d3bf711498089dd0f1337f.png)
 
 注意：前端代码安装设置是安装时同时把前端vue代码安装到开发前端代码目录下，为了防止热编译效率框架不建议把前端代码放到go目录下。
-## 五、在线预览
- [1.GoFly全栈开发社区了解更多](https://goflys.cn/home)  
+## 五、预览(演示)地址
+ [GoFly全栈开发社区了解更多](https://goflys.cn/home)  
 
- [2.Go快速后台系统开发框架完整代码包下载](https://goflys.cn/prdetail?id=6)
+### 企业版
+ [1.安装插件-管理的admin端在线体验](https://bs.goflys.cn/webadmin/)
 
- [3.Go快速后台系统开发文档](https://doc.goflys.cn/docview?id=25)
+ [2.安装插件-业务开发的business端在线体验](https://bs.goflys.cn/webbusiness/)
 
- [4.A端在线预览](https://sg.goflys.cn/webadmin)
+ [3.未安装插件-管理的admin端在线体验](https://spl.goflys.cn/webadmin/)
 
- [5.B端在线预览](https://sg.goflys.cn/webbusiness)
- 
- [6.企业版admin端在线体验](https://bs.goflys.cn/webadmin/)
+ [4.未安装插件-业务开发的business端在线体验](https://spl.goflys.cn/webbusiness/)
 
- [7.企业版business端在线体验](https://bs.goflys.cn/webbusiness/)
+ [5.企业版开发文档](https://doc.goflys.cn/docview?id=26)
+### 开源版
+ [1.管理的admin端在线预览](https://sg.goflys.cn/webadmin)
+
+ [2.业务开发的business端在线预览](https://sg.goflys.cn/webbusiness)
+
+ [3.GoFly快速后台系统开发框架完整代码包下载](https://goflys.cn/prdetail?id=6)
+
+ [4.开源版开发文档](https://doc.goflys.cn/docview?id=25)
 
 ## 六、效果图片预览
 ### 开源版界面
