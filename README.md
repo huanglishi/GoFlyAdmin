@@ -13,7 +13,29 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 **如果框架能帮助到你，无需捐赠，给我们⭐️star就好**，让更多人使用，开发者们都找到好工作或快速开发自己项目，企业可以降本增效。
 
 需要其他扩展功能如：定时任务、cms、websocket、mqtt，数据大屏，微信管理、抖音小程序快速开发、OA流程审批、工作流引擎等插件请移步到企业版使用，企业版是一个众人参与，每个开发者都可以把自己编写的代码打包上传代码仓，代码仓大家可以一同使用，[更多插件可到代码市场查看](https://goflys.cn/codemarket)。
-## 二、优势简介
+## 二、预览(演示)地址
+ [GoFly全栈开发社区了解更多](https://goflys.cn/home)  
+
+### 企业版
+ [1.安装插件-管理的admin端在线体验](https://bs.goflys.cn/webadmin/)
+
+ [2.安装插件-业务开发的business端在线体验](https://bs.goflys.cn/webbusiness/)
+
+ [3.未安装插件-管理的admin端在线体验](https://spl.goflys.cn/webadmin/)
+
+ [4.未安装插件-业务开发的business端在线体验](https://spl.goflys.cn/webbusiness/)
+
+ [5.企业版开发文档](https://doc.goflys.cn/docview?id=26)
+### 开源版
+ [1.管理的admin端在线预览](https://sg.goflys.cn/webadmin)
+
+ [2.业务开发的business端在线预览](https://sg.goflys.cn/webbusiness)
+
+ [3.GoFly快速后台系统开发框架完整代码包下载](https://goflys.cn/prdetail?id=6)
+
+ [4.开源版开发文档](https://doc.goflys.cn/docview?id=25)
+ 
+## 三、优势简介
 1. 基于优秀成熟框架集成，保证系统可靠性。集成的主要有 Gin、Arco Design 、Mysql 等主流框架技术《我们不生产框架，我们是优秀框架的搬运工》。
 
 2. 系统已集成开发常用基础功能，开箱即用，快速开始您业务开发，快人一步，比同行节省成本，降本增效首选。
@@ -34,7 +56,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 ```
 9. 框架以“大道至简，唯快不破”为思想，在每个细节处理都坚持让“开发”变得简单，即使你是新手也可以跟着开发文档快手上手并能开发出企业级产品。
 10. 我们开源的框架不是阉割版、不留后门、没有任何开发和使用限制、没有任何收费项，框架直接从我们以往开发项目整理出来的，是个纯粹开源项目，不存在使用问题。
-## 三、目录结构
+## 四、目录结构
 
 ```
 ├── app                     # 应用目录
@@ -61,7 +83,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 开发时仅需在app目录下添加你新的需求，app外部文件建议不要改动，除了config配置需要改，其他不要修改，
 框架已经为您封装好，你只需在app应用目录书写你的业务，路由、访问权限、跨域、限流、Token验证、ORM等
 框架已集成好，开发只需添加新的方法或者新增一个文件即可。
-## 四、快速安装
+## 五、快速安装
 1. 首先在GOPATH路径下的src目录下现在放代码的文件夹下载代码解压到项目文件夹中（或者直接git clone 代码到src目录下）。
 2. 再运行服务 go run main.go 或者 编译 fresh (go install github.com/pilu/fresh@latest 安装fresh热编译工具)，启动成功如下：
 ![运行启动命令](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20230912/00ab0aa6dbbaea7135421d9d58fc7d53.png)
@@ -69,27 +91,6 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 ![安装界面](https://api.goflys.cn/common/uploadfile/get_image?url=resource/uploads/20240219/30b533c7a6d3bf711498089dd0f1337f.png)
 
 注意：前端代码安装设置是安装时同时把前端vue代码安装到开发前端代码目录下，为了防止热编译效率框架不建议把前端代码放到go目录下。
-## 五、预览(演示)地址
- [GoFly全栈开发社区了解更多](https://goflys.cn/home)  
-
-### 企业版
- [1.安装插件-管理的admin端在线体验](https://bs.goflys.cn/webadmin/)
-
- [2.安装插件-业务开发的business端在线体验](https://bs.goflys.cn/webbusiness/)
-
- [3.未安装插件-管理的admin端在线体验](https://spl.goflys.cn/webadmin/)
-
- [4.未安装插件-业务开发的business端在线体验](https://spl.goflys.cn/webbusiness/)
-
- [5.企业版开发文档](https://doc.goflys.cn/docview?id=26)
-### 开源版
- [1.管理的admin端在线预览](https://sg.goflys.cn/webadmin)
-
- [2.业务开发的business端在线预览](https://sg.goflys.cn/webbusiness)
-
- [3.GoFly快速后台系统开发框架完整代码包下载](https://goflys.cn/prdetail?id=6)
-
- [4.开源版开发文档](https://doc.goflys.cn/docview?id=25)
 
 ## 六、效果图片预览
 ### 开源版界面
