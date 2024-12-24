@@ -14,7 +14,7 @@ git上传了全部的Go源码，前端代码和数据库请到[GoFly社区下载
 
 需要其他扩展功能如：定时任务、cms、websocket、mqtt，数据大屏，微信管理、抖音小程序快速开发、OA流程审批、工作流引擎等插件请移步到企业版使用，企业版是一个众人参与，每个开发者都可以把自己编写的代码打包上传代码仓，代码仓大家可以一同使用，[更多插件可到代码市场查看](https://goflys.cn/codemarket)。
 ## 二、预览(演示)地址
- [GoFly全栈开发社区了解更多](https://goflys.cn/home)  
+ [GoFly全栈开发社区](https://goflys.cn/home)  
 
 ### 企业版
  [1.安装插件-管理的admin端在线体验](https://bs.goflys.cn/webadmin/)
