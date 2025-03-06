@@ -46,17 +46,16 @@ func Register(controller interface{}, PkgPathstr string) bool {
 	} else {
 		module = "/" + strings.ToLower(module) + "/"
 	}
-	v := reflect.ValueOf(controller)
 	// fmt.Println("遍历方法:")
 	// fmt.Println(ctrlName)
 	//遍历方法
-	for i := 0; i < v.NumMethod(); i++ {
-		method := v.Method(i)
-		action := v.Type().Method(i).Name
+	for i := 0; i < vbf.NumMethod(); i++ {
+		method := vbf.Method(i)
+		action := vbf.Type().Method(i).Name
 		//拼接路由地址
 		path := rootPkg + module + FirstLower(action)
 		//遍历参数
-		params := make([]reflect.Type, 0, v.NumMethod())
+		params := make([]reflect.Type, 0, vbf.NumMethod())
 		httpMethod := "POST" //默认POST
 		if (strings.HasPrefix(action, "Get") && !strings.HasPrefix(action, "GetPost")) || action == "Index" {
 			httpMethod = "GET"
